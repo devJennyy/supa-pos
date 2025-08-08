@@ -1,10 +1,10 @@
-
 import { ThemeToggle } from "./theme-toggle";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center gap-5 bg-white dark:bg-black text-black dark:text-white transition-all duration-300">
-      <p className="text-4xl font-bold">Hello world!</p>
+    <div className="flex flex-1 flex-col justify-center items-center gap-5 bg-background transition-all duration-300">
+      <p className="text-4xl font-bold text-foreground">Hello world!</p>
+      <p className="text-xl text-secondary">How are you today?</p>
       <ThemeToggle />
     </div>
   );
