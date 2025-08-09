@@ -57,7 +57,7 @@ const Navbar = () => {
                 className={`px-4 h-full rounded-md text-sm border text-foreground flex justify-center items-center cursor-pointer
                   ${
                     active === link.label
-                      ? "bg-input border-border"
+                      ? "bg-input dark:border-border border-borderBrand"
                       : "border-transparent"
                   }
                 `}
@@ -149,7 +149,7 @@ const Navbar = () => {
                   }}
                   className={`text-foreground text-sm font-medium px-6 py-2 rounded-md border transition duration-150 ${
                     active === link.label
-                      ? "bg-input border-border"
+                      ? "bg-input dark:border-border border-borderBrand"
                       : "border-transparent"
                   }`}
                 >
