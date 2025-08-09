@@ -17,6 +17,7 @@ html {
 
 @theme inline {
   --color-background: var(--background);
+  --color-secondaryBackground: var(--secondaryBackground);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -58,6 +59,7 @@ html {
 :root {
   --radius: 0.625rem;
   --background: #FCFCFD;
+  --secondaryBackground: #FFFFFF;
   --foreground: #1A1A1A;
   --primary: #4FD1C5;
   --primary-foreground: #FFFFFF;
@@ -96,6 +98,7 @@ html {
 
 .dark {
   --background: #1A202C;
+  --secondaryBackground: #1F2733;
   --foreground: #FFFFFF;
   --primary: #4FD1C5;
   --primary-foreground: #FFFFFF;
@@ -138,7 +141,7 @@ html {
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground tracking-wide;
   }
 }
 
