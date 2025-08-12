@@ -108,18 +108,16 @@ const Page = () => {
   return (
     <main
       id="/login"
-      className="w-full 4xl:flex-none flex-1 flex justify-center items-center overflow-hidden dark:bg-secondaryBackground"
+      className="w-full 4xl:flex-none flex-1 flex justify-center items-center overflow-hidden"
     >
       <div className="w-full max-w-[1280px] !mx-auto sm:px-5 px-4 3xl:py-20 py-10 flex lg:flex-row flex-col-reverse justify-center lg:items-start items-center">
         <form
           onSubmit={handleLogIn}
-          className="w-full max-w-[500px] rounded-3xl sm:py-10 p-8 gap-10 flex flex-col justify-start bg-secondaryFill dark:bg-background border border-secondaryBorder dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
+          className="w-full max-w-[500px] rounded-3xl sm:py-10 p-8 gap-10 flex flex-col justify-start bg-secondaryBackground border dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
         >
           <div className="w-full flex flex-col gap-1 ">
-            <h1 className="text-2xl font-semibold text-primaryText">
-              Welcome Back!
-            </h1>
-            <p className="text-base text-secondaryText">
+            <h1 className="text-2xl font-semibold">Welcome Back!</h1>
+            <p className="text-base text-secondary">
               Please enter your details.
             </p>
           </div>
@@ -128,9 +126,7 @@ const Page = () => {
             {/* Email */}
             <div className="flex flex-col gap-2 text-left w-full">
               <div className="flex items-center gap-1">
-                <p
-                  className={emailError ? "text-red-500" : "text-secondaryText"}
-                >
+                <p className={emailError ? "text-red-500" : "text-secondary"}>
                   Username, or email address
                 </p>
                 {emailError}
@@ -151,8 +147,8 @@ const Page = () => {
                     setEmailError(true);
                   }
                 }}
-                className={`w-full h-11 px-4 text-primaryText border rounded-lg outline-none
-      ${emailError ? "border-red-500" : "border-primaryBorder"}
+                className={`w-full h-11 px-4 border rounded-lg outline-none
+      ${emailError ? "border-red-500" : "border"}
       darkfocus:shadow-sm focus-visible:ring-1 dark:ring-stone-100 ring-stone-700`}
               />
             </div>
@@ -161,9 +157,7 @@ const Page = () => {
             <div className=" flex flex-col gap-2 text-left">
               <div className="flex items-center gap-1">
                 <p
-                  className={
-                    passwordError ? "text-red-500" : "text-secondaryText"
-                  }
+                  className={passwordError ? "text-red-500" : "text-secondary"}
                 >
                   Password
                 </p>
@@ -180,8 +174,8 @@ const Page = () => {
                       setPasswordError(false);
                     }
                   }}
-                  className={`w-full h-11 text-primaryText px-4 pr-11 border rounded-lg outline-none
-        ${passwordError ? "border-red-500" : "border-primaryBorder"}
+                  className={`w-full h-11 px-4 pr-11 border rounded-lg outline-none
+        ${passwordError ? "border-red-500" : "border"}
         darkfocus:shadow-sm focus-visible:ring-1 dark:ring-stone-100 ring-stone-700 
         [appearance:textfield] [&::-ms-reveal]:hidden [&::-ms-clear]:hidden [&::-webkit-credentials-auto-fill-button]:hidden`}
                 />
@@ -189,7 +183,7 @@ const Page = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-3 flex items-center text-secondaryText"
+                  className="absolute inset-y-0 right-3 flex items-center text-secondary"
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
@@ -198,7 +192,7 @@ const Page = () => {
               {/* Forgot Password */}
               <Dialog>
                 <DialogTrigger asChild>
-                  <p className="text-secondaryText hover:text-primaryText transition-default text-end underline underline-offset-2 cursor-pointer !mt-[2px]">
+                  <p className="text-secondary hover:text-foreground transition-default text-end underline underline-offset-2 cursor-pointer !mt-[2px]">
                     Forgot Password?
                   </p>
                 </DialogTrigger>
@@ -230,8 +224,8 @@ const Page = () => {
                             setEmailError(true);
                           }
                         }}
-                        className={`w-full h-11 px-4 text-primaryText border rounded-lg outline-none
-    ${emailError ? "border-red-500" : "border-primaryBorder"}
+                        className={`w-full h-11 px-4 border rounded-lg outline-none
+    ${emailError ? "border-red-500" : "border"}
     darkfocus:shadow-sm focus-visible:ring-1 dark:ring-stone-100 ring-stone-700`}
                       />
                     </div>
@@ -264,30 +258,30 @@ const Page = () => {
             )}
           </div>
 
-          <div className="w-full h-[2px] rounded-full !mt-[-5px] dark:bg-primaryFill/50 bg-gradient-to-l from-primaryFill/0 via-primaryFill to-primaryFill/0"></div>
+          <div className="w-full h-[1px] rounded-full !mt-[-5px] dark:bg-foreground/0 bg-gradient-to-l from-foreground/0 via-foreground to-foreground/0"></div>
 
           <div className="w-full flex flex-col gap-3 !mt-[-10px]">
             <button
               onClick={() => handleGoogleLogin()}
-              className="w-full h-12 dark:bg-primaryFill/50 hover:dark:bg-primaryFill active:dark:bg-primaryFill dark:border-primaryBorder bg-primaryFill/20 hover:bg-primaryFill/30 active:bg-primaryFill/30 border border-primaryBorder/20 hover:border-primaryBorder/30 active:border-primaryBorder/30 transition-default rounded-full flex justify-center items-center gap-2 cursor-pointer"
+              className="w-full h-12 dark:bg-input/50 hover:dark:bg-input active:dark:bg-input dark:border bg-input/20 hover:bg-input/30 active:bg-input/30 border transition-default rounded-full flex justify-center items-center gap-2 cursor-pointer"
             >
               <FcGoogle size={20} />
-              <p className="text-primaryText text-sm">Continue with Google</p>
+              <p className="text-sm">Continue with Google</p>
             </button>
             <button
               onClick={() => handleGitHubLogin()}
-              className="w-full h-12 dark:bg-primaryFill/50 hover:dark:bg-primaryFill active:dark:bg-primaryFill dark:border-primaryBorder bg-primaryFill/20 hover:bg-primaryFill/30 active:bg-primaryFill/30 border border-primaryBorder/20 hover:border-primaryBorder/30 active:border-primaryBorder/30 transition-default rounded-full flex justify-center items-center gap-2 cursor-pointer"
+              className="w-full h-12 dark:bg-input/50 hover:dark:bg-input active:dark:bg-input dark:border bg-input/20 hover:bg-input/30 active:bg-input/30 border transition-default rounded-full flex justify-center items-center gap-2 cursor-pointer"
             >
-              <FaGithub size={18} className="text-primaryText" />
-              <p className="text-primaryText text-sm">Sign in with Github</p>
+              <FaGithub size={18} />
+              <p className="text-sm">Sign in with Github</p>
             </button>
           </div>
 
-          <p className="text-center text-sm text-secondaryText">
+          <p className="text-center text-sm text-secondary">
             New to Writual?
             <Link
               href={"/register-account"}
-              className="text-primaryText font-semibold underline underline-offset-4 !ml-1"
+              className="font-semibold underline underline-offset-4 !ml-1"
             >
               Sign up
             </Link>
@@ -296,10 +290,8 @@ const Page = () => {
 
         <div className="w-full lg:max-w-1/2 max-w-[450px] lg:p-10 lg:!mb-0 !mb-5">
           <div className="p-5 flex flex-col gap-3 w-full lg:items-start items-center">
-            <h1 className="text-primaryText text-[2rem] font-semibold">
-              Start your Writual
-            </h1>
-            <p className="text-secondaryText text-lg md:max-w-[340px] lg:text-left text-center">
+            <h1 className="text-[2rem] font-semibold">Start your Writual</h1>
+            <p className="text-secondary text-lg md:max-w-[340px] lg:text-left text-center">
               A fast, easy, and free way to write notes, manage your daily
               tasks, and build better habits.
             </p>
