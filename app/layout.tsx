@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "next-themes"
+import { AuthContextProvider } from "./context/AuthContext";
 
 export const metadata: Metadata = {
   title: "SupaPOS",
@@ -17,11 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`antialiased`}
-      >
+      <body className="antialiased">
         <ThemeProvider attribute="class" enableSystem defaultTheme="system">
-          {children}
+          <AuthContextProvider>
+            {children}
+          </AuthContextProvider>
         </ThemeProvider>
       </body>
     </html>
