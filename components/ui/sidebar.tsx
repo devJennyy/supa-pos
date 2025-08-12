@@ -24,6 +24,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { FiChevronRight } from "react-icons/fi";
+import { RxHamburgerMenu } from "react-icons/rx";
+import Image from "next/image";
+import ThemeToggle from "./theme-toggle";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -207,7 +210,7 @@ function Sidebar({
 
   return (
     <div
-      className="group peer text-sidebar-foreground hidden md:block"
+      className="group peer text-sidebar-foreground hidden lg:block"
       data-state={state}
       data-collapsible={state === "collapsed" ? collapsible : ""}
       data-variant={variant}
@@ -260,23 +263,68 @@ function SidebarTrigger({
   const { toggleSidebar } = useSidebar();
 
   return (
-    <Button
-      data-sidebar="trigger"
-      data-slot="sidebar-trigger"
-      size="icon"
-      className={cn(
-        "size-8 border-r border-t border-b rounded-tl-none rounded-bl-none !mt-24 !ml-[-1px] z-20 absolute bg-secondaryBackground hover:bg-secondaryBackground",
-        className
-      )}
-      onClick={(event) => {
-        onClick?.(event);
-        toggleSidebar();
-      }}
-      {...props}
-    >
-      <FiChevronRight />
-      <span className="sr-only">Toggle Sidebar</span>
-    </Button>
+    <>
+      <Button
+        data-sidebar="trigger"
+        data-slot="sidebar-trigger"
+        size="icon"
+        className={cn(
+          "lg:flex hidden size-8 border-r border-t border-b rounded-tl-none rounded-bl-none !mt-24 !ml-[-1px] z-20 absolute bg-secondaryBackground hover:bg-secondaryBackground",
+          className
+        )}
+        onClick={(event) => {
+          onClick?.(event);
+          toggleSidebar();
+        }}
+        {...props}
+      >
+        <FiChevronRight />
+        <span className="sr-only">Toggle Sidebar</span>
+      </Button>
+
+      <div className="lg:hidden h-16 w-full flex justify-between items-center px-3 border-b bg-secondaryBackground">
+        <Button
+          data-sidebar="trigger"
+          data-slot="sidebar-trigger"
+          variant="ghost"
+          size="icon"
+          className={cn(
+            "[&_svg:not([class*='size-'])]:size-6.5 w-10 h-10",
+            className
+          )}
+          onClick={(event) => {
+            onClick?.(event);
+            toggleSidebar();
+          }}
+          {...props}
+        >
+          <RxHamburgerMenu />
+          <span className="sr-only">Toggle Sidebar</span>
+        </Button>
+
+        {/* Logo */}
+        <a href="/homepage" className="md:w-full md:max-w-43">
+          <Image
+            src="logo-light-text.svg"
+            alt="Logo Light"
+            className="block dark:hidden"
+            width={110}
+            height={40}
+            priority
+          />
+          <Image
+            src="logo-dark-text.svg"
+            alt="Logo Dark"
+            className="hidden dark:block"
+            width={110}
+            height={40}
+            priority
+          />
+        </a>
+
+        <ThemeToggle />
+      </div>
+    </>
   );
 }
 
