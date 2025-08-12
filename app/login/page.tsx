@@ -22,6 +22,7 @@ import LoadingScreen from "@/components/ui/loading";
 import { Button } from "@/components/ui/button";
 
 const Page = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
@@ -30,14 +31,12 @@ const Page = () => {
   const [error, setError] = useState("");
   const [pageLoading, setPageLoading] = useState(true);
   const [formLoading, setFormLoading] = useState(false);
-  const router = useRouter();
 
   const { session, signInUser, signInWithGoogle, signInWithGitHub } =
     UserAuth()!;
 
   const handleLogIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    setPageLoading(true);
     setError("");
 
     let hasError = false;
@@ -57,9 +56,10 @@ const Page = () => {
     }
 
     if (hasError) {
-      setFormLoading(false);
       return;
     }
+
+    setFormLoading(true);
 
     const result = await signInUser(email, password);
 
@@ -192,7 +192,7 @@ const Page = () => {
               {/* Forgot Password */}
               <Dialog>
                 <DialogTrigger asChild>
-                  <p className="text-secondary hover:text-foreground transition-default text-end underline underline-offset-2 cursor-pointer !mt-[2px]">
+                  <p className="text-secondary hover:text-foreground transition-default text-end underline underline-offset-2 cursor-pointer !mt-1">
                     Forgot Password?
                   </p>
                 </DialogTrigger>
@@ -280,8 +280,8 @@ const Page = () => {
           <p className="text-center text-sm text-secondary">
             New to Writual?
             <Link
-              href={"/register-account"}
-              className="font-semibold underline underline-offset-4 !ml-1"
+              href={"/signup"}
+              className="font-semibold underline underline-offset-4 !ml-1 text-foreground"
             >
               Sign up
             </Link>
