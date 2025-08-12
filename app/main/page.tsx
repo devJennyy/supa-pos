@@ -1,16 +1,17 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar";
+import Navbar from "@/components/ui/navbar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
-const Page = ({ children }: { children: React.ReactNode }) => {
+const Page = () => {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main>
+      <main className="w-full">
         <SidebarTrigger />
-        {children}
+        <Navbar />
       </main>
     </SidebarProvider>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;

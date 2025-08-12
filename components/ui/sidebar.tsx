@@ -265,7 +265,7 @@ function SidebarTrigger({
       data-slot="sidebar-trigger"
       size="icon"
       className={cn(
-        "size-8 border-r border-t border-b rounded-tl-none rounded-bl-none !mt-20 !ml-[-1px] z-20 absolute bg-secondaryBackground hover:bg-secondaryBackground",
+        "size-8 border-r border-t border-b rounded-tl-none rounded-bl-none !mt-24 !ml-[-1px] z-20 absolute bg-secondaryBackground hover:bg-secondaryBackground",
         className
       )}
       onClick={(event) => {
