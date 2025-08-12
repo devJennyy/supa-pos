@@ -11,7 +11,7 @@ type AuthContextType = {
     password: string,
     firstName: string,
     lastName: string,
-    username: string,
+    storeName: string,
   ) => Promise<{ success: boolean; data?: any; error?: any }>;
   signInUser: (
     email: string,
@@ -41,7 +41,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     password: string,
     firstName: string,
     lastName: string,
-    username: string,
+    storeName: string,
   ) => {
     try {
       const { data: signUpData, error: signUpError } =
@@ -65,7 +65,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
           id: userId,
           first_name: firstName,
           last_name: lastName,
-          username,
+          store_name: storeName,
           email,
           setup_complete: false,
         },

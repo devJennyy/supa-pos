@@ -20,7 +20,7 @@ const Page = () => {
     email: "",
     password: "",
     rePassword: "",
-    username: "",
+    storeName: "",
   });
   const [firstNameError, setFirstNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
@@ -74,7 +74,7 @@ const Page = () => {
         signupData?.password,
         signupData?.firstName,
         signupData?.lastName,
-        signupData?.username
+        signupData?.storeName
       );
       if (result.success) {
         router.push("/finish-setup");
