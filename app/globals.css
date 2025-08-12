@@ -15,6 +15,7 @@ html {
 }
 
 @theme inline {
+  --font-sofia: "Sofia Pro", ui-sans-serif, system-ui, sans-serif;
   --color-background: var(--background);
   --color-secondaryBackground: var(--secondaryBackground);
   --color-foreground: var(--foreground);
@@ -130,7 +131,7 @@ html {
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent: #2F3A4A;
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
@@ -163,4 +164,24 @@ html {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@font-face {
+  font-family: "Sofia Pro";
+  src: url("/fonts/sofia-pro-bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+.sidebar-btn:hover .sidebar-btn-icon {
+  @apply bg-primary;
+}
+
+.sidebar-close-btn:hover {
+  @apply bg-primary;
+}
+
+.sidebar-btn:hover .sidebar-label {
+  @apply text-foreground;
 }
