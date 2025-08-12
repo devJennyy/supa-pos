@@ -1,10 +1,15 @@
-import React from 'react'
+import { AppSidebar } from "@/components/app-sidebar"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 
-const Page = () => {
+const Page = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div>
-      
-    </div>
+    <SidebarProvider>
+      <AppSidebar />
+      <main>
+        <SidebarTrigger />
+        {children}
+      </main>
+    </SidebarProvider>
   )
 }
 
