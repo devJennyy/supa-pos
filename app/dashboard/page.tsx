@@ -1,7 +1,6 @@
 "use client";
 
 import { AppSidebar } from "@/components/app-sidebar";
-import { Button } from "@/components/ui/button";
 import {
   SidebarInset,
   SidebarProvider,
@@ -28,11 +27,16 @@ import {
 import { FaCog } from "react-icons/fa";
 import React from "react";
 import { FaEyeSlash } from "react-icons/fa";
+import { DatePicker } from "@/components/ui/date-picker";
+import { format, subDays } from "date-fns";
 
 export default function Page() {
   const [isVisible, setIsVisible] = useState(true);
   const [isRemoved, setIsRemoved] = useState(false);
   const [removeDialogOpen, setRemoveDialogOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    subDays(new Date(), 1)
+  );
 
   return (
     <SidebarProvider>
@@ -54,7 +58,7 @@ export default function Page() {
             <div className="w-full flex lg:flex-row flex-col justify-between lg:items-center gap-1">
               <h1 className="font-semibold">Today&apos;s Overview</h1>
               <p className="lg:text-sm text-xs text-secondary">
-                Sunday, 16, August 2023
+                {format(new Date(), "EEEE, dd, MMMM yyyy")}
               </p>
             </div>
 
@@ -136,7 +140,9 @@ export default function Page() {
 
                 {isVisible && (
                   <p className="text-secondary lg:text-sm text-xs">
-                    Sunday, 15, August 2023
+                    {selectedDate
+                      ? format(selectedDate, "EEEE, dd, MMMM yyyy")
+                      : ""}
                   </p>
                 )}
               </div>
@@ -151,9 +157,7 @@ export default function Page() {
                   </div>
 
                   <div className="w-full flex justify-end">
-                    <Button className="w-fit bg-secondaryBackground border lg:text-sm text-xs text-secondary hover:text-foreground">
-                      Choose Date
-                    </Button>
+                    <DatePicker date={selectedDate} setDate={setSelectedDate} />
                   </div>
                 </>
               )}
