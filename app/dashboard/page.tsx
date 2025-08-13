@@ -33,7 +33,6 @@ import { Chart } from "@/components/ui/chart-area";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { BsCashStack } from "react-icons/bs";
 import { BsFillCreditCard2BackFill } from "react-icons/bs";
-import { IoTrendingUp } from "react-icons/io5";
 import { FiTrendingUp } from "react-icons/fi";
 
 export default function Page() {
@@ -45,9 +44,7 @@ export default function Page() {
   );
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
+    <>
         {/* Header */}
         <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="w-full flex items-center gap-2">
@@ -322,7 +319,6 @@ export default function Page() {
             </div>
           </div>
         </div>
-      </SidebarInset>
-    </SidebarProvider>
+    </>
   );
 }

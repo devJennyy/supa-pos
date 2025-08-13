@@ -22,7 +22,7 @@ export function DatePicker({ date, setDate }: DatePickerProps) {
     <div className="relative flex gap-2">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button className="w-fit dark:bg-input border lg:text-sm text-xs font-medium dark:text-secondary hover:text-foreground">
+          <Button className="w-fit dark:bg-input border lg:text-sm text-xs font-medium dark:text-primary hover:text-foreground">
             Choose Date
           </Button>
         </PopoverTrigger>

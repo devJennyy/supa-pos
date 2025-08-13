@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "next-themes"
 import { AuthContextProvider } from "./context/AuthContext";
+import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 
 export const metadata: Metadata = {
   title: "SupaPOS",
@@ -21,7 +23,17 @@ export default function RootLayout({
       <body className="antialiased">
         <ThemeProvider attribute="class" enableSystem defaultTheme="system">
           <AuthContextProvider>
-            {children}
+            <SidebarProvider>
+              <div className="flex min-h-screen flex-1">
+                {/* Sidebar */}
+                <AppSidebar />
+
+                {/* Main page content */}
+                <SidebarInset className="flex-1">
+                  {children}
+                </SidebarInset>
+              </div>
+            </SidebarProvider>
           </AuthContextProvider>
         </ThemeProvider>
       </body>
