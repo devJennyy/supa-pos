@@ -29,6 +29,7 @@ import React from "react";
 import { FaEyeSlash } from "react-icons/fa";
 import { DatePicker } from "@/components/ui/date-picker";
 import { format, subDays } from "date-fns";
+import { Chart } from "@/components/ui/chart-area";
 
 export default function Page() {
   const [isVisible, setIsVisible] = useState(true);
@@ -169,7 +170,9 @@ export default function Page() {
             <h1 className="text-secondary font-semibold">
               Your Monthly Profit Graph
             </h1>
-            <div className="bg-secondaryBackground border lg:min-h-[100vh] min-h-[50vh] flex-1 rounded-xl md:min-h-min" />
+            <div className="bg-secondaryBackground border lg:min-h-[60vh] min-h-[50vh] flex-1 rounded-xl md:min-h-min">
+              <Chart />
+            </div>
           </div>
         </div>
       </SidebarInset>
