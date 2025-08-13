@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import ThemeToggle from "./ui/theme-toggle";
 
 const navLinks = [
   { label: "Home", href: "/homepage" },
@@ -70,37 +71,7 @@ const Navbar = () => {
 
         {/* Right Side */}
         <div className="md:w-full md:max-w-43 flex md:gap-3 gap-2 h-10">
-          <button
-            onClick={() => {
-              setIsDark(!isDark);
-              document.documentElement.classList.toggle("dark");
-            }}
-            className="cursor-pointer w-10 h-10 flex justify-center items-center rounded-md text-foreground"
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              {isDark ? (
-                <motion.div
-                  key="sun"
-                  initial={{ opacity: 0, rotate: -60 }}
-                  animate={{ opacity: 1, rotate: 0 }}
-                  exit={{ opacity: 0, rotate: 60 }}
-                  transition={{ duration: 0.15, ease: "easeInOut" }}
-                >
-                  <MdSunny size={25} />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="moon"
-                  initial={{ opacity: 0, rotate: -60 }}
-                  animate={{ opacity: 1, rotate: 0 }}
-                  exit={{ opacity: 0, rotate: 60 }}
-                  transition={{ duration: 0.15, ease: "easeInOut" }}
-                >
-                  <BsFillMoonStarsFill size={20} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </button>
+          <ThemeToggle />
 
           <Button asChild className="md:block hidden">
             <Link href="/login">Get Started</Link>

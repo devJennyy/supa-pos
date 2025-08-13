@@ -175,13 +175,19 @@ html {
 }
 
 .sidebar-btn:hover .sidebar-btn-icon {
-  @apply bg-primary;
+  @apply 
+    bg-primary
+    text-foreground;
+}
+
+.sidebar-btn:hover .sidebar-label {
+  @apply text-foreground;
 }
 
 .sidebar-close-btn:hover {
   @apply bg-primary;
 }
 
-.sidebar-btn:hover .sidebar-label {
+.sidebar-close-btn:hover .sidebar-icon {
   @apply text-foreground;
 }

@@ -43,7 +43,7 @@ export function NavMain({
                     tooltip={item.title}
                     className="flex gap-3 sidebar-close-btn cursor-pointer"
                   >
-                    <div className="w-full h-full flex justify-center items-center">
+                    <div className="w-7.5 h-7.5 flex justify-center items-center text-secondary sidebar-icon">
                       {item.icon && <item.icon size={item.iconSize ?? 20} />}
                     </div>
                     <span>{item.title}</span>
@@ -54,7 +54,7 @@ export function NavMain({
                     className="flex gap-3 items-center relative px-3 h-14 sidebar-btn transition-default cursor-pointer"
                     tooltip={item.title}
                   >
-                    <div className="w-7.5 h-7.5 flex justify-center items-center rounded-md transition-colors sidebar-btn-icon">
+                    <div className="w-7.5 h-7.5 flex justify-center items-center rounded-md transition-colors sidebar-btn-icon text-secondary">
                       {item.icon && <item.icon size={item.iconSize ?? 20} />}
                     </div>
                     <span className="text-secondary sidebar-label">

@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const logo = () => {
   return (
-    <SidebarMenuButton size="lg" className="hover:bg-transparent">
+    <SidebarMenuButton size="lg" className="hover:bg-transparent active:bg-transparent focus:bg-transparent">
       <div className="bg-transparent text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
         <Image
           src="/logo/logo.svg"
