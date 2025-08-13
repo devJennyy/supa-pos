@@ -271,7 +271,7 @@ function SidebarTrigger({
         }}
         {...props}
       >
-        <FiChevronRight />
+        <FiChevronRight className="text-foreground"/>
         <span className="sr-only">Toggle Sidebar</span>
       </Button>
 

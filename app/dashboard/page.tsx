@@ -227,11 +227,11 @@ export default function Page() {
               {isVisible && (
                 <>
                   <div className="grid auto-rows-min gap-4 lg:grid-cols-4 grid-cols-2">
-                    <div className="relative bg-secondaryBackground/40 border border-border/20 rounded-xl flex flex-col justify-between xl:p-5 p-3">
-                      <p className="xl:text-sm text-xs font-medium text-secondary">
+                    <div className="relative bg-tertiary-background dark:bg-secondaryBackground/40 border dark:border-border/20 rounded-xl flex flex-col justify-between xl:p-5 p-3">
+                      <p className="xl:text-sm text-xs font-medium text-foreground/80">
                         Starting Change
                       </p>
-                      <p className="xl:text-3xl text-2xl font-bold 2xl:my-8 my-4 text-secondary">
+                      <p className="xl:text-3xl text-2xl font-bold 2xl:my-8 my-4 text-foreground/80">
                         5,000
                       </p>
                       <p className="xl:text-sm text-xs font-medium text-secondary flex xl:flex-row flex-col lg:gap-2 gap-1">
@@ -241,16 +241,16 @@ export default function Page() {
                         </span>
                         Prepared change
                       </p>
-                      <div className="absolute xl:top-5 xl:right-5 top-2.5 right-2.5 xl:w-12 xl:h-12 w-7 h-7 rounded-md bg-input/40 flex justify-center items-center">
+                      <div className="absolute xl:top-5 xl:right-5 top-2.5 right-2.5 xl:w-12 xl:h-12 w-7 h-7 rounded-md bg-secondary/5 flex justify-center items-center">
                         <FaCoins className="xl:text-[22px] text-sm text-secondary" />
                       </div>
                     </div>
 
-                    <div className="relative bg-secondaryBackground/40 border border-border/20 rounded-xl flex flex-col justify-between xl:p-5 p-3">
-                      <p className="xl:text-sm text-xs font-medium text-secondary">
+                    <div className="relative bg-tertiary-background dark:bg-secondaryBackground/40 border dark:border-border/20 rounded-xl flex flex-col justify-between xl:p-5 p-3">
+                      <p className="xl:text-sm text-xs font-medium text-foreground/80">
                         Sales In Cash
                       </p>
-                      <p className="xl:text-3xl text-2xl font-bold 2xl:my-8 my-4 text-secondary">
+                      <p className="xl:text-3xl text-2xl font-bold 2xl:my-8 my-4 text-foreground/80">
                         5,000
                       </p>
                       <p className="whitespace-nowrap xl:text-sm text-xs font-medium text-secondary flex xl:flex-row flex-col lg:gap-2 gap-1">
@@ -260,16 +260,16 @@ export default function Page() {
                         </span>
                         Down from yesterday
                       </p>
-                      <div className="absolute xl:top-5 xl:right-5 top-2.5 right-2.5 xl:w-12 xl:h-12 w-7 h-7 rounded-md bg-input/40 flex justify-center items-center">
+                      <div className="absolute xl:top-5 xl:right-5 top-2.5 right-2.5 xl:w-12 xl:h-12 w-7 h-7 rounded-md bg-secondary/5 flex justify-center items-center">
                         <BsCashStack className="xl:text-[22px] text-sm text-secondary" />
                       </div>
                     </div>
 
-                    <div className="relative bg-secondaryBackground/40 border border-border/20 rounded-xl flex flex-col justify-between xl:p-5 p-3">
-                      <p className="xl:text-sm text-xs font-medium text-secondary">
+                    <div className="relative bg-tertiary-background dark:bg-secondaryBackground/40 border dark:border-border/20 rounded-xl flex flex-col justify-between xl:p-5 p-3">
+                      <p className="xl:text-sm text-xs font-medium text-foreground/80">
                         Sales in Banks
                       </p>
-                      <p className="xl:text-3xl text-2xl font-bold xl:my-8 my-4 text-secondary">
+                      <p className="xl:text-3xl text-2xl font-bold xl:my-8 my-4 text-foreground/80">
                         5,000
                       </p>
                       <p className="xl:text-sm text-xs font-medium text-secondary flex xl:flex-row flex-col lg:gap-2 gap-1">
@@ -279,16 +279,16 @@ export default function Page() {
                         </span>
                         Up from yesterday
                       </p>
-                      <div className="absolute xl:top-5 xl:right-5 top-2.5 right-2.5 xl:w-12 xl:h-12 w-7 h-7 rounded-md bg-input/40 flex justify-center items-center">
+                      <div className="absolute xl:top-5 xl:right-5 top-2.5 right-2.5 xl:w-12 xl:h-12 w-7 h-7 rounded-md bg-secondary/5 flex justify-center items-center">
                         <BsFillCreditCard2BackFill className="xl:text-[22px] text-sm text-secondary" />
                       </div>
                     </div>
 
-                    <div className="relative bg-secondaryBackground/40 border border-border/20 rounded-xl flex flex-col justify-between xl:p-5 p-3">
-                      <p className="xl:text-sm text-xs font-medium text-secondary">
+                    <div className="relative bg-tertiary-background dark:bg-secondaryBackground/40 border dark:border-border/20 rounded-xl flex flex-col justify-between xl:p-5 p-3">
+                      <p className="xl:text-sm text-xs font-medium text-foreground/80">
                         Profit
                       </p>
-                      <p className="xl:text-3xl text-2xl font-bold xl:my-8 my-4 text-secondary">
+                      <p className="xl:text-3xl text-2xl font-bold xl:my-8 my-4 text-foreground/80">
                         5,000
                       </p>
                       <p className="xl:text-sm text-xs font-medium text-secondary flex xl:flex-row flex-col lg:gap-2 gap-1">
@@ -298,7 +298,7 @@ export default function Page() {
                         </span>
                         Up from yesterday
                       </p>
-                      <div className="absolute xl:top-5 xl:right-5 top-2.5 right-2.5 xl:w-12 xl:h-12 w-7 h-7 rounded-md bg-input/40 flex justify-center items-center">
+                      <div className="absolute xl:top-5 xl:right-5 top-2.5 right-2.5 xl:w-12 xl:h-12 w-7 h-7 rounded-md bg-secondary/5 flex justify-center items-center">
                         <FiTrendingUp className="xl:text-2xl text-sm text-secondary" />
                       </div>
                     </div>
