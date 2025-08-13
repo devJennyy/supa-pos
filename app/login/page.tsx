@@ -64,7 +64,7 @@ const Page = () => {
     const result = await signInUser(email, password);
 
     if (result.success) {
-      router.push("/main");
+      router.push("/user");
     } else {
       setError(result.error || "Invalid email or password");
     }
@@ -77,7 +77,7 @@ const Page = () => {
     if (!result?.success) {
       alert("Google sign-in failed: " + result?.error.message);
     } else {
-      router.push("/main");
+      router.push("/user");
     }
   };
 
@@ -86,13 +86,13 @@ const Page = () => {
     if (!result?.success) {
       alert("GitHub sign-in failed: " + result?.error.message);
     } else {
-      router.push("/main");
+      router.push("/user");
     }
   };
 
   useEffect(() => {
     if (session) {
-      router.push("/main");
+      router.push("/user");
     }
   }, [session, router]);
 

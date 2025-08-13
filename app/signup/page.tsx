@@ -76,6 +76,7 @@ const Page = () => {
         signupData?.lastName,
         signupData?.storeName
       );
+      console.log("TESTETSET")
       if (result.success) {
         router.push("/finish-setup");
       } else {
@@ -97,7 +98,7 @@ const Page = () => {
     if (!result?.success) {
       alert("Google sign-in failed: " + result?.error.message);
     } else {
-      router.push("/main");
+      router.push("/user");
     }
   };
 
@@ -106,13 +107,13 @@ const Page = () => {
     if (!result?.success) {
       alert("GitHub sign-in failed: " + result?.error.message);
     } else {
-      router.push("/main");
+      router.push("/user");
     }
   };
 
   useEffect(() => {
     if (session) {
-      router.push("/main");
+      router.push("/user");
     }
   }, [router, session]);
 

@@ -60,6 +60,16 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
       const userId = signUpData.user.id;
 
+      console.log("User ID:", signUpData.user.id);
+      console.log({
+          id: userId,
+          first_name: firstName,
+          last_name: lastName,
+          store_name: storeName,
+          email,
+          setup_complete: false,
+        });
+
       const { error: profileError } = await supabase.from("profiles").insert([
         {
           id: userId,
@@ -153,7 +163,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/main`,
+          redirectTo: `${window.location.origin}/user`,
         },
       });
 
@@ -178,7 +188,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "github",
         options: {
-          redirectTo: `${window.location.origin}/main`,
+          redirectTo: `${window.location.origin}/user`,
         },
       });
 

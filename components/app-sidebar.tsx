@@ -23,14 +23,14 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "/dashboard",
+      url: "/user/dashboard",
       icon: FaHome,
       iconSize: 19,
       isActive: true,
     },
     {
       title: "Inventory",
-      url: "/inventory",
+      url: "/user/inventory",
       icon: BsBoxFill,
       iconSize: 15,
       isActive: true,

@@ -1,9 +1,5 @@
 "use client";
 
-import {
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
-import ThemeToggle from "@/components/ui/theme-toggle";
 import { useState } from "react";
 import {
   DropdownMenu,
@@ -43,16 +39,6 @@ export default function Page() {
 
   return (
     <>
-      {/* Header */}
-      <header className="flex h-16 shrink-0 items-center gap-2">
-        <div className="w-full flex items-center gap-2">
-          <SidebarTrigger />
-          <div className="w-full h-16 bg-secondaryBackground border-b lg:flex justify-end items-center px-10 hidden">
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
-
       <div className="flex flex-1 flex-col gap-8 p-5">
         {/* Today’s Overview */}
         <div className="w-full flex flex-col gap-4">
