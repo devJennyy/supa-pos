@@ -24,12 +24,17 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { FaCog } from "react-icons/fa";
+import { FaCog, FaCoins } from "react-icons/fa";
 import React from "react";
 import { FaEyeSlash } from "react-icons/fa";
 import { DatePicker } from "@/components/ui/date-picker";
 import { format, subDays } from "date-fns";
 import { Chart } from "@/components/ui/chart-area";
+import { TrendingDown, TrendingUp } from "lucide-react";
+import { CgArrowsExchangeAltV } from "react-icons/cg";
+import { BsCashStack } from "react-icons/bs";
+import { MdOutlineAttachMoney, MdOutlinePointOfSale } from "react-icons/md";
+import { BsFillCreditCard2BackFill } from "react-icons/bs";
 
 export default function Page() {
   const [isVisible, setIsVisible] = useState(true);
@@ -64,10 +69,68 @@ export default function Page() {
             </div>
 
             <div className="grid auto-rows-min gap-4 md:grid-cols-4 grid-cols-2">
-              <div className="bg-secondaryBackground border aspect-video rounded-xl" />
-              <div className="bg-secondaryBackground border aspect-video rounded-xl" />
-              <div className="bg-secondaryBackground border aspect-video rounded-xl" />
-              <div className="bg-secondaryBackground border aspect-video rounded-xl" />
+              <div className="relative bg-secondaryBackground border aspect-video rounded-xl flex flex-col justify-between p-5">
+                <p className="text-sm font-medium text-foreground">
+                  Starting Change
+                </p>
+                <p className="text-3xl font-bold">5,000</p>
+                <p className="text-sm font-medium text-secondary">
+                  Bills/coins prepared for the day
+                </p>
+                <div className="absolute top-5 right-5 w-12 h-12 rounded-md bg-input flex justify-center items-center">
+                  <FaCoins size={22} className="text-primary" />
+                </div>
+              </div>
+
+              <div className="relative bg-secondaryBackground border aspect-video rounded-xl flex flex-col justify-between p-5">
+                <p className="text-sm font-medium text-foreground">
+                  Actual Sales In Cash
+                </p>
+                <p className="text-3xl font-bold">5,000</p>
+                <p className="text-sm font-medium text-secondary flex gap-2">
+                  <span className="flex gap-2 text-destructive">
+                    <TrendingDown className="h-4 w-4" />
+                    8.5%
+                  </span>
+                  Down from yesterday
+                </p>
+                <div className="absolute top-5 right-5 w-12 h-12 rounded-md bg-input flex justify-center items-center">
+                  <BsCashStack size={24} className="text-primary" />
+                </div>
+              </div>
+
+              <div className="relative bg-secondaryBackground border aspect-video rounded-xl flex flex-col justify-between p-5">
+                <p className="text-sm font-medium text-foreground">Sales</p>
+                <p className="text-3xl font-bold">5,000</p>
+                <p className="text-sm font-medium text-secondary flex gap-2">
+                  <span className="flex gap-2 text-primary">
+                    <TrendingUp className="h-4 w-4" />
+                    8.5%
+                  </span>
+                  Up from yesterday
+                </p>
+                <div className="absolute top-5 right-5 w-12 h-12 rounded-md bg-input flex justify-center items-center">
+                  <BsFillCreditCard2BackFill
+                    size={22}
+                    className="text-primary"
+                  />
+                </div>
+              </div>
+
+              <div className="relative bg-secondaryBackground border aspect-video rounded-xl flex flex-col justify-between p-5">
+                <p className="text-sm font-medium text-foreground">Profit</p>
+                <p className="text-3xl font-bold">5,000</p>
+                <p className="text-sm font-medium text-secondary flex gap-2">
+                  <span className="flex gap-2 text-primary">
+                    <TrendingUp className="h-4 w-4" />
+                    8.5%
+                  </span>
+                  Up from yesterday
+                </p>
+                <div className="absolute top-5 right-5 w-12 h-12 rounded-md bg-input flex justify-center items-center">
+                  <TrendingUp size={24} className="text-primary" />
+                </div>
+              </div>
             </div>
           </div>
 
@@ -151,10 +214,72 @@ export default function Page() {
               {isVisible && (
                 <>
                   <div className="grid auto-rows-min gap-4 md:grid-cols-4 grid-cols-2">
-                    <div className="bg-[#F9F9FA] dark:bg-secondaryBackground border border-border/20 aspect-video rounded-xl" />
-                    <div className="bg-[#F9F9FA] dark:bg-secondaryBackground border border-border/20 aspect-video rounded-xl" />
-                    <div className="bg-[#F9F9FA] dark:bg-secondaryBackground border border-border/20 aspect-video rounded-xl" />
-                    <div className="bg-[#F9F9FA] dark:bg-secondaryBackground border border-border/20 aspect-video rounded-xl" />
+                    <div className="relative bg-secondaryBackground border aspect-video rounded-xl flex flex-col justify-between p-5">
+                      <p className="text-sm font-medium text-secondary">
+                        Starting Change
+                      </p>
+                      <p className="text-3xl font-bold text-secondary">5,000</p>
+                      <p className="text-sm font-medium text-secondary">
+                        Bills/coins prepared for the day
+                      </p>
+                      <div className="absolute top-5 right-5 w-12 h-12 rounded-md bg-input/40 flex justify-center items-center">
+                        <FaCoins size={22} className="text-secondary" />
+                      </div>
+                    </div>
+
+                    <div className="relative bg-secondaryBackground border aspect-video rounded-xl flex flex-col justify-between p-5">
+                      <p className="text-sm font-medium text-secondary">
+                        Actual Sales In Cash
+                      </p>
+                      <p className="text-3xl font-bold text-secondary">5,000</p>
+                      <p className="text-sm font-medium text-secondary flex gap-2">
+                        <span className="flex gap-2 text-secondary">
+                          <TrendingDown className="h-4 w-4" />
+                          8.5%
+                        </span>
+                        Down from yesterday
+                      </p>
+                      <div className="absolute top-5 right-5 w-12 h-12 rounded-md bg-input/40 flex justify-center items-center">
+                        <BsCashStack size={24} className="text-secondary" />
+                      </div>
+                    </div>
+
+                    <div className="relative bg-secondaryBackground border aspect-video rounded-xl flex flex-col justify-between p-5">
+                      <p className="text-sm font-medium text-secondary">
+                        Sales
+                      </p>
+                      <p className="text-3xl font-bold text-secondary">5,000</p>
+                      <p className="text-sm font-medium text-secondary flex gap-2">
+                        <span className="flex gap-2 text-secondary">
+                          <TrendingUp className="h-4 w-4" />
+                          8.5%
+                        </span>
+                        Up from yesterday
+                      </p>
+                      <div className="absolute top-5 right-5 w-12 h-12 rounded-md bg-input/40 flex justify-center items-center">
+                        <BsFillCreditCard2BackFill
+                          size={22}
+                          className="text-secondary"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="relative bg-secondaryBackground border aspect-video rounded-xl flex flex-col justify-between p-5">
+                      <p className="text-sm font-medium text-secondary">
+                        Profit
+                      </p>
+                      <p className="text-3xl font-bold text-secondary">5,000</p>
+                      <p className="text-sm font-medium text-secondary flex gap-2">
+                        <span className="flex gap-2 text-secondary">
+                          <TrendingUp className="h-4 w-4" />
+                          8.5%
+                        </span>
+                        Up from yesterday
+                      </p>
+                      <div className="absolute top-5 right-5 w-12 h-12 rounded-md bg-input/40 flex justify-center items-center">
+                        <TrendingUp size={24} className="text-secondary" />
+                      </div>
+                    </div>
                   </div>
 
                   <div className="w-full flex justify-end">
@@ -170,7 +295,7 @@ export default function Page() {
             <h1 className="text-secondary font-semibold">
               Your Monthly Profit Graph
             </h1>
-            <div className="bg-secondaryBackground border lg:min-h-[60vh] min-h-[50vh] flex-1 rounded-xl md:min-h-min">
+            <div className="lg:min-h-[60vh] min-h-[50vh] flex-1 rounded-xl md:min-h-min">
               <Chart />
             </div>
           </div>
