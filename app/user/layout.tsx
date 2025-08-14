@@ -10,7 +10,7 @@ import ThemeToggle from "@/components/ui/theme-toggle";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { AppSidebar } from "@/components/app-sidebar";
-import { RightSidebar } from "@/components/bill-details";
+import { RightSidebar } from "@/components/inventory/BillDetails";
 
 interface LayoutProps {
   children: ReactNode;
