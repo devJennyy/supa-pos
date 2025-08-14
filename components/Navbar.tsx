@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { BsFillMoonStarsFill } from "react-icons/bs";
 import { FiMenu, FiX } from "react-icons/fi";
-import { MdSunny } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Button } from "./ui/button";
@@ -19,7 +17,6 @@ const navLinks = [
 
 const Navbar = () => {
   const [active, setActive] = useState("Home");
-  const [isDark, setIsDark] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
@@ -31,7 +28,7 @@ const Navbar = () => {
         {/* Logo */}
         <a href="/homepage" className="md:w-full md:max-w-43">
           <Image
-            src="logo-light.svg"
+            src="/logo/logo-light.svg"
             alt="Logo Light"
             className="block dark:hidden"
             width={130}
@@ -39,7 +36,7 @@ const Navbar = () => {
             priority
           />
           <Image
-            src="logo-dark.svg"
+            src="/logo/logo-dark.svg"
             alt="Logo Dark"
             className="hidden dark:block"
             width={130}
