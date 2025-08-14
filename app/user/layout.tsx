@@ -20,7 +20,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const pathname = usePathname();
-  const rightSidebarWidth = 379.2;
+  const rightSidebarWidth = 380;
 
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
 
@@ -33,15 +33,16 @@ export default function Layout({ children }: LayoutProps) {
         <AppSidebar />
 
         {/* Main content */}
-        <SidebarInset className="flex-1 relative">
-          {/* Header */}
-          <header className="flex h-16 shrink-0 items-center gap-2 border-b bg-secondaryBackground px-4">
+        <SidebarInset className="flex-1 relative overflow-hidden">
+          {/* Header stays static */}
+          <header className="flex h-16 w-full max-w-full shrink-0 items-center gap-2 border-b bg-secondaryBackground px-4 overflow-hidden">
             <SidebarTrigger />
             <div className="flex-1 lg:flex justify-end hidden">
               <ThemeToggle />
             </div>
           </header>
 
+          {/* Motion content */}
           <motion.div
             animate={{
               marginRight:

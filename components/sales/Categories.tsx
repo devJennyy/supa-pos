@@ -34,13 +34,8 @@ const categories = [
     isActive: false,
   },
   {
-    title: "Frozen",
-    emoji: "❄️",
-    isActive: false,
-  },
-  {
     title: "Bakery",
-    emoji: "🥐",
+    emoji: "🥖",
     isActive: false,
   },
   {
@@ -59,8 +54,13 @@ const categories = [
     isActive: false,
   },
   {
+    title: "Frozen",
+    emoji: "❄️",
+    isActive: false,
+  },
+  {
     title: "Seafood",
-    emoji: "🦐",
+    emoji: "🦞",
     isActive: false,
   },
   {

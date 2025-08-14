@@ -70,11 +70,11 @@ export function RightSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props} className="w-full max-w-[380px]">
+    <Sidebar collapsible="none" {...props} className="w-full max-w-[380px]">
       <SidebarHeader className="p-5">
         <h1 className="text-xl font-semibold">Bill Details</h1>
       </SidebarHeader>
-      <SidebarContent className="px-4">
+      <SidebarContent className="px-4 overflow-y-auto max-h-[calc(100vh-4rem)]">
         {/* Invoices */}
         <Table>
           <TableHeader>
