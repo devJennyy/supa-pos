@@ -75,7 +75,7 @@ function SidebarProvider({
   const [isMobile, setIsMobile] = React.useState(false);
 
   React.useEffect(() => {
-    const checkScreen = () => setIsMobile(window.innerWidth < 1024); // was probably 640 before
+    const checkScreen = () => setIsMobile(window.innerWidth < 1024);
     checkScreen();
     window.addEventListener("resize", checkScreen);
     return () => window.removeEventListener("resize", checkScreen);
@@ -218,7 +218,7 @@ function Sidebar({
   <div
     className={cn(
       "group peer text-sidebar-foreground",
-      side === "right" ? "block" : "hidden lg:block" // 👈 Right side always visible
+      side === "right" ? "block" : "hidden lg:block"
     )}
     data-state={state}
     data-collapsible={state === "collapsed" ? collapsible : ""}

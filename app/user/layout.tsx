@@ -24,7 +24,7 @@ export default function Layout({ children }: LayoutProps) {
 
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
 
-  const showRightSidebar = pathname.startsWith("/user/inventory");
+  const showRightSidebar = pathname.startsWith("/user/sales");
 
   return (
     <div className="flex min-h-screen flex-1 relative">

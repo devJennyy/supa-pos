@@ -13,7 +13,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import Logo from "./logo";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaTags } from "react-icons/fa";
 import { BsBoxFill, BsFillMoonStarsFill } from "react-icons/bs";
 import { IoStatsChart } from "react-icons/io5";
 import { HiDocumentReport } from "react-icons/hi";
@@ -26,6 +26,13 @@ const data = {
       url: "/user/dashboard",
       icon: FaHome,
       iconSize: 19,
+      isActive: true,
+    },
+    {
+      title: "Sales",
+      url: "/user/sales",
+      icon: FaTags,
+      iconSize: 17,
       isActive: true,
     },
     {
