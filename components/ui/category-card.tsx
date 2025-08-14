@@ -53,7 +53,7 @@ const CategoryCard = ({
       {category?.map((item, index) => (
         <button
           key={index}
-          className={`flex-shrink-0 lg:w-25 lg:h-25 w-25 h-20 rounded-xl border flex flex-col justify-center items-center lg:gap-2 gap-1 hover:bg-input hover:text-primary text-secondary transition-default cursor-pointer ${
+          className={`flex-shrink-0 lg:h-25 lg:px-8 px-5 h-20 rounded-xl border flex flex-col justify-center items-center lg:gap-2 gap-1 hover:bg-input hover:text-primary text-secondary transition-default cursor-pointer ${
             item.isActive ? "bg-input" : ""
           }`}
         >
