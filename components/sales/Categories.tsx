@@ -59,91 +59,20 @@ const categories = [
     isActive: false,
   },
   {
-    title: "Fruits",
-    emoji: "🍎",
+    title: "Seafood",
+    emoji: "🦐",
     isActive: false,
   },
   {
-    title: "Vegetables",
-    emoji: "🥦",
+    title: "Meat",
+    emoji: "🥩",
     isActive: false,
   },
   {
-    title: "Dairy",
-    emoji: "🧀",
+    title: "Beverages",
+    emoji: "☕",
     isActive: false,
   },
-  {
-    title: "Snacks",
-    emoji: "🥨",
-    isActive: true,
-  },
-  {
-    title: "Drinks",
-    emoji: "🧃",
-    isActive: false,
-  },
-  {
-    title: "Canned",
-    emoji: "🥫",
-    isActive: false,
-  },
-  {
-    title: "Goods",
-    emoji: "🍚",
-    isActive: false,
-  },
-  {
-    title: "Sweet",
-    emoji: "🍬",
-    isActive: false,
-  },
-  {
-    title: "Condiments",
-    emoji: "🌶️",
-    isActive: false,
-  },
-  {
-    title: "Frozen",
-    emoji: "❄️",
-    isActive: false,
-  },
-  {
-    title: "Bakery",
-    emoji: "🥐",
-    isActive: false,
-  },
-  {
-    title: "Fruits",
-    emoji: "🍎",
-    isActive: false,
-  },
-  {
-    title: "Vegetables",
-    emoji: "🥦",
-    isActive: false,
-  },
-  {
-    title: "Dairy",
-    emoji: "🧀",
-    isActive: false,
-  },
-  {
-    title: "Fruits",
-    emoji: "🍎",
-    isActive: false,
-  },
-  {
-    title: "Vegetables",
-    emoji: "🥦",
-    isActive: false,
-  },
-  {
-    title: "Dairy",
-    emoji: "🧀",
-    isActive: false,
-  },
-
 ];
 
 const Categories = () => {

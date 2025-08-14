@@ -8,7 +8,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100dvh;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
 }
 
 html {
