@@ -10,7 +10,7 @@ import ThemeToggle from "@/components/ui/theme-toggle";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { AppSidebar } from "@/components/app-sidebar";
-import { RightSidebar } from "@/components/inventory/BillDetails";
+import { RightSidebar } from "@/components/sales/BillDetails";
 import { IoMdClose } from "react-icons/io";
 import { IoChevronBackOutline } from "react-icons/io5";
 
@@ -34,7 +34,7 @@ export default function Layout({ children }: LayoutProps) {
 
         {/* Main content */}
         <SidebarInset className="flex-1 relative">
-          {/* Header (no animation) */}
+          {/* Header */}
           <header className="flex h-16 shrink-0 items-center gap-2 border-b bg-secondaryBackground px-4">
             <SidebarTrigger />
             <div className="flex-1 lg:flex justify-end hidden">
@@ -42,14 +42,13 @@ export default function Layout({ children }: LayoutProps) {
             </div>
           </header>
 
-          {/* Only content area is animated */}
           <motion.div
             animate={{
               marginRight:
                 showRightSidebar && isRightSidebarOpen ? rightSidebarWidth : 0,
             }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="flex flex-col min-h-[calc(100%-4rem)]" // subtract header height
+            className="flex flex-col min-h-[calc(100%-4rem)]"
           >
             <div className="flex-1">{children}</div>
           </motion.div>
