@@ -53,37 +53,37 @@ const ItemSelection = () => {
             key={index}
             className="border lg:p-5 p-2.5 rounded-xl cursor-pointer text-start hover:bg-secondaryBackground group transition-default"
           >
-            <div className="w-full h-full flex flex-col lg:gap-4 gap-1">
-              <div className="w-full lg:h-16 flex lg:flex-row flex-col justify-between lg:gap-4 gap-2">
+            <div className="w-full h-full flex flex-col lg:gap-4 gap-1.5">
+              <div className="w-full lg:h-16 flex lg:flex-row flex-col justify-between lg:gap-4 gap-3">
                 <div className="w-full lg:max-w-16 lg:h-full h-24 border rounded-lg group-hover:bg-input"></div>
 
-                <div className="flex flex-col justify-between gap-1">
-                  <p className="lg:text-sm text-xs line-clamp-2 text-ellipsis font-semibold">
+                <div className="flex flex-col justify-between lg:gap-1 gap-1.5">
+                  <p className="lg:text-sm text-[13px] line-clamp-2 text-ellipsis font-semibold">
                     {item.productName}
                   </p>
-                  <div className="flex justify-between lg:text-xs text-[10px] !mb-1 text-secondary font-medium">
+                  <div className="flex justify-between lg:text-xs text-[11px] !mb-1 text-secondary font-medium">
                     <p>{item.availableStock} Available</p>
                     <p>{item.numberSold} sold</p>
                   </div>
                 </div>
               </div>
 
-              <h1 className="font-semibold lg:text-lg text-sm lg:!my-1 lg:!mb-0 !mb-1">
+              <h1 className="font-semibold lg:text-lg !my-1">
                 ₱ {item.productPrice}
               </h1>
 
               <div className="flex flex-col lg:gap-3 gap-1.5">
-                <div className="lg:h-9 h-7 bg-secondaryBackground rounded-md flex justify-between items-center px-3 group-hover:bg-primary/5">
+                <div className="h-9 bg-secondaryBackground rounded-md flex justify-between items-center px-3 group-hover:bg-primary/5">
                   <div className="p-1 bg-input rounded-full flex justify-center items-center group-hover:bg-primary/15">
-                    <FiMinus className="lg:text-[15px] text-[11px]"/>
+                    <FiMinus className="lg:text-[15px] text-sm"/>
                   </div>
-                  <p className="font-bold lg:text-base text-xs">2</p>
+                  <p className="font-bold lg:text-base text-sm">2</p>
                   <div className="p-1 bg-input rounded-full flex justify-center items-center group-hover:bg-primary">
-                    <FiPlus className="lg:text-[15px] text-[11px]"/>
+                    <FiPlus className="lg:text-[15px] text-sm"/>
                   </div>
                 </div>
 
-                <Button className="lg:h-9 h-7 lg:font-semibold lg:text-sm text-xs">Add to Sale</Button>
+                <Button className="h-9 font-semibold lg:text-sm text-[13px]">Add to Sale</Button>
               </div>
             </div>
           </button>
