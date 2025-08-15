@@ -35,7 +35,7 @@ export default function Layout({ children }: LayoutProps) {
         {/* Main content */}
         <SidebarInset className="flex-1 relative overflow-hidden">
           {/* Header stays static */}
-          <header className="flex h-16 w-full max-w-full shrink-0 items-center gap-2 border-b bg-secondaryBackground px-4 overflow-hidden">
+          <header className="flex h-16 w-full max-w-full shrink-0 items-center gap-2 border-b bg-secondaryBackground px-3 overflow-hidden">
             <SidebarTrigger />
             <div className="flex-1 lg:flex justify-end hidden">
               <ThemeToggle />

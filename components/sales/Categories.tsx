@@ -4,75 +4,101 @@ import CategoryCard from "../ui/category-card";
 
 const categories = [
   {
-    title: "Snacks",
-    emoji: "🥨",
-    isActive: true,
-  },
-  {
-    title: "Drinks",
-    emoji: "🧃",
-    isActive: false,
-  },
-  {
-    title: "Canned",
-    emoji: "🥫",
-    isActive: false,
-  },
-  {
-    title: "Goods",
-    emoji: "🍚",
-    isActive: false,
-  },
-  {
-    title: "Sweet",
-    emoji: "🍬",
-    isActive: false,
-  },
-  {
-    title: "Condiments",
-    emoji: "🌶️",
-    isActive: false,
-  },
-  {
-    title: "Bakery",
-    emoji: "🥖",
-    isActive: false,
-  },
-  {
-    title: "Fruits",
-    emoji: "🍎",
-    isActive: false,
-  },
-  {
-    title: "Vegetables",
-    emoji: "🥦",
-    isActive: false,
-  },
-  {
-    title: "Dairy",
-    emoji: "🧀",
-    isActive: false,
-  },
-  {
-    title: "Frozen",
-    emoji: "❄️",
-    isActive: false,
-  },
-  {
-    title: "Seafood",
-    emoji: "🦞",
-    isActive: false,
-  },
-  {
-    title: "Meat",
-    emoji: "🥩",
-    isActive: false,
-  },
-  {
-    title: "Beverages",
-    emoji: "☕",
-    isActive: false,
-  },
+  title: "Snacks",
+  emoji: "🥨",
+  isActive: true,
+},
+{
+  title: "Drinks",
+  emoji: "🧃",
+  isActive: false,
+},
+{
+  title: "Canned",
+  emoji: "🥫",
+  isActive: false,
+},
+{
+  title: "Goods",
+  emoji: "🍚",
+  isActive: false,
+},
+{
+  title: "Sweet",
+  emoji: "🍬",
+  isActive: false,
+},
+{
+  title: "Condiments",
+  emoji: "🌶️",
+  isActive: false,
+},
+{
+  title: "Bakery",
+  emoji: "🥖",
+  isActive: false,
+},
+{
+  title: "Fruits",
+  emoji: "🍎",
+  isActive: false,
+},
+{
+  title: "Vegetables",
+  emoji: "🥦",
+  isActive: false,
+},
+{
+  title: "Dairy",
+  emoji: "🧀",
+  isActive: false,
+},
+{
+  title: "Frozen",
+  emoji: "❄️",
+  isActive: false,
+},
+{
+  title: "Seafood",
+  emoji: "🦞",
+  isActive: false,
+},
+{
+  title: "Meat",
+  emoji: "🥩",
+  isActive: false,
+},
+{
+  title: "Beverages",
+  emoji: "☕",
+  isActive: false,
+},
+{
+  title: "Snacks & Chips",
+  emoji: "🍿",
+  isActive: false,
+},
+{
+  title: "Noodles & Pasta",
+  emoji: "🍝",
+  isActive: false,
+},
+{
+  title: "Grains & Rice",
+  emoji: "🌾",
+  isActive: false,
+},
+{
+  title: "Health & Supplements",
+  emoji: "💊",
+  isActive: false,
+},
+{
+  title: "Baby Care",
+  emoji: "👶",
+  isActive: false,
+},
+
 ];
 
 const Categories = () => {

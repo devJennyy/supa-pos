@@ -44,7 +44,7 @@ const CategoryCard = ({
   return (
     <div
       ref={carouselRef}
-      className="flex lg:gap-5 gap-3 lg:overflow-x-hidden overflow-x-auto  cursor-grab select-none"
+      className="flex lg:gap-5 gap-3 overflow-x-auto pb-4 custom-scrollbar cursor-grab select-none"
       onMouseDown={handleMouseDown}
       onMouseLeave={handleMouseLeave}
       onMouseUp={handleMouseUp}
