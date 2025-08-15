@@ -40,6 +40,30 @@ const itemDetails = [
     numberSold: "6",
     productPrice: "12.00",
   },
+  {
+    productName: "Beng Beng Chocolate Overload",
+    availableStock: "24",
+    numberSold: "6",
+    productPrice: "12.00",
+  },
+  {
+    productName: "Beng Beng Chocolate Overload",
+    availableStock: "24",
+    numberSold: "6",
+    productPrice: "12.00",
+  },
+  {
+    productName: "Beng Beng Chocolate Overload",
+    availableStock: "24",
+    numberSold: "6",
+    productPrice: "12.00",
+  },
+  {
+    productName: "Beng Beng Chocolate Overload",
+    availableStock: "24",
+    numberSold: "6",
+    productPrice: "12.00",
+  },
 ];
 
 const ItemSelection = () => {
@@ -49,7 +73,7 @@ const ItemSelection = () => {
 
       <div className="grid lg:gap-5 gap-3 lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] grid-cols-[repeat(auto-fill,minmax(140px,1fr))]">
         {itemDetails?.map((item, index) => (
-          <button
+          <div
             key={index}
             className="border lg:p-5 p-2.5 rounded-xl cursor-pointer text-start hover:bg-secondaryBackground group transition-default"
           >
@@ -86,7 +110,7 @@ const ItemSelection = () => {
                 <Button className="h-9 font-semibold lg:text-sm text-[13px]">Add to Sale</Button>
               </div>
             </div>
-          </button>
+          </div>
         ))}
       </div>
     </div>
