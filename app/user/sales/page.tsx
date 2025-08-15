@@ -1,10 +1,12 @@
 import Categories from '@/components/sales/Categories'
+import ItemSelection from '@/components/sales/ItemSelection'
 import React from 'react'
 
 const Page = () => {
   return (
     <main className="flex flex-1 flex-col gap-8 p-5">
       <Categories />
+      <ItemSelection />
     </main>
   )
 }

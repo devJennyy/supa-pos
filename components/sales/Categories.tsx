@@ -79,7 +79,6 @@ const Categories = () => {
   return (
     <div className="flex flex-col gap-4">
       <SectionTitle title={"Categories"} />
-
       <CategoryCard category={categories} />
     </div>
   );

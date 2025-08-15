@@ -69,7 +69,7 @@ const CategoryCard = ({
             </p>
           )}
 
-          <p className="text-secondary lg:text-sm text-xs font-medium">
+          <p className={`lg:text-sm text-xs font-medium ${item.isActive ? "text-foreground" : "text-secondary"}`}>
             {item.title}
           </p>
         </button>
