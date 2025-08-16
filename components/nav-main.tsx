@@ -71,7 +71,7 @@ export function NavMain({
                       </div>
                       <span
                         className={`text-secondary sidebar-label ${
-                          item.isActive ? "text-white" : ""
+                          item.isActive ? "text-foreground" : ""
                         }`}
                       >
                         {item.title}

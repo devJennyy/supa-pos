@@ -81,7 +81,11 @@ const itemDetails = [
   },
 ];
 
-const Item = () => {
+interface ItemProps {
+  showAddButton?: boolean;
+}
+
+const Item = ({ showAddButton }: ItemProps) => {
   const [stock, setStock] = useState("");
   const [price, setPrice] = useState("");
 
@@ -118,58 +122,60 @@ const Item = () => {
       <div className="flex items-center justify-between">
         <SectionTitle title="Snacks" />
 
-        <Dialog>
-          <form>
-            <DialogTrigger asChild>
-              <Button variant="outline">
-                <FiPlus />
-                <p>Add New Item</p>
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>Add New Item</DialogTitle>
-                <DialogDescription>
-                  Fill all required inputs. Click save when you&apos;re done.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 !mt-2">
-                <div className="grid gap-3">
-                  <Label htmlFor="name-1">Item Name</Label>
-                  <Input id="name-1" name="name" placeholder="Chocolate" />
+        {showAddButton && (
+          <Dialog>
+            <form>
+              <DialogTrigger asChild>
+                <Button variant="outline">
+                  <FiPlus />
+                  <p>Add New Item</p>
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Add New Item</DialogTitle>
+                  <DialogDescription>
+                    Fill all required inputs. Click save when you&apos;re done.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 !mt-2">
+                  <div className="grid gap-3">
+                    <Label htmlFor="name-1">Item Name</Label>
+                    <Input id="name-1" name="name" placeholder="Chocolate" />
+                  </div>
+                  <div className="grid gap-3">
+                    <Label htmlFor="stock-1">Stock</Label>
+                    <Input
+                      id="stock-1"
+                      name="stock"
+                      type="text"
+                      value={stock}
+                      onChange={handleStockChange}
+                      placeholder="261"
+                    />
+                  </div>
+                  <div className="grid gap-3">
+                    <Label htmlFor="price-1">Price</Label>
+                    <Input
+                      id="price-1"
+                      name="price"
+                      type="text"
+                      value={price}
+                      onChange={handlePriceChange}
+                      placeholder="212.99"
+                    />
+                  </div>
                 </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="stock-1">Stock</Label>
-                  <Input
-                    id="stock-1"
-                    name="stock"
-                    type="text"
-                    value={stock}
-                    onChange={handleStockChange}
-                    placeholder="261"
-                  />
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="price-1">Price</Label>
-                  <Input
-                    id="price-1"
-                    name="price"
-                    type="text"
-                    value={price}
-                    onChange={handlePriceChange}
-                    placeholder="212.99"
-                  />
-                </div>
-              </div>
-              <DialogFooter className="lg:!mt-4 !mt-2">
-                <DialogClose asChild>
-                  <Button variant="outline">Cancel</Button>
-                </DialogClose>
-                <Button type="submit">Save changes</Button>
-              </DialogFooter>
-            </DialogContent>
-          </form>
-        </Dialog>
+                <DialogFooter className="lg:!mt-4 !mt-2">
+                  <DialogClose asChild>
+                    <Button variant="outline">Cancel</Button>
+                  </DialogClose>
+                  <Button type="submit">Save changes</Button>
+                </DialogFooter>
+              </DialogContent>
+            </form>
+          </Dialog>
+        )}
       </div>
 
       <div className="grid lg:gap-5 gap-3 lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] grid-cols-[repeat(auto-fill,minmax(140px,1fr))]">

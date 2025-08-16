@@ -66,7 +66,7 @@ export default function Layout({ children }: LayoutProps) {
         closeRight,
       }}
     >
-      <div className="flex min-h-screen flex-1 relative">
+      <div className="flex h-screen min-h-fit flex-1 relative">
         {/* Left Sidebar */}
         <SidebarProvider>
           <AppSidebar />
@@ -101,7 +101,7 @@ export default function Layout({ children }: LayoutProps) {
         {showRightSidebar && !isRightSidebarOpen && (
           <button
             onClick={() => setIsRightSidebarOpen(true)}
-            className="absolute cursor-pointer top-1/2 right-0 transform -translate-y-1/2 z-30 text-foreground bg-secondaryBackground border py-2.5 px-2 rounded-l-lg hover:bg-input transition-default"
+            className="fixed cursor-pointer top-1/2 right-0 transform -translate-y-1/2 z-30 text-foreground bg-secondaryBackground border py-2.5 px-2 rounded-l-lg hover:bg-input transition-default"
           >
             <IoChevronBackOutline size={20} />
           </button>

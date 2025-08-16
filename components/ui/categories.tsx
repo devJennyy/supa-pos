@@ -15,7 +15,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import EmojiPicker, { Theme } from "emoji-picker-react";
-import { useTheme } from "next-themes";
 
 interface Props {
   showAddButton?: boolean;
@@ -50,7 +49,7 @@ const Categories = ({ showAddButton }: Props) => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const [icon, setIcon] = useState("📦");
-  const { theme } = useTheme();
+
   const [showPicker, setShowPicker] = useState(false);
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -173,7 +172,7 @@ const Categories = ({ showAddButton }: Props) => {
 
       <div
         ref={carouselRef}
-        className="flex lg:gap-5 gap-3 overflow-x-auto pb-4 custom-scrollbar cursor-grab select-none"
+        className="flex lg:gap-5 gap-3 lg:overflow-x-hidden overflow-x-auto pb-4 custom-scrollbar cursor-grab select-none"
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
