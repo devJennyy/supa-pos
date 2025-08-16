@@ -4,7 +4,7 @@ import React from 'react'
 
 const Page = () => {
   return (
-    <main className="flex flex-1 flex-col gap-8 lg:p-5 p-4">
+    <main className="flex flex-1 flex-col gap-5 lg:p-5 p-4">
       <Categories />
       <ItemSelection />
     </main>

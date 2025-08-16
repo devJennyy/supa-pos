@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 import SectionTitle from "../ui/section-title";
 import { Button } from "../ui/button";
 import { FiMinus, FiPlus } from "react-icons/fi";
+import { useRightSidebar } from "@/app/user/layout";
 
 const itemDetails = [
   {
@@ -67,6 +70,8 @@ const itemDetails = [
 ];
 
 const ItemSelection = () => {
+  const { openRight } = useRightSidebar();
+
   return (
     <div className="flex flex-col gap-4">
       <SectionTitle title={"Select Items"} />
@@ -98,16 +103,27 @@ const ItemSelection = () => {
 
               <div className="flex flex-col lg:gap-3 gap-1.5">
                 <div className="h-9 bg-secondaryBackground rounded-md flex justify-between items-center px-3 group-hover:bg-primary/5">
-                  <div className="p-1 bg-input rounded-full flex justify-center items-center group-hover:bg-primary/15">
-                    <FiMinus className="lg:text-[15px] text-sm"/>
-                  </div>
+                  <button
+                    onClick={openRight}
+                    className="p-1 bg-input rounded-full flex justify-center items-center group-hover:bg-primary/15"
+                  >
+                    <FiMinus className="lg:text-[15px] text-sm" />
+                  </button>
                   <p className="font-bold lg:text-base text-sm">2</p>
-                  <div className="p-1 bg-input rounded-full flex justify-center items-center group-hover:bg-primary">
-                    <FiPlus className="lg:text-[15px] text-sm"/>
-                  </div>
+                  <button
+                    onClick={openRight}
+                    className="p-1 bg-input rounded-full flex justify-center items-center group-hover:bg-primary"
+                  >
+                    <FiPlus className="lg:text-[15px] text-sm" />
+                  </button>
                 </div>
 
-                <Button className="h-9 font-semibold lg:text-sm text-[13px]">Add to Sale</Button>
+                <Button
+                  className="h-9 font-semibold lg:text-sm text-[13px]"
+                  onClick={openRight}
+                >
+                  Add to Sale
+                </Button>
               </div>
             </div>
           </div>
