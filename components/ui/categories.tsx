@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import EmojiPicker, { Theme } from "emoji-picker-react";
+import { useTheme } from "next-themes";
 
 interface Props {
   showAddButton?: boolean;
@@ -47,6 +49,9 @@ const Categories = ({ showAddButton }: Props) => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [icon, setIcon] = useState("📦");
+  const { theme } = useTheme();
+  const [showPicker, setShowPicker] = useState(false);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
@@ -85,11 +90,73 @@ const Categories = ({ showAddButton }: Props) => {
                 <div className="grid gap-4 !mt-2">
                   <div className="grid gap-3">
                     <Label htmlFor="name-1">Name</Label>
-                    <Input id="name-1" name="name" />
+                    <Input
+                      id="name-1"
+                      name="name"
+                      placeholder="e.g. Beverages"
+                    />
                   </div>
                   <div className="grid gap-3">
-                    <Label htmlFor="username-1">Emoji / Icon</Label>
-                    <Input id="icon-1" name="icon" placeholder="📦" />
+                    <label htmlFor="icon-1">Emoji / Icon</label>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        id="icon-1"
+                        name="icon"
+                        value={icon}
+                        onChange={(e) => setIcon(e.target.value)}
+                        placeholder="Select / add emoji"
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => setShowPicker((prev) => !prev)}
+                        className="p-2"
+                      >
+                        <p className="text-lg !mb-1">🍔</p>
+                      </Button>
+                    </div>
+                    {showPicker && (
+                      <div className="absolute right-5 top-[14.2rem] z-50 max-w-[90vw] bg-background rounded-lg shadow-lg border p-3 dark:hidden">
+                        <div className="flex justify-between items-center">
+                          <p className="text-sm">Choose emoji</p>
+                          <button
+                            className="text-sm px-2 py-1 rounded hover:bg-muted !mb-2"
+                            onClick={() => setShowPicker(false)}
+                          >
+                            ✕
+                          </button>
+                        </div>
+                        <EmojiPicker
+                          width="100%"
+                          height={350}
+                          theme={Theme.LIGHT}
+                          onEmojiClick={(emojiData) => {
+                            setIcon(emojiData.emoji);
+                          }}
+                        />
+                      </div>
+                    )}
+                    {showPicker && (
+                      <div className="absolute right-5 top-[14.2rem] z-50 max-w-[90vw] bg-background rounded-lg shadow-lg border p-3 dark:block hidden">
+                        <div className="flex justify-between items-center">
+                          <p className="text-sm">Choose emoji</p>
+                          <button
+                            className="text-sm px-2 py-1 rounded hover:bg-muted !mb-2"
+                            onClick={() => setShowPicker(false)}
+                          >
+                            ✕
+                          </button>
+                        </div>
+                        <EmojiPicker
+                          width="100%"
+                          height={350}
+                          theme={Theme.DARK}
+                          onEmojiClick={(emojiData) => {
+                            setIcon(emojiData.emoji);
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
                 <DialogFooter className="lg:!mt-4 !mt-2">
