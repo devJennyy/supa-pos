@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-
 import { NavMain } from "@/components/nav-main";
 import {
   Sidebar,
@@ -18,65 +17,82 @@ import { BsBoxFill, BsFillMoonStarsFill } from "react-icons/bs";
 import { IoStatsChart } from "react-icons/io5";
 import { HiDocumentReport } from "react-icons/hi";
 import { RiSettings3Fill } from "react-icons/ri";
-
-const data = {
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/user/dashboard",
-      icon: FaHome,
-      iconSize: 19,
-      isActive: true,
-    },
-    {
-      title: "Sales",
-      url: "/user/sales",
-      icon: FaTags,
-      iconSize: 17,
-      isActive: true,
-    },
-    {
-      title: "Inventory",
-      url: "/user/inventory",
-      icon: BsBoxFill,
-      iconSize: 15,
-      isActive: true,
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: IoStatsChart,
-      iconSize: 16,
-      isActive: true,
-    },
-    {
-      title: "Reports",
-      url: "#",
-      icon: HiDocumentReport,
-      isActive: true,
-      iconSize: 20,
-    },
-  ],
-  settings: [
-    {
-      title: "Account Settings",
-      url: "#",
-      icon: RiSettings3Fill,
-      isActive: true,
-      iconSize: 19,
-    },
-    {
-      title: "Theme Color",
-      url: "#",
-      icon: BsFillMoonStarsFill,
-      isActive: true,
-      iconSize: 15,
-    },
-  ],
-};
+import { usePathname } from "next/navigation";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
+  const pathname = usePathname();
+
+  const data = {
+    navMain: [
+      {
+        title: "Dashboard",
+        url: "/user/dashboard",
+        icon: FaHome,
+        iconSize: 19,
+        isActive: false,
+      },
+      {
+        title: "Sales",
+        url: "/user/sales",
+        icon: FaTags,
+        iconSize: 17,
+        isActive: false,
+      },
+      {
+        title: "Inventory",
+        url: "/user/inventory",
+        icon: BsBoxFill,
+        iconSize: 15,
+        isActive: false,
+      },
+      {
+        title: "Analytics",
+        url: "/user/analytics",
+        icon: IoStatsChart,
+        iconSize: 16,
+        isActive: false,
+      },
+      {
+        title: "Reports",
+        url: "/user/reports",
+        icon: HiDocumentReport,
+        iconSize: 20,
+        isActive: false,
+      },
+    ],
+    settings: [
+      {
+        title: "Account Settings",
+        url: "/user/settings",
+        icon: RiSettings3Fill,
+        iconSize: 19,
+        isActive: false,
+      },
+      {
+        title: "Theme Color",
+        url: "/user/theme",
+        icon: BsFillMoonStarsFill,
+        iconSize: 15,
+        isActive: false,
+      },
+    ],
+  };
+
+  const cleanPath = pathname.replace(/\/+$/, "");
+
+  data.navMain = data.navMain.map((item) => ({
+    ...item,
+    isActive:
+      cleanPath === "/user"
+        ? item.url === "/user/dashboard"
+        : cleanPath.startsWith(item.url),
+  }));
+
+  data.settings = data.settings.map((item) => ({
+    ...item,
+    isActive: cleanPath.startsWith(item.url),
+  }));
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -94,7 +110,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             Account Pages
           </SidebarGroupLabel>
         )}
-
         <NavMain items={data.settings} />
       </SidebarContent>
       <SidebarRail />

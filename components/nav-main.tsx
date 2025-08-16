@@ -43,7 +43,9 @@ export function NavMain({
                   <Link href={item.url} className="block">
                     <SidebarMenuButton
                       tooltip={item.title}
-                      className="flex gap-3 sidebar-close-btn cursor-pointer"
+                      className={`flex gap-3 sidebar-close-btn cursor-pointer ${
+                        item.isActive ? "bg-accent text-accent-foreground" : ""
+                      }`}
                     >
                       <div className="w-7.5 h-7.5 flex justify-center items-center text-secondary sidebar-icon">
                         {item.icon && <item.icon size={item.iconSize ?? 20} />}
@@ -55,13 +57,23 @@ export function NavMain({
                   <Link href={item.url} className="block">
                     <SidebarMenuButton
                       key={item.title}
-                      className="flex gap-3 items-center relative px-3 h-14 sidebar-btn transition-default cursor-pointer"
                       tooltip={item.title}
+                      className={`flex gap-3 items-center relative px-3 h-14 sidebar-btn transition-default cursor-pointer ${
+                        item.isActive ? "bg-input" : ""
+                      }`}
                     >
-                      <div className="w-7.5 h-7.5 flex justify-center items-center rounded-md transition-colors sidebar-btn-icon text-secondary">
+                      <div
+                        className={`w-7.5 h-7.5 flex justify-center items-center rounded-md transition-colors sidebar-btn-icon text-secondary ${
+                          item.isActive ? "text-white bg-primary" : ""
+                        }`}
+                      >
                         {item.icon && <item.icon size={item.iconSize ?? 20} />}
                       </div>
-                      <span className="text-secondary sidebar-label">
+                      <span
+                        className={`text-secondary sidebar-label ${
+                          item.isActive ? "text-white" : ""
+                        }`}
+                      >
                         {item.title}
                       </span>
                     </SidebarMenuButton>
