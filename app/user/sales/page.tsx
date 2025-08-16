@@ -1,5 +1,6 @@
-import Categories from '@/components/sales/Categories'
+
 import ItemSelection from '@/components/sales/ItemSelection'
+import Categories from '@/components/ui/categories'
 import React from 'react'
 
 const Page = () => {
