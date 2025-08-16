@@ -3,6 +3,17 @@ import React, { useRef, useState } from "react";
 import SectionTitle from "../ui/section-title";
 import { Button } from "./button";
 import { LuPackagePlus } from "react-icons/lu";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface Props {
   showAddButton?: boolean;
@@ -59,10 +70,37 @@ const Categories = ({ showAddButton }: Props) => {
       <div className="flex items-center justify-between">
         <SectionTitle title="Categories" />
         {showAddButton && (
-          <Button className="w-fit dark:bg-input border lg:text-sm text-xs font-medium dark:text-primary hover:text-foreground">
-            <LuPackagePlus />
-            <p>Add Categories</p>
-          </Button>
+          <Dialog>
+            <form>
+              <DialogTrigger asChild>
+                <Button variant="outline">
+                  <LuPackagePlus />
+                  <p>Add Categories</p>
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Add New Category</DialogTitle>
+                </DialogHeader>
+                <div className="grid gap-4 !mt-2">
+                  <div className="grid gap-3">
+                    <Label htmlFor="name-1">Name</Label>
+                    <Input id="name-1" name="name" />
+                  </div>
+                  <div className="grid gap-3">
+                    <Label htmlFor="username-1">Emoji / Icon</Label>
+                    <Input id="icon-1" name="icon" placeholder="📦" />
+                  </div>
+                </div>
+                <DialogFooter className="lg:!mt-4 !mt-2">
+                  <DialogClose asChild>
+                    <Button variant="outline">Cancel</Button>
+                  </DialogClose>
+                  <Button type="submit">Save changes</Button>
+                </DialogFooter>
+              </DialogContent>
+            </form>
+          </Dialog>
         )}
       </div>
 
