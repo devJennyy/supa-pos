@@ -49,8 +49,8 @@ export function Chart() {
         <CardTitle>Area Chart - Axes</CardTitle>
         <CardDescription>Showing your monthly profit</CardDescription>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
+      <CardContent className="h-[100px]">
+        <ChartContainer config={chartConfig} className="w-full h-full">
           <AreaChart
             accessibilityLayer
             data={chartData}

@@ -8,6 +8,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { MdCalendarMonth } from "react-icons/md";
 
 interface DatePickerProps {
   date: Date | undefined;
@@ -20,10 +21,14 @@ export function DatePicker({ date, setDate }: DatePickerProps) {
 
   return (
     <div className="relative flex gap-2">
+      <Button variant="outline">Yesterday</Button>
+      <Button variant="outline">Last 7 Days</Button>
+      <Button variant="outline">Last 30 Days</Button>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button className="w-fit dark:bg-input border lg:text-sm text-xs font-medium dark:text-primary hover:text-foreground">
-            Choose Date
+          <Button className="bg-background border">
+            <p>mm / dd / year</p>
+            <MdCalendarMonth className="!mb-[2px]" />
           </Button>
         </PopoverTrigger>
         <PopoverContent

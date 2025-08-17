@@ -11,7 +11,6 @@ import SectionTitle from "@/components/ui/section-title";
 
 const OverviewCard = () => {
   return (
-    // Today's Overview
     <div className="w-full flex flex-col gap-4">
       <SectionTitle
         title="Today's Overview"

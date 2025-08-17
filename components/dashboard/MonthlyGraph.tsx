@@ -5,10 +5,11 @@ import { Chart } from "../ui/chart-area";
 const MonthlyGraph = () => {
   return (
     <div className="w-full flex-1 flex flex-col gap-4">
-      <SectionTitle title="Categories" variant="secondary" />
-      <div className="lg:min-h-[60vh] min-h-[50vh] flex-1 rounded-xl md:min-h-min">
-        <Chart />
-      </div>
+      <SectionTitle title="Weekly Profit"/>
+      <div className="w-full h-[100px] rounded-xl">
+  <Chart />
+</div>
+
     </div>
   );
 };

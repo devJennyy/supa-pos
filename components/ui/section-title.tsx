@@ -4,28 +4,12 @@ interface SectionTitleProps {
   title: string;
   variant?: "default" | "secondary";
   label?: string;
-  direction?: "row" | "col";
 }
 
-const SectionTitle = ({
-  title,
-  variant = "default",
-  label,
-  direction = "col",
-}: SectionTitleProps) => {
-  const variantClasses = {
-    default: "text-foreground",
-    secondary: "text-secondary",
-  };
-
-  const flexClasses =
-    direction === "row"
-      ? "lg:flex-row flex-row justify-between items-center"
-      : "lg:flex-col flex-col justify-start";
-
+const SectionTitle = ({ title, label }: SectionTitleProps) => {
   return (
-    <div className={`w-full flex ${flexClasses} gap-1`}>
-      <h1 className={`font-semibold ${variantClasses[variant]}`}>{title}</h1>
+    <div className="flex lg:flex-row flex-col justify-between lg:items-center gap-1">
+      <h1 className="font-semibold text-foreground">{title}</h1>
       {label && <p className="lg:text-sm text-xs text-secondary">{label}</p>}
     </div>
   );
