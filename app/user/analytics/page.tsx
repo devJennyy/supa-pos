@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from "recharts";
 import OverviewCard from "@/components/dashboard/OverviewCard";
 import CustomOverview from "@/components/dashboard/CustomOverview";
+import { Chart } from "@/components/ui/chart-area";
 
 const salesOverTime = [
   { date: "Aug 1", cash: 1200, bank: 800 },
@@ -39,23 +40,13 @@ const lowStock = [
   { name: "Rice", stock: 8 },
 ];
 
-const KpiCard = ({ title, value }: { title: string; value: string }) => (
-  <Card className="rounded-2xl shadow-md">
-    <CardHeader>
-      <CardTitle className="text-lg">{title}</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <p className="text-2xl font-bold">{value}</p>
-    </CardContent>
-  </Card>
-);
-
 export default function Page() {
 
   return (
     <main className="flex flex-1 flex-col gap-8 lg:p-5 p-4">
       <OverviewCard />
       <CustomOverview />
+      <Chart />
 
       {/* Charts */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

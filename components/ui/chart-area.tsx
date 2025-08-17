@@ -31,11 +31,11 @@ const chartData = [
 
 const chartConfig = {
   desktop: {
-    label: "Change Profit",
+    label: "Profit",
     color: "var(--chart-1)",
   },
   mobile: {
-    label: "Online Bank Profit",
+    label: "Revenue",
     color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
@@ -96,8 +96,8 @@ export function Chart() {
       </CardContent>
       <CardFooter>
         <div className="flex w-full flex-col gap-2 text-sm">
-          <div className="text-muted-foreground flex items-center gap-2 leading-none">
-            Click the curves to see your monthly profit
+          <div className="text-muted-foreground flex items-center gap-2 leading-tight">
+            Click the curves to see your monthly profits & revenues
           </div>
         </div>
       </CardFooter>
