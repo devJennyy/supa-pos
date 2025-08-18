@@ -25,7 +25,7 @@ const OverviewCard = () => {
           <p className="xl:text-3xl text-2xl font-bold 2xl:my-8 my-4">5,000</p>
           <p className="xl:text-sm text-xs font-medium text-secondary flex xl:flex-row flex-col lg:gap-2 gap-1">
             <span className="flex gap-2 text-secondary h-4 xl:hidden">
-              <FaCoins className="xl:text-[22px] text-sm text-secondary" />4
+              <FaCoins className="xl:text-[22px] text-sm text-secondary sm:block hidden" />4
               Bills + 1000 coins
             </span>
             Prepared change
