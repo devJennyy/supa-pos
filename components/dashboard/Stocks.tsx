@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TabsContent } from "@/components/ui/tabs";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SectionTitle from "../ui/section-title";
+import { ChartBarMixed } from "../ui/chart-bar-mixed";
 
 const topSellers = [
   { name: "Ramen Special", category: "Ramen", sold: 120 },
@@ -35,7 +36,7 @@ const lowStock = [
 export function Stocks() {
   return (
     <Tabs defaultValue="top">
-      <div className="flex lf:flex-row flex-col lg:items-center justify-between lg:!mb-1 !mb-2 gap-2">
+      <div className="flex lg:flex-row flex-col justify-between lg:!mb-1 !mb-2 gap-2">
         <SectionTitle title="Inventory Overview" />
         <TabsList>
           <TabsTrigger value="top">Top Selling</TabsTrigger>
@@ -45,31 +46,7 @@ export function Stocks() {
 
       {/* Top Sellers Tab */}
       <TabsContent value="top">
-        <Card className="rounded-2xl shadow-md lg:text-base text-sm">
-          <CardHeader>
-            <CardTitle>Top Selling Products</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-[2fr_1fr_1fr] font-semibold border-b pb-2 mb-2">
-              <span>Name</span>
-              <span>Category</span>
-              <span className="lg:text-left text-right">Sold</span>
-            </div>
-
-            {topSellers.map((item, i) => (
-              <div
-                key={i}
-                className="grid grid-cols-[2fr_1fr_1fr] py-2 border-b border-border/40 last:border-0"
-              >
-                <span className="text-secondary truncate">{item.name}</span>
-                <span className="text-secondary">{item.category}</span>
-                <span className="font-semibold lg:text-left text-right">
-                  {item.sold}
-                </span>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
+        <ChartBarMixed />
       </TabsContent>
 
       {/* Low Stock Tab */}
@@ -88,7 +65,7 @@ export function Stocks() {
             {lowStock.map((item, i) => (
               <div
                 key={i}
-                className="grid grid-cols-[2fr_1fr_1fr] py-2 border-b last:border-0"
+                className="grid grid-cols-[2fr_1fr_1fr] py-2 border-b border-border/40 last:border-0"
               >
                 <span className="text-secondary truncate">{item.name}</span>
                 <span className="text-secondary">{item.category}</span>

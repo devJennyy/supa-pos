@@ -90,6 +90,11 @@ html {
   --chart-3: oklch(53.18% 0.233 254.12);
   --chart-4: oklch(44.31% 0.23 255.23);
   --chart-5: oklch(37.02% 0.193 254.65);
+  --chart-6: oklch(72% 0.12 240);
+  --chart-7: oklch(63% 0.18 245);
+  --chart-8: oklch(55% 0.2 250); 
+  --chart-9: oklch(48% 0.21 255);
+  --chart-10: oklch(40% 0.19 260);;
 
   --sidebar: #FFFFFF;
   --sidebar-foreground: oklch(0.145 0 0);
