@@ -21,12 +21,18 @@ export function DatePicker({ date, setDate }: DatePickerProps) {
 
   return (
     <div className="relative flex gap-2">
-      <Button variant="outline">Yesterday</Button>
-      <Button variant="outline">Last 7 Days</Button>
-      <Button variant="outline">Last 30 Days</Button>
+      <Button variant="outline" className="lg:text-sm text-xs sm:px-4 px-3">
+        Yesterday
+      </Button>
+      <Button variant="outline" className="lg:text-sm text-xs sm:px-4 px-3">
+        Last 7 Days
+      </Button>
+      <Button variant="outline" className="sm:block hidden">
+        Last 30 Days
+      </Button>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button className="bg-background border">
+          <Button className="bg-background border lg:text-sm text-xs px-3">
             <p>mm / dd / year</p>
             <MdCalendarMonth className="!mb-[2px]" />
           </Button>

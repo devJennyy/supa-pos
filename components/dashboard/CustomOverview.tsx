@@ -15,7 +15,7 @@ const CustomOverview = () => {
   );
   return (
     <div className="w-full flex flex-col gap-4">
-      <div className="w-full flex justify-between items-center">
+      <div className="w-full flex lg:flex-row flex-col justify-between lg:items-center gap-3">
         <SectionTitle title="Yesterday's Overview" />
         <DatePicker date={selectedDate} setDate={setSelectedDate} />
       </div>

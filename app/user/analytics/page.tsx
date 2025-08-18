@@ -48,66 +48,11 @@ export default function Page() {
     <main className="flex flex-1 flex-col gap-8 lg:p-5 p-4">
       <OverviewCard />
       <CustomOverview />
-      <div className="flex lg:flex-row flex-col w-full gap-4">
+      <div className="flex lg:flex-row flex-col w-full lg:gap-4 gap-8">
         <ChartBarMultiple />
         <ChartPieLegend />
       </div>
       <Chart />
-
-      {/* Charts */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="rounded-2xl shadow-md">
-          <CardHeader>
-            <CardTitle>Sales Over Time</CardTitle>
-          </CardHeader>
-          <CardContent className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={salesOverTime}>
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="cash" stackId="a" fill="#0088FE" />
-                <Bar dataKey="bank" stackId="a" fill="#00C49F" />
-              </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-2xl shadow-md">
-          <CardHeader>
-            <CardTitle>Payment Mix</CardTitle>
-          </CardHeader>
-          <CardContent className="h-64">
-            <ResponsiveContainer>
-              <PieChart>
-                <Pie data={paymentMix} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
-                  {paymentMix.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Card className="rounded-2xl shadow-md">
-        <CardHeader>
-          <CardTitle>Monthly Profit</CardTitle>
-        </CardHeader>
-        <CardContent className="h-72">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={monthlyProfit}>
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="profit" stroke="#0088FE" strokeWidth={2} />
-              <Line type="monotone" dataKey="revenue" stroke="#00C49F" strokeWidth={2} />
-            </LineChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
 
       {/* Product Insights */}
       <Tabs defaultValue="top">

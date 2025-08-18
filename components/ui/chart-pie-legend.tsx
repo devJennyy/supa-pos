@@ -43,10 +43,10 @@ export function ChartPieLegend() {
         <CardDescription>June 2025</CardDescription>
       </CardHeader>
 
-      <CardContent className="flex-1 pb-0 !mt-[-2.5rem]">
+      <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[300px]"
+          className="sm:!mx-auto sm:aspect-square sm:max-h-[300px] min-h-[200px] sm:!mt-0 !mt-[-2rem] !ml-[-1.7rem]"
         >
           <PieChart>
              <ChartTooltip content={<ChartTooltipContent hideLabel />} />
