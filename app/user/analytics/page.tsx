@@ -6,6 +6,8 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, L
 import OverviewCard from "@/components/dashboard/OverviewCard";
 import CustomOverview from "@/components/dashboard/CustomOverview";
 import { Chart } from "@/components/ui/chart-area";
+import { ChartBarMultiple } from "@/components/ui/chart-bar-multiple";
+import { ChartPieLegend } from "@/components/ui/chart-pie-legend";
 
 const salesOverTime = [
   { date: "Aug 1", cash: 1200, bank: 800 },
@@ -46,6 +48,10 @@ export default function Page() {
     <main className="flex flex-1 flex-col gap-8 lg:p-5 p-4">
       <OverviewCard />
       <CustomOverview />
+      <div className="flex lg:flex-row flex-col w-full gap-4">
+        <ChartBarMultiple />
+        <ChartPieLegend />
+      </div>
       <Chart />
 
       {/* Charts */}
