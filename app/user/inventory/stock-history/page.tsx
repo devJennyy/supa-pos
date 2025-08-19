@@ -49,11 +49,10 @@ const history: StockHistoryItem[] = [
 export default function StockHistoryPage({ data = history }: { data?: StockHistoryItem[] }) {
   const [tab, setTab] = React.useState<"all" | "deducted" | "added">("all");
 
-  // Filtered data based on tab
   const filteredData = data.filter(item => {
     if (tab === "deducted") return item.action === "Deducted";
     if (tab === "added") return item.action === "Added";
-    return true; // all
+    return true;
   });
 
   return (
