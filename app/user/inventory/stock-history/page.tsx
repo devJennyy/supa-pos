@@ -145,7 +145,7 @@ export default function Page({
         </Card>
       </Tabs>
 
-      {/* Yesterday's History */}
+      {/* Custom Date History */}
       <Tabs
         value={tab}
         onValueChange={(value) => setTab(value as "all" | "deducted" | "added")}
