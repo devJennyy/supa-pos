@@ -55,7 +55,7 @@ export function ChartBarMixed() {
         <CardDescription>June 2025</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="hidden lg:block">
+        <ChartContainer config={chartConfig} className="hidden lg:block 2xl:h-[980px] lg:h-[480px] h-[200px] w-full">
           {/* Desktop Chart */}
           <BarChart
             accessibilityLayer

@@ -48,7 +48,7 @@ export function ChartLowStock() {
       </CardHeader>
       <CardContent>
         {/* Desktop Chart */}
-        <ChartContainer config={chartConfig} className="hidden lg:block">
+        <ChartContainer config={chartConfig} className="hidden lg:block 2xl:h-[980px] lg:h-[480px] h-[200px] w-full">
           <BarChart
             accessibilityLayer
             data={chartData}
@@ -74,7 +74,7 @@ export function ChartLowStock() {
                       style={{
                         fontSize: 14,
                         fill: item?.fill,
-                        fontWeight: 700,
+                        fontWeight: 500,
                       }}
                     >
                       {item?.stock === 0
