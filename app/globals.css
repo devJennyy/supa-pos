@@ -94,7 +94,12 @@ html {
   --chart-7: oklch(63% 0.18 245);
   --chart-8: oklch(55% 0.2 250); 
   --chart-9: oklch(48% 0.21 255);
-  --chart-10: oklch(40% 0.19 260);;
+  --chart-10: oklch(40% 0.19 260);
+
+  --chart-yellow: oklch(78% 0.15 90);
+  --chart-orange: oklch(70% 0.18 60);
+  --chart-red:    oklch(62% 0.20 30);
+  --chart-bg:    rgba(0,0,0,0.08)
 
   --sidebar: #FFFFFF;
   --sidebar-foreground: oklch(0.145 0 0);
