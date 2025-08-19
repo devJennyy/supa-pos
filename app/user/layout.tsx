@@ -45,7 +45,7 @@ export default function Layout({ children }: LayoutProps) {
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
   const [hasOpenedOnce, setHasOpenedOnce] = useState(false);
 
-  const showRightSidebar = pathname.startsWith("/user/sales");
+  const showRightSidebar = pathname.startsWith("/user/sales/orders");
 
   const openRight = useCallback(() => {
     if (!hasOpenedOnce) {

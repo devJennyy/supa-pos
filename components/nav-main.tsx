@@ -117,11 +117,11 @@ export function NavMain({
                       <div className="w-7.5 flex justify-center">
                         <div className="border-l border-border" />
                       </div>
-                      <div className="flex flex-col gap-1 py-1">
+                      <div className="flex flex-col gap-1 py-1 w-full">
                         {item.children?.map((child) => (
                           <Link key={child.title} href={child.url}>
                             <SidebarMenuButton
-                              className={`px-3 py-2 text-sm rounded-md ${
+                              className={`px-3 py-4.5 text-sm rounded-md ${
                                 child.isActive
                                   ? "text-primary font-medium"
                                   : "text-muted-foreground"
