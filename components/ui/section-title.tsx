@@ -2,13 +2,17 @@ import React from "react";
 
 interface SectionTitleProps {
   title: string;
-  variant?: "default" | "secondary";
   label?: string;
+  direction?: "row" | "col";
 }
 
-const SectionTitle = ({ title, label }: SectionTitleProps) => {
+const SectionTitle = ({ title, label, direction = "row" }: SectionTitleProps) => {
   return (
-    <div className="flex lg:flex-row flex-col justify-between lg:items-center gap-1">
+    <div
+      className={`flex justify-between gap-1 ${
+        direction === "row" ? "flex-row items-center" : "flex-col items-start"
+      }`}
+    >
       <h1 className="font-semibold text-foreground">{title}</h1>
       {label && <p className="lg:text-sm text-xs text-secondary">{label}</p>}
     </div>
