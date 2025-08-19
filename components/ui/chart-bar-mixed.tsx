@@ -51,7 +51,7 @@ export function ChartBarMixed() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Top 10 Selling Products</CardTitle>
+        <CardTitle>Selling Products</CardTitle>
         <CardDescription>June 2025</CardDescription>
       </CardHeader>
       <CardContent>
@@ -139,8 +139,8 @@ export function ChartBarMixed() {
         <div className="flex gap-2 leading-none font-medium">
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
-        <div className="text-muted-foreground leading-none">
-          Showing total units sold for the last 6 months
+        <div className="text-muted-foreground leading-normal">
+          Showing the top 10 selling products
         </div>
       </CardFooter>
     </Card>

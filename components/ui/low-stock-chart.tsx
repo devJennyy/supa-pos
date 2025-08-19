@@ -1,6 +1,6 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
+import { TrendingDown } from "lucide-react";
 import { Bar, BarChart, XAxis, YAxis, Cell } from "recharts";
 
 import {
@@ -193,9 +193,9 @@ export function ChartLowStock() {
 
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 leading-none font-medium">
-          Low stock alerts generated <TrendingUp className="h-4 w-4" />
+          Low stock alerts generated <TrendingDown className="h-4 w-4" />
         </div>
-        <div className="text-muted-foreground leading-none">
+        <div className="text-muted-foreground leading-normal">
           Showing products with stock 5 and below
         </div>
       </CardFooter>

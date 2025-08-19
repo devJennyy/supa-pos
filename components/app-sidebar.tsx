@@ -38,6 +38,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: FaTags,
         iconSize: 17,
         isActive: false,
+        children: [
+          {
+            title: "Orders",
+            url: "/user/sales/orders",
+            isActive: false,
+          },
+          {
+            title: "Transactions",
+            url: "/user/sales/transactions",
+            isActive: false,
+          },
+        ],
       },
       {
         title: "Inventory",
@@ -45,6 +57,28 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: BsBoxFill,
         iconSize: 15,
         isActive: false,
+        children: [
+          {
+            title: "Restock",
+            url: "/user/inventory/restock",
+            isActive: false,
+          },
+          {
+            title: "Low Stocks",
+            url: "/user/inventory/low-stocks",
+            isActive: false,
+          },
+          {
+            title: "Deduct Stock",
+            url: "/user/inventory/deduct-stock",
+            isActive: false,
+          },
+          {
+            title: "Stock History",
+            url: "/user/inventory/stock-history",
+            isActive: false,
+          },
+        ],
       },
       {
         title: "Analytics",
@@ -59,6 +93,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: HiDocumentReport,
         iconSize: 20,
         isActive: false,
+        children: [
+          {
+            title: "Daily Report",
+            url: "/user/reports/daily",
+            isActive: false,
+          },
+          {
+            title: "Weekly Report",
+            url: "/user/reports/weekly",
+            isActive: false,
+          },
+          {
+            title: "Monthly Report",
+            url: "/user/reports/monthly",
+            isActive: false,
+          },
+        ],
       },
     ],
     settings: [
@@ -81,13 +132,24 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const cleanPath = pathname.replace(/\/+$/, "");
 
-  data.navMain = data.navMain.map((item) => ({
-    ...item,
-    isActive:
+  data.navMain = data.navMain.map((item) => {
+    const isParentActive =
       cleanPath === "/user"
         ? item.url === "/user/dashboard"
-        : cleanPath.startsWith(item.url),
-  }));
+        : cleanPath.startsWith(item.url);
+
+    const children =
+      item.children?.map((child) => ({
+        ...child,
+        isActive: cleanPath === child.url,
+      })) ?? [];
+
+    return {
+      ...item,
+      isActive: isParentActive,
+      children,
+    };
+  });
 
   data.settings = data.settings.map((item) => ({
     ...item,
