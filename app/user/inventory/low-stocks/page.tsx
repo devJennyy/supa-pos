@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -148,117 +148,111 @@ export default function Page({ data = MOCK }: { data?: StockItem[] }) {
       />
 
       {/* Filters */}
-      <Card className="w-full overflow-hidden">
-        <CardContent>
-          <div className="flex flex-col gap-3 md:flex-row md:items-end">
-            <div className="grid gap-3 md:w-2/5">
-              <Label htmlFor="search">Search</Label>
-              <div className="flex items-center gap-2">
-                <Input
-                  id="search"
-                  placeholder="Search name..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                />
-                <Button
-                  variant="default"
-                  size="icon"
-                  onClick={() => setQuery("")}
-                >
-                  <RefreshCcw className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-
-            <div className="grid gap-3 md:w-1/5">
-              <Label>Category</Label>
-              <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="w-32 cursor-pointer">
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((c) => (
-                    <SelectItem key={c} value={c}>
-                      {c === "all" ? "All" : c}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="flex items-center gap-2 md:ml-auto">
-              <Checkbox
-                id="onlyLow"
-                checked={onlyLow}
-                onCheckedChange={(v) => setOnlyLow(Boolean(v))}
-                className="cursor-pointer"
-              />
-              <Label htmlFor="onlyLow">Only show Low / Out of stock</Label>
-            </div>
+      <div className="flex flex-col gap-3 md:flex-row md:items-end !mt-3">
+        <div className="grid gap-3 md:w-2/5">
+          <Label htmlFor="search">Search</Label>
+          <div className="flex items-center gap-2">
+            <Input
+              id="search"
+              placeholder="Search name..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <Button variant="default" size="icon" onClick={() => setQuery("")}>
+              <RefreshCcw className="h-4 w-4" />
+            </Button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+
+        <div className="grid gap-3 md:w-1/5">
+          <Label>Category</Label>
+          <Select value={category} onValueChange={setCategory}>
+            <SelectTrigger className="w-32 cursor-pointer">
+              <SelectValue placeholder="Select category" />
+            </SelectTrigger>
+            <SelectContent>
+              {categories.map((c) => (
+                <SelectItem key={c} value={c}>
+                  {c === "all" ? "All" : c}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="flex items-center gap-2 md:ml-auto">
+          <Checkbox
+            id="onlyLow"
+            checked={onlyLow}
+            onCheckedChange={(v) => setOnlyLow(Boolean(v))}
+            className="cursor-pointer"
+          />
+          <Label htmlFor="onlyLow">Only show Low / Out of stock</Label>
+        </div>
+      </div>
 
       {/* Table */}
-      <Table className="!mt-3 rounded-sm border overflow-hidden">
-        <TableHeader className="sticky top-0 bg-input z-10 h-14">
-          <TableRow>
-            <TableHead className="w-[30%] px-5">Item</TableHead>
-            <TableHead className="w-[20%]">Category</TableHead>
-            <TableHead className="w-[15%]">Stocks</TableHead>
-            <TableHead className="w-[20%]">Unit</TableHead>
-            <TableHead className="w-[15%]">Status</TableHead>
-            <TableHead className="w-[10%]"></TableHead>
-          </TableRow>
-        </TableHeader>
+      <Card className="border border-border/50 px-5 bg-secondaryBackground/30 !mt-2">
+        <Table className="rounded-lg border overflow-hidden">
+          <TableHeader className="sticky top-0 bg-input z-10 h-14">
+            <TableRow>
+              <TableHead className="w-[30%] px-5">Item</TableHead>
+              <TableHead className="w-[20%]">Category</TableHead>
+              <TableHead className="w-[15%]">Stocks</TableHead>
+              <TableHead className="w-[20%]">Unit</TableHead>
+              <TableHead className="w-[15%]">Status</TableHead>
+              <TableHead className="w-[10%]"></TableHead>
+            </TableRow>
+          </TableHeader>
 
-        <TableBody>
-          {filtered.map((item) => {
-            const st = statusOf(item);
-            return (
-              <TableRow
-                key={item.id}
-                className={classNames(st.label !== "Ok" && "bg-input/20")}
-              >
-                <TableCell className="font-medium px-5 text-secondary">
-                  {item.name}
-                </TableCell>
-                <TableCell>
-                  <p className="text-secondary">{item.category}</p>
-                </TableCell>
-                <TableCell>{item.stock}</TableCell>
-                <TableCell>{item.unitDescription || "unit"}</TableCell>
-                <TableCell>
-                  <Badge
-                    className={`${toneBadge(st.tone)} opacity-90 rounded-sm`}
-                  >
-                    {st.label}
-                  </Badge>
-                </TableCell>
-                <TableCell className="pr-5">
-                  {st.label !== "Ok" && (
-                    <Button size="sm" variant="default">
-                      <FiPlus />
-                      <p className="pr-2">Restock</p>
-                    </Button>
-                  )}
+          <TableBody>
+            {filtered.map((item) => {
+              const st = statusOf(item);
+              return (
+                <TableRow
+                  key={item.id}
+                  className={classNames(st.label !== "Ok" && "bg-input/20")}
+                >
+                  <TableCell className="font-medium px-5 text-secondary">
+                    {item.name}
+                  </TableCell>
+                  <TableCell>
+                    <p className="text-secondary">{item.category}</p>
+                  </TableCell>
+                  <TableCell>{item.stock}</TableCell>
+                  <TableCell>{item.unitDescription || "unit"}</TableCell>
+                  <TableCell>
+                    <Badge
+                      className={`${toneBadge(st.tone)} opacity-90 rounded-sm`}
+                    >
+                      {st.label}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="pr-5">
+                    {st.label !== "Ok" && (
+                      <Button size="sm" variant="default">
+                        <FiPlus />
+                        <p className="pr-2">Restock</p>
+                      </Button>
+                    )}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+
+            {filtered.length === 0 && (
+              <TableRow>
+                <TableCell
+                  colSpan={6}
+                  className="text-center py-10 text-muted-foreground"
+                >
+                  No items match your filters.
                 </TableCell>
               </TableRow>
-            );
-          })}
-
-          {filtered.length === 0 && (
-            <TableRow>
-              <TableCell
-                colSpan={6}
-                className="text-center py-10 text-muted-foreground"
-              >
-                No items match your filters.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            )}
+          </TableBody>
+        </Table>
+      </Card>
     </main>
   );
 }

@@ -95,7 +95,7 @@ export default function Page({
         </div>
         <Card className="border border-border/50 px-5 bg-secondaryBackground/30">
           <TabsContent value={tab}>
-            <Table className="rounded-xl border overflow-hidden">
+            <Table className="rounded-lg border overflow-hidden">
               <TableHeader className="sticky top-0 bg-input z-10 h-14">
                 <TableRow>
                   <TableHead className="w-[25%] px-5">Item</TableHead>
@@ -161,7 +161,7 @@ export default function Page({
         </div>
         <Card className="border border-border/50 px-5 bg-secondaryBackground/30">
           <TabsContent value={tab}>
-            <Table className="rounded-xl border overflow-hidden">
+            <Table className="rounded-lg border overflow-hidden">
               <TableHeader className="sticky top-0 bg-input z-10 h-14">
                 <TableRow>
                   <TableHead className="w-[25%] px-5">Item</TableHead>
