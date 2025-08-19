@@ -22,7 +22,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { RefreshCcw } from "lucide-react";
 import SectionTitle from "@/components/ui/section-title";
 import { FiPlus } from "react-icons/fi";
@@ -119,11 +118,7 @@ function classNames(...s: (string | undefined | false)[]) {
   return s.filter(Boolean).join(" ");
 }
 
-export default function LowStocksTable({
-  data = MOCK,
-}: {
-  data?: StockItem[];
-}) {
+export default function Page({ data = MOCK }: { data?: StockItem[] }) {
   const [query, setQuery] = React.useState("");
   const [category, setCategory] = React.useState<string>("all");
   const [onlyLow, setOnlyLow] = React.useState(true);
@@ -205,72 +200,65 @@ export default function LowStocksTable({
       </Card>
 
       {/* Table */}
+      <Table className="!mt-3 rounded-sm border overflow-hidden">
+        <TableHeader className="sticky top-0 bg-input z-10 h-14">
+          <TableRow>
+            <TableHead className="w-[30%] px-5">Item</TableHead>
+            <TableHead className="w-[20%]">Category</TableHead>
+            <TableHead className="w-[15%]">Stocks</TableHead>
+            <TableHead className="w-[20%]">Unit</TableHead>
+            <TableHead className="w-[15%]">Status</TableHead>
+            <TableHead className="w-[10%]"></TableHead>
+          </TableRow>
+        </TableHeader>
 
-      <div className="!mt-3 rounded-2xl border overflow-hidden">
-        <ScrollArea>
-          <Table>
-            <TableHeader className="sticky top-0 bg-input z-10 h-14">
-              <TableRow>
-                <TableHead className="w-[30%] px-5">Item</TableHead>
-                <TableHead className="w-[20%]">Category</TableHead>
-                <TableHead className="w-[15%]">Stocks</TableHead>
-                <TableHead className="w-[20%]">Unit</TableHead>
-                <TableHead className="w-[15%]">Status</TableHead>
-                <TableHead className="w-[10%]"></TableHead>
+        <TableBody>
+          {filtered.map((item) => {
+            const st = statusOf(item);
+            return (
+              <TableRow
+                key={item.id}
+                className={classNames(st.label !== "Ok" && "bg-input/20")}
+              >
+                <TableCell className="font-medium px-5 text-secondary">
+                  {item.name}
+                </TableCell>
+                <TableCell>
+                  <p className="text-secondary">{item.category}</p>
+                </TableCell>
+                <TableCell>{item.stock}</TableCell>
+                <TableCell>{item.unitDescription || "unit"}</TableCell>
+                <TableCell>
+                  <Badge
+                    className={`${toneBadge(st.tone)} opacity-90 rounded-sm`}
+                  >
+                    {st.label}
+                  </Badge>
+                </TableCell>
+                <TableCell className="pr-5">
+                  {st.label !== "Ok" && (
+                    <Button size="sm" variant="default">
+                      <FiPlus />
+                      <p className="pr-2">Restock</p>
+                    </Button>
+                  )}
+                </TableCell>
               </TableRow>
-            </TableHeader>
+            );
+          })}
 
-            <TableBody>
-              {filtered.map((item) => {
-                const st = statusOf(item);
-                return (
-                  <TableRow
-                    key={item.id}
-                    className={classNames(st.label !== "Ok" && "bg-input/20")}
-                  >
-                    <TableCell className="font-medium px-5 text-secondary">
-                      {item.name}
-                    </TableCell>
-                    <TableCell>
-                      <p className="text-secondary">{item.category}</p>
-                    </TableCell>
-                    <TableCell>{item.stock}</TableCell>
-                    <TableCell>{item.unitDescription || "unit"}</TableCell>
-                    <TableCell>
-                      <Badge
-                        className={`${toneBadge(
-                          st.tone
-                        )} opacity-90 rounded-sm`}
-                      >
-                        {st.label}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="pr-5">
-                      {st.label !== "Ok" && (
-                        <Button size="sm" variant="default">
-                          <FiPlus />
-                          <p className="pr-2">Restock</p>
-                        </Button>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-
-              {filtered.length === 0 && (
-                <TableRow>
-                  <TableCell
-                    colSpan={6}
-                    className="text-center py-10 text-muted-foreground"
-                  >
-                    No items match your filters.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </ScrollArea>
-      </div>
+          {filtered.length === 0 && (
+            <TableRow>
+              <TableCell
+                colSpan={6}
+                className="text-center py-10 text-muted-foreground"
+              >
+                No items match your filters.
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
     </main>
   );
 }
