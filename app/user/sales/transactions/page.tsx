@@ -15,6 +15,7 @@ import SectionTitle from "@/components/ui/section-title";
 import { subDays } from "date-fns";
 import { useState } from "react";
 import { DatePicker } from "@/components/ui/date-picker";
+import { useRightSidebar } from "../../layout";
 
 interface Transaction {
   id: string;
@@ -56,6 +57,7 @@ const Page = () => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     subDays(new Date(), 1)
   );
+  const { openRight } = useRightSidebar();
 
   return (
     <main className="flex flex-1 flex-col gap-8 lg:p-5 p-4">
@@ -90,7 +92,7 @@ const Page = () => {
                       <Button
                         size="sm"
                         variant="outline"
-                        onClick={() => alert(`View details for ${txn.id}`)}
+                        onClick={openRight}
                         className="w-full"
                       >
                         View Details
@@ -138,7 +140,7 @@ const Page = () => {
                       <Button
                         size="sm"
                         variant="outline"
-                        onClick={() => alert(`View details for ${txn.id}`)}
+                        onClick={openRight}
                         className="w-full"
                       >
                         View Details

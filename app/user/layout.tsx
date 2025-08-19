@@ -45,14 +45,23 @@ export default function Layout({ children }: LayoutProps) {
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
   const [hasOpenedOnce, setHasOpenedOnce] = useState(false);
 
-  const showRightSidebar = pathname.startsWith("/user/sales/orders");
+  const showRightSidebar =
+    pathname.startsWith("/user/sales/orders") ||
+    pathname.startsWith("/user/sales/transactions");
 
-  const openRight = useCallback(() => {
-    if (!hasOpenedOnce) {
-      setIsRightSidebarOpen(true);
-      setHasOpenedOnce(true);
-    }
-  }, [hasOpenedOnce]);
+  const openRight = useCallback(
+    (force = false) => {
+      const isTransactionsPage = pathname.startsWith(
+        "/user/sales/transactions"
+      );
+
+      if (!hasOpenedOnce || (force && isTransactionsPage)) {
+        setIsRightSidebarOpen(true);
+        setHasOpenedOnce(true);
+      }
+    },
+    [hasOpenedOnce, pathname]
+  );
 
   const closeRight = useCallback(() => {
     setIsRightSidebarOpen(false);

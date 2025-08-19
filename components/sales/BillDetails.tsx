@@ -74,7 +74,7 @@ export function RightSidebar({
       <SidebarHeader className="p-5">
         <h1 className="text-xl font-semibold">Bill Details</h1>
       </SidebarHeader>
-      <SidebarContent className="px-4 overflow-y-auto max-h-[calc(100vh-4rem)]">
+      <SidebarContent className="px-4 overflow-y-auto sm:max-h-[calc(100vh-4rem)] !mb-10">
         {/* Invoices */}
         <Table>
           <TableHeader>
@@ -158,14 +158,14 @@ export function RightSidebar({
             </div>
           </div>
         </div>
-      </SidebarContent>
 
-      <div className="flex flex-col gap-3 px-5 pb-5 lg:!mt-16 !mt-8">
-        <Button className="h-12 font-semibold">Process Transaction</Button>
-        <Button className="h-12 text-primary border border-primary bg-transparent font-medium hover:bg-primary/10">
-          Print Receipt
-        </Button>
-      </div>
+        <div className="flex flex-col gap-3 lg:!mt-16 !mt-8">
+          <Button className="h-12 font-semibold">Process Transaction</Button>
+          <Button className="h-12 text-primary border border-primary bg-transparent font-medium hover:bg-primary/10">
+            Print Receipt
+          </Button>
+        </div>
+      </SidebarContent>
       <SidebarRail />
     </Sidebar>
   );
