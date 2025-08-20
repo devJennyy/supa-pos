@@ -93,23 +93,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: HiDocumentReport,
         iconSize: 20,
         isActive: false,
-        children: [
-          {
-            title: "Daily Report",
-            url: "/user/reports/daily",
-            isActive: false,
-          },
-          {
-            title: "Weekly Report",
-            url: "/user/reports/weekly",
-            isActive: false,
-          },
-          {
-            title: "Monthly Report",
-            url: "/user/reports/monthly",
-            isActive: false,
-          },
-        ],
       },
     ],
     settings: [
