@@ -97,7 +97,7 @@ export default function SetupModal() {
     setTimeout(() => setPageLoading(false), 800);
   };
 
-  // CASE 1: still fetching
+  // Still fetching
   if (isFirstTime === null) {
     return (
       <div className="fixed inset-0 z-[9999999] flex items-center justify-center bg-black/30 backdrop-blur-md">
@@ -106,7 +106,7 @@ export default function SetupModal() {
     );
   }
 
-  // CASE 2: not first time
+  // Not first time
   if (isFirstTime === false) {
     if (pageLoading) {
       return (
@@ -118,7 +118,7 @@ export default function SetupModal() {
     return null;
   }
 
-  // CASE 3: first time → show modal
+  // First time → show modal
   return (
     <div className="fixed inset-0 z-[9999999] flex items-center justify-center bg-black/30 backdrop-blur-md">
       <div className="w-full max-w-[1280px] sm:px-5 px-4 3xl:py-20 py-10 flex justify-center">

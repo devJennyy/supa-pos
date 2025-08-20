@@ -20,10 +20,11 @@ export function NavMain({
 }: {
   items: {
     title: string
-    url: string
+    url?: string
     icon?: React.ComponentType<IconWithSizeProps>
     iconSize?: number | string
     isActive?: boolean
+    onClick?: () => void
     children?: {
       title: string
       url: string
@@ -49,9 +50,10 @@ export function NavMain({
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
                   {state === "collapsed" ? (
-                    <Link href={item.url} className="block">
+                    item.onClick ? (
                       <SidebarMenuButton
                         tooltip={item.title}
+                        onClick={item.onClick}
                         className={`flex gap-3 sidebar-close-btn cursor-pointer ${
                           item.isActive ? "bg-primary text-white" : ""
                         }`}
@@ -61,12 +63,27 @@ export function NavMain({
                             item.isActive ? "text-white" : "text-secondary"
                           }`}
                         >
-                          {item.icon && (
-                            <item.icon size={item.iconSize ?? 20} />
-                          )}
+                          {item.icon && <item.icon size={item.iconSize ?? 20} />}
                         </div>
                       </SidebarMenuButton>
-                    </Link>
+                    ) : (
+                      <Link href={item.url ?? "#"} className="block">
+                        <SidebarMenuButton
+                          tooltip={item.title}
+                          className={`flex gap-3 sidebar-close-btn cursor-pointer ${
+                            item.isActive ? "bg-primary text-white" : ""
+                          }`}
+                        >
+                          <div
+                            className={`w-7.5 h-7.5 flex justify-center items-center sidebar-icon ${
+                              item.isActive ? "text-white" : "text-secondary"
+                            }`}
+                          >
+                            {item.icon && <item.icon size={item.iconSize ?? 20} />}
+                          </div>
+                        </SidebarMenuButton>
+                      </Link>
+                    )
                   ) : hasChildren ? (
                     <SidebarMenuButton
                       tooltip={item.title}
@@ -90,8 +107,31 @@ export function NavMain({
                       </span>
                       <ChevronRight className="ml-auto h-4 w-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                     </SidebarMenuButton>
+                  ) : item.onClick ? (
+                    <SidebarMenuButton
+                      tooltip={item.title}
+                      onClick={item.onClick}
+                      className={`flex gap-3 items-center relative px-3 h-14 sidebar-btn transition-default cursor-pointer ${
+                        item.isActive ? "bg-input" : ""
+                      }`}
+                    >
+                      <div
+                        className={`w-7.5 h-7.5 flex justify-center items-center rounded-md transition-colors sidebar-btn-icon ${
+                          item.isActive ? "text-white bg-primary" : "text-secondary"
+                        }`}
+                      >
+                        {item.icon && <item.icon size={item.iconSize ?? 20} />}
+                      </div>
+                      <span
+                        className={`sidebar-label ${
+                          item.isActive ? "text-white" : "text-secondary"
+                        }`}
+                      >
+                        {item.title}
+                      </span>
+                    </SidebarMenuButton>
                   ) : (
-                    <Link href={item.url} className="block">
+                    <Link href={item.url ?? "#"} className="block">
                       <SidebarMenuButton
                         tooltip={item.title}
                         className={`flex gap-3 items-center relative px-3 h-14 sidebar-btn transition-default cursor-pointer ${
@@ -103,9 +143,7 @@ export function NavMain({
                             item.isActive ? "text-white bg-primary" : "text-secondary"
                           }`}
                         >
-                          {item.icon && (
-                            <item.icon size={item.iconSize ?? 20} />
-                          )}
+                          {item.icon && <item.icon size={item.iconSize ?? 20} />}
                         </div>
                         <span
                           className={`sidebar-label ${
@@ -145,7 +183,7 @@ export function NavMain({
                 )}
               </SidebarMenuItem>
             </Collapsible>
-          );
+          )
         })}
       </SidebarMenu>
     </SidebarGroup>

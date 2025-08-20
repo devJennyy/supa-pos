@@ -16,12 +16,14 @@ import { BsBoxFill, BsFillMoonStarsFill } from "react-icons/bs";
 import { IoStatsChart } from "react-icons/io5";
 import { HiDocumentReport } from "react-icons/hi";
 import { RiSettings3Fill } from "react-icons/ri";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { MdLogout } from "react-icons/md";
+import { supabase } from "@/app/supabaseClient";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
   const pathname = usePathname();
+  const router = useRouter();
 
   const navMainItems = [
     { title: "Dashboard", url: "/user/dashboard", icon: FaHome, iconSize: 19 },
@@ -47,21 +49,49 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         { title: "Stock History", url: "/user/inventory/stock-history" },
       ],
     },
-    { title: "Analytics", url: "/user/analytics", icon: IoStatsChart, iconSize: 16 },
-    { title: "Reports", url: "/user/reports", icon: HiDocumentReport, iconSize: 20 },
+    {
+      title: "Analytics",
+      url: "/user/analytics",
+      icon: IoStatsChart,
+      iconSize: 16,
+    },
+    {
+      title: "Reports",
+      url: "/user/reports",
+      icon: HiDocumentReport,
+      iconSize: 20,
+    },
   ];
 
   const settingsItems = [
-    { title: "Account Settings", url: "/user/settings", icon: RiSettings3Fill, iconSize: 19 },
-    { title: "Theme Color", url: "/user/theme", icon: BsFillMoonStarsFill, iconSize: 15 },
+    {
+      title: "Account Settings",
+      url: "/user/settings",
+      icon: RiSettings3Fill,
+      iconSize: 19,
+    },
+    {
+      title: "Theme Color",
+      url: "/user/theme",
+      icon: BsFillMoonStarsFill,
+      iconSize: 15,
+    },
   ];
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error signing out:", error.message);
+    } else {
+      router.push("/");
+    }
+  };
 
   const logoutItem = {
     title: "Logout",
-    url: "#",
     icon: MdLogout,
     iconSize: 18,
-    isActive: false,
+    onClick: handleLogout,
   };
 
   const cleanPath = pathname.replace(/\/+$/, "");
@@ -73,7 +103,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         : cleanPath.startsWith(item.url);
 
     const children =
-      item.children?.map((child) => ({ ...child, isActive: cleanPath === child.url })) ?? [];
+      item.children?.map((child) => ({
+        ...child,
+        isActive: cleanPath === child.url,
+      })) ?? [];
 
     return { ...item, isActive: isParentActive, children };
   });

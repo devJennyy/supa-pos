@@ -75,14 +75,14 @@ export default function Layout({ children }: LayoutProps) {
         openRight,
         closeRight,
       }}
-    ><SetupModal />
+    >
+      <SetupModal />
 
       <div className="flex h-screen min-h-fit flex-1 relative">
-        
         {/* Left Sidebar */}
         <SidebarProvider>
           <AppSidebar />
-          
+
           {/* Main content */}
           <SidebarInset className="flex-1 relative overflow-hidden">
             {/* Header */}
