@@ -5,7 +5,6 @@ import { NavMain } from "@/components/nav-main";
 import {
   Sidebar,
   SidebarContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarRail,
   SidebarSeparator,
@@ -18,123 +17,68 @@ import { IoStatsChart } from "react-icons/io5";
 import { HiDocumentReport } from "react-icons/hi";
 import { RiSettings3Fill } from "react-icons/ri";
 import { usePathname } from "next/navigation";
+import { MdLogout } from "react-icons/md";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
   const pathname = usePathname();
 
-  const data = {
-    navMain: [
-      {
-        title: "Dashboard",
-        url: "/user/dashboard",
-        icon: FaHome,
-        iconSize: 19,
-        isActive: false,
-      },
-      {
-        title: "Sales",
-        url: "/user/sales",
-        icon: FaTags,
-        iconSize: 17,
-        isActive: false,
-        children: [
-          {
-            title: "Orders",
-            url: "/user/sales/orders",
-            isActive: false,
-          },
-          {
-            title: "Transactions",
-            url: "/user/sales/transactions",
-            isActive: false,
-          },
-        ],
-      },
-      {
-        title: "Inventory",
-        url: "/user/inventory",
-        icon: BsBoxFill,
-        iconSize: 15,
-        isActive: false,
-        children: [
-          {
-            title: "Restock",
-            url: "/user/inventory/restock",
-            isActive: false,
-          },
-          {
-            title: "Low Stocks",
-            url: "/user/inventory/low-stocks",
-            isActive: false,
-          },
-          {
-            title: "Deduct Stock",
-            url: "/user/inventory/deduct-stock",
-            isActive: false,
-          },
-          {
-            title: "Stock History",
-            url: "/user/inventory/stock-history",
-            isActive: false,
-          },
-        ],
-      },
-      {
-        title: "Analytics",
-        url: "/user/analytics",
-        icon: IoStatsChart,
-        iconSize: 16,
-        isActive: false,
-      },
-      {
-        title: "Reports",
-        url: "/user/reports",
-        icon: HiDocumentReport,
-        iconSize: 20,
-        isActive: false,
-      },
-    ],
-    settings: [
-      {
-        title: "Account Settings",
-        url: "/user/settings",
-        icon: RiSettings3Fill,
-        iconSize: 19,
-        isActive: false,
-      },
-      {
-        title: "Theme Color",
-        url: "/user/theme",
-        icon: BsFillMoonStarsFill,
-        iconSize: 15,
-        isActive: false,
-      },
-    ],
+  const navMainItems = [
+    { title: "Dashboard", url: "/user/dashboard", icon: FaHome, iconSize: 19 },
+    {
+      title: "Sales",
+      url: "/user/sales",
+      icon: FaTags,
+      iconSize: 17,
+      children: [
+        { title: "Orders", url: "/user/sales/orders" },
+        { title: "Transactions", url: "/user/sales/transactions" },
+      ],
+    },
+    {
+      title: "Inventory",
+      url: "/user/inventory",
+      icon: BsBoxFill,
+      iconSize: 15,
+      children: [
+        { title: "Restock", url: "/user/inventory/restock" },
+        { title: "Low Stocks", url: "/user/inventory/low-stocks" },
+        { title: "Deduct Stock", url: "/user/inventory/deduct-stock" },
+        { title: "Stock History", url: "/user/inventory/stock-history" },
+      ],
+    },
+    { title: "Analytics", url: "/user/analytics", icon: IoStatsChart, iconSize: 16 },
+    { title: "Reports", url: "/user/reports", icon: HiDocumentReport, iconSize: 20 },
+  ];
+
+  const settingsItems = [
+    { title: "Account Settings", url: "/user/settings", icon: RiSettings3Fill, iconSize: 19 },
+    { title: "Theme Color", url: "/user/theme", icon: BsFillMoonStarsFill, iconSize: 15 },
+  ];
+
+  const logoutItem = {
+    title: "Logout",
+    url: "#",
+    icon: MdLogout,
+    iconSize: 18,
+    isActive: false,
   };
 
   const cleanPath = pathname.replace(/\/+$/, "");
 
-  data.navMain = data.navMain.map((item) => {
+  const navMain = navMainItems.map((item) => {
     const isParentActive =
       cleanPath === "/user"
         ? item.url === "/user/dashboard"
         : cleanPath.startsWith(item.url);
 
     const children =
-      item.children?.map((child) => ({
-        ...child,
-        isActive: cleanPath === child.url,
-      })) ?? [];
+      item.children?.map((child) => ({ ...child, isActive: cleanPath === child.url })) ?? [];
 
-    return {
-      ...item,
-      isActive: isParentActive,
-      children,
-    };
+    return { ...item, isActive: isParentActive, children };
   });
 
-  data.settings = data.settings.map((item) => ({
+  const settings = settingsItems.map((item) => ({
     ...item,
     isActive: cleanPath.startsWith(item.url),
   }));
@@ -144,19 +88,29 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <Logo />
       </SidebarHeader>
-      <SidebarContent>
-        <NavMain items={data.navMain} />
-        {state === "collapsed" ? (
-          <div className="!mx-2 flex justify-center items-center">
-            <SidebarSeparator />
-          </div>
-        ) : (
-          <SidebarGroupLabel className="font-medium text-sm text-muted-foreground !mx-2">
-            Account Pages
-          </SidebarGroupLabel>
-        )}
-        <NavMain items={data.settings} />
+
+      <SidebarContent className="flex flex-col justify-between h-full">
+        <div>
+          <NavMain items={navMain} />
+
+          {state === "collapsed" ? (
+            <div className="!mx-2 flex justify-center items-center">
+              <SidebarSeparator />
+            </div>
+          ) : (
+            <div className="font-medium text-sm text-muted-foreground !mx-4 mt-4 mb-2">
+              Account Pages
+            </div>
+          )}
+
+          <NavMain items={settings} />
+        </div>
+
+        <div className="mt-auto !mx-2 mb-4">
+          <NavMain items={[logoutItem]} />
+        </div>
       </SidebarContent>
+
       <SidebarRail />
     </Sidebar>
   );

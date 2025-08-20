@@ -53,11 +53,17 @@ export function NavMain({
                       <SidebarMenuButton
                         tooltip={item.title}
                         className={`flex gap-3 sidebar-close-btn cursor-pointer ${
-                          item.isActive ? "bg-accent text-accent-foreground" : ""
+                          item.isActive ? "bg-primary text-white" : ""
                         }`}
                       >
-                        <div className="w-7.5 h-7.5 flex justify-center items-center text-secondary sidebar-icon">
-                          {item.icon && <item.icon size={item.iconSize ?? 20} />}
+                        <div
+                          className={`w-7.5 h-7.5 flex justify-center items-center sidebar-icon ${
+                            item.isActive ? "text-white" : "text-secondary"
+                          }`}
+                        >
+                          {item.icon && (
+                            <item.icon size={item.iconSize ?? 20} />
+                          )}
                         </div>
                       </SidebarMenuButton>
                     </Link>
@@ -93,15 +99,17 @@ export function NavMain({
                         }`}
                       >
                         <div
-                          className={`w-7.5 h-7.5 flex justify-center items-center rounded-md transition-colors sidebar-btn-icon text-secondary ${
-                            item.isActive ? "text-white bg-primary" : ""
+                          className={`w-7.5 h-7.5 flex justify-center items-center rounded-md transition-colors sidebar-btn-icon ${
+                            item.isActive ? "text-white bg-primary" : "text-secondary"
                           }`}
                         >
-                          {item.icon && <item.icon size={item.iconSize ?? 20} />}
+                          {item.icon && (
+                            <item.icon size={item.iconSize ?? 20} />
+                          )}
                         </div>
                         <span
-                          className={`text-secondary sidebar-label ${
-                            item.isActive ? "text-foreground" : ""
+                          className={`sidebar-label ${
+                            item.isActive ? "text-white" : "text-secondary"
                           }`}
                         >
                           {item.title}
@@ -137,7 +145,7 @@ export function NavMain({
                 )}
               </SidebarMenuItem>
             </Collapsible>
-          )
+          );
         })}
       </SidebarMenu>
     </SidebarGroup>
