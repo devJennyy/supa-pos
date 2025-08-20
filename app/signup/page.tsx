@@ -78,7 +78,7 @@ const Page = () => {
       );
       console.log("TESTETSET")
       if (result.success) {
-        router.push("/finish-setup");
+        router.push("/user");
       } else {
         setError(result.error?.message || "Sign-up failed.");
       }

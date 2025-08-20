@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import LoadingScreen from "@/components/ui/loading";
 
-const FinishSetup = () => {
+export default function SetupModal() {
   const [pageLoading, setPageLoading] = useState(true);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -49,6 +49,8 @@ const FinishSetup = () => {
         console.error("No user or error getting user:", userError);
         return;
       }
+
+        console.log(user.id)
 
       const { data, error } = await supabase
         .from("profiles")
@@ -100,20 +102,19 @@ const FinishSetup = () => {
   if (pageLoading) return <LoadingScreen />;
 
   return (
-    <main
-      id="/finish-setup"
-      className="w-full 4xl:flex-none flex-1 flex items-center overflow-hidden"
+    <div
+      className="w-full 4xl:flex-none flex-1 flex items-center overflow-hidden fixed z-[9999999] backdrop-blur-md bg-black/30 h-[100dvh]"
     >
       <div className="w-full max-w-[1280px] !mx-auto sm:px-5 px-4 3xl:py-20 py-10 flex justify-center">
         <div className="w-full max-w-[500px] rounded-3xl sm:py-10 p-8 gap-4 flex flex-col text-center items-center bg-secondaryBackground border dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
           <div className="w-full flex flex-col gap-1 !mb-5">
-            <h1 className="text-2xl font-semibold">Complete Your Profile</h1>
-            <p className="text-base text-secondary">
+            <h1 className="lg:text-2xl text-xl font-semibold">Complete Your Profile</h1>
+            <p className="lg:text-base text-sm text-secondary">
               This helps personalize your experience
             </p>
           </div>
 
-          <div className="relative w-40 h-40">
+          <div className="relative lg:w-40 lg:h-40 w-32 h-32">
             <div className="w-full h-full rounded-full border-2 bg-input overflow-hidden">
               <Image
                 src={imagePreview || "/images/default-avatar.svg"}
@@ -146,23 +147,21 @@ const FinishSetup = () => {
             value={storeName}
             onChange={(e) => setStoreName(e.target.value)}
             placeholder="Name's Convenient Store"
-            className="w-full h-12 border transition-default rounded-full px-4 placeholder:text-secondary text-foreground text-base tracking-wide outline-none text-center !mt-4"
+            className="w-full lg:h-12 h-11 border transition-default rounded-full px-4 placeholder:text-secondary text-foreground lg:text-base text-sm tracking-wide outline-none text-center lg:!mt-4 !mt-2"
           />
 
           <Button
             onClick={updateProfile}
-            className="w-full rounded-full h-12 text-base font-semibold"
+            className="w-full rounded-full lg:h-12 h-11 lg:text-base text-sm font-semibold"
           >
             Save Changes
           </Button>
 
-          <p className="text-sm text-secondary !mt-2">
+          <p className="lg:text-sm text-xs text-secondary !mt-2">
             Your information can be updated anytime
           </p>
         </div>
       </div>
-    </main>
+    </div>
   );
-};
-
-export default FinishSetup;
+}

@@ -19,6 +19,7 @@ import { RightSidebar } from "@/components/sales/BillDetails";
 import { IoMdClose } from "react-icons/io";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { HiOutlineSearch } from "react-icons/hi";
+import SetupModal from "@/components/ui/complete-setup";
 
 type SidebarContextType = {
   isRightOpen: boolean;
@@ -74,12 +75,14 @@ export default function Layout({ children }: LayoutProps) {
         openRight,
         closeRight,
       }}
-    >
+    ><SetupModal />
+
       <div className="flex h-screen min-h-fit flex-1 relative">
+        
         {/* Left Sidebar */}
         <SidebarProvider>
           <AppSidebar />
-
+          
           {/* Main content */}
           <SidebarInset className="flex-1 relative overflow-hidden">
             {/* Header */}
