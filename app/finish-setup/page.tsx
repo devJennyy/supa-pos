@@ -102,21 +102,19 @@ const FinishSetup = () => {
   return (
     <main
       id="/finish-setup"
-      className="w-full 4xl:flex-none flex-1 flex items-center overflow-hidden dark:bg-secondaryBackground"
+      className="w-full 4xl:flex-none flex-1 flex items-center overflow-hidden"
     >
       <div className="w-full max-w-[1280px] !mx-auto sm:px-5 px-4 3xl:py-20 py-10 flex justify-center">
-        <div className="w-full max-w-[500px] rounded-3xl sm:py-10 p-8 gap-4 flex flex-col text-center items-center bg-secondaryFill dark:bg-background border border-secondaryBorder dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+        <div className="w-full max-w-[500px] rounded-3xl sm:py-10 p-8 gap-4 flex flex-col text-center items-center bg-secondaryBackground border dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
           <div className="w-full flex flex-col gap-1 !mb-5">
-            <h1 className="text-2xl font-semibold text-primaryText">
-              Complete Your Profile
-            </h1>
-            <p className="text-base text-secondaryText">
+            <h1 className="text-2xl font-semibold">Complete Your Profile</h1>
+            <p className="text-base text-secondary">
               This helps personalize your experience
             </p>
           </div>
 
           <div className="relative w-40 h-40">
-            <div className="w-full h-full rounded-full border-2 border-primaryBorder/20 dark:border-primaryBorder bg-primaryFill/20 dark:bg-primaryFill/50 overflow-hidden">
+            <div className="w-full h-full rounded-full border-2 bg-input overflow-hidden">
               <Image
                 src={imagePreview || "/images/default-avatar.svg"}
                 alt="Avatar"
@@ -127,15 +125,13 @@ const FinishSetup = () => {
               />
             </div>
 
-            {/* Camera Button */}
             <div
               onClick={handleCameraClick}
-              className="absolute bottom-2 right-2 w-8 h-8 bg-primaryFill dark:bg-background border border-primaryBorder rounded-full flex items-center justify-center cursor-pointer transition-default"
+              className="absolute bottom-2 right-2 w-8 h-8 bg-background border rounded-full flex items-center justify-center cursor-pointer"
             >
-              <BsFillCameraFill className="text-primaryText/80 dark:text-secondaryText/80 text-[16px]" />
+              <BsFillCameraFill className="text-primary dark:text-secondary/80 text-base" />
             </div>
 
-            {/* Hidden file input */}
             <input
               ref={fileInputRef}
               type="file"
