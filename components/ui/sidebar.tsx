@@ -277,7 +277,7 @@ function SidebarTrigger({
         data-slot="sidebar-trigger"
         size="icon"
         className={cn(
-          "lg:flex hidden size-8 border-r border-t border-b rounded-tl-none rounded-bl-none !ml-[-1.1rem] z-20 absolute bg-secondaryBackground hover:bg-secondaryBackground",
+          "lg:flex hidden size-8 border-r border-t border-b rounded-tl-none rounded-bl-none !ml-[-1rem] z-20 absolute bg-secondaryBackground hover:bg-secondaryBackground",
           className
         )}
         onClick={(event) => {
@@ -290,7 +290,7 @@ function SidebarTrigger({
         <span className="sr-only">Toggle Sidebar</span>
       </Button>
 
-      <div className="lg:hidden h-16 w-full flex justify-between items-center border-b bg-secondaryBackground">
+      <div className="lg:hidden h-16 w-full flex justify-between items-center bg-secondaryBackground">
         <Button
           data-sidebar="trigger"
           data-slot="sidebar-trigger"

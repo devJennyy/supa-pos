@@ -12,13 +12,13 @@ import {
   SidebarInset,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import ThemeToggle from "@/components/ui/theme-toggle";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { AppSidebar } from "@/components/app-sidebar";
 import { RightSidebar } from "@/components/sales/BillDetails";
 import { IoMdClose } from "react-icons/io";
 import { IoChevronBackOutline } from "react-icons/io5";
+import { HiOutlineSearch } from "react-icons/hi";
 
 type SidebarContextType = {
   isRightOpen: boolean;
@@ -83,10 +83,41 @@ export default function Layout({ children }: LayoutProps) {
           {/* Main content */}
           <SidebarInset className="flex-1 relative overflow-hidden">
             {/* Header */}
-            <header className="flex h-16 w-full max-w-full shrink-0 items-center gap-2 border-b bg-secondaryBackground px-3 overflow-hidden">
+            <header className="flex h-17 w-full max-w-full shrink-0 items-center gap-2 border-b bg-secondaryBackground px-3 overflow-hidden">
               <SidebarTrigger />
-              <div className="flex-1 lg:flex justify-end hidden">
-                <ThemeToggle />
+              <div className="lg:flex hidden justify-between items-center w-full px-10 py-4 shadow-lg rounded-xl">
+                {/* Search Input */}
+                <div className="relative w-2/5">
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    className="border text-sm rounded-lg pl-10 pr-4 py-2 w-full 
+                 focus:outline-none focus:ring-1 focus:ring-input hover:shadow-sm transition placeholder:text-secondary"
+                  />
+                  <HiOutlineSearch
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary"
+                    size={20}
+                  />
+                </div>
+
+                {/* User Info */}
+                <div className="flex items-center gap-4">
+                  <div
+                    className="w-12 h-12 rounded-full border bg-secondaryBackground flex items-center justify-center 
+                    text-lg font-semibold transition cursor-pointer"
+                  >
+                    J
+                  </div>
+
+                  <div className="flex flex-col">
+                    <p className="font-semibold text-sm">
+                      Jenny’s Convenient Store
+                    </p>
+                    <p className="text-secondary text-xs font-medium">
+                      Sunday, 22 August 2025
+                    </p>
+                  </div>
+                </div>
               </div>
             </header>
 
