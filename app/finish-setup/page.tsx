@@ -1,0 +1,172 @@
+"use client";
+
+import { BsFillCameraFill } from "react-icons/bs";
+import { useEffect, useRef, useState } from "react";
+import { supabase } from "@/app/supabaseClient";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import LoadingScreen from "@/components/ui/loading";
+
+const FinishSetup = () => {
+  const [pageLoading, setPageLoading] = useState(true);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setPageLoading(false);
+    }, 650);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleCameraClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        console.error("No user or error getting user:", userError);
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("first_name, last_name, username")
+        .eq("id", user.id)
+        .single();
+
+      console.log(data);
+
+      if (error) {
+        console.error("Error fetching profile:", error);
+        return;
+      }
+
+      setFullName(`${data.first_name} ${data.last_name}`);
+      setUsername(data.username || "");
+    };
+
+    fetchProfile();
+  }, []);
+
+  const updateProfile = async () => {
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (!user || userError) {
+      console.error("No user or error getting user:", userError);
+      return;
+    }
+
+    const [first_name, ...rest] = fullName.trim().split(" ");
+    const last_name = rest.join(" ");
+
+    const { error: updateError } = await supabase
+      .from("profiles")
+      .update({ first_name, last_name, username })
+      .eq("id", user.id);
+
+    if (updateError) {
+      console.error("Error updating profile:", updateError);
+      return;
+    }
+
+    router.push("/user");
+  };
+
+  if (pageLoading) return <LoadingScreen />;
+
+  return (
+    <main
+      id="/finish-setup"
+      className="w-full 4xl:flex-none flex-1 flex items-center overflow-hidden dark:bg-secondaryBackground"
+    >
+      <div className="w-full max-w-[1280px] !mx-auto sm:px-5 px-4 3xl:py-20 py-10 flex justify-center">
+        <div className="w-full max-w-[500px] rounded-3xl sm:py-10 p-8 gap-4 flex flex-col text-center items-center bg-secondaryFill dark:bg-background border border-secondaryBorder dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+          <div className="w-full flex flex-col gap-1 !mb-5">
+            <h1 className="text-2xl font-semibold text-primaryText">
+              Complete Your Profile
+            </h1>
+            <p className="text-base text-secondaryText">
+              This helps personalize your experience
+            </p>
+          </div>
+
+          <div className="relative w-40 h-40">
+            <div className="w-full h-full rounded-full border-2 border-primaryBorder/20 dark:border-primaryBorder bg-primaryFill/20 dark:bg-primaryFill/50 overflow-hidden">
+              <Image
+                src={imagePreview || "/images/default-avatar.svg"}
+                alt="Avatar"
+                className="w-full h-full object-cover"
+                width={100}
+                height={100}
+                priority
+              />
+            </div>
+
+            {/* Camera Button */}
+            <div
+              onClick={handleCameraClick}
+              className="absolute bottom-2 right-2 w-8 h-8 bg-primaryFill dark:bg-background border border-primaryBorder rounded-full flex items-center justify-center cursor-pointer transition-default"
+            >
+              <BsFillCameraFill className="text-primaryText/80 dark:text-secondaryText/80 text-[16px]" />
+            </div>
+
+            {/* Hidden file input */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden"
+            />
+          </div>
+
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Name's Convenient Store"
+            className="w-full h-12 border transition-default rounded-full px-4 placeholder:text-secondary text-foreground text-base tracking-wide outline-none text-center !mt-4"
+          />
+
+          <Button
+            onClick={updateProfile}
+            className="w-full rounded-full h-12 text-base font-semibold"
+          >
+            Save Changes
+          </Button>
+
+          <p className="text-sm text-secondary !mt-2">
+            Your information can be updated anytime
+          </p>
+        </div>
+      </div>
+    </main>
+  );
+};
+
+export default FinishSetup;
