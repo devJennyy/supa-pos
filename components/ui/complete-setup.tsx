@@ -3,7 +3,6 @@
 import { BsFillCameraFill } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/app/supabaseClient";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import LoadingScreen from "@/components/ui/loading";
@@ -13,30 +12,8 @@ export default function SetupModal() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fullName, setFullName] = useState("");
-  const [storeName, setStoreName] = useState("");
-  const router = useRouter();
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setPageLoading(false);
-    }, 650);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleCameraClick = () => {
-    fileInputRef.current?.click();
-  };
+  const [store_name, setStoreName] = useState("");
+  const [isFirstTime, setIsFirstTime] = useState<boolean | null>(null);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -47,30 +24,49 @@ export default function SetupModal() {
 
       if (userError || !user) {
         console.error("No user or error getting user:", userError);
+        setIsFirstTime(false);
         return;
       }
-
-        console.log(user.id)
 
       const { data, error } = await supabase
         .from("profiles")
-        .select("first_name, last_name, store_name")
+        .select("first_name, last_name, store_name, first_time")
         .eq("id", user.id)
         .single();
 
-      console.log(data);
-
       if (error) {
         console.error("Error fetching profile:", error);
+        setIsFirstTime(false);
         return;
       }
 
+      setIsFirstTime(data.first_time);
       setFullName(`${data.first_name} ${data.last_name}`);
       setStoreName(data.store_name || "");
+
+      if (data.first_time === false) {
+        setPageLoading(true);
+        setTimeout(() => setPageLoading(false), 800);
+      } else {
+        setPageLoading(false);
+      }
     };
 
     fetchProfile();
   }, []);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setImagePreview(reader.result as string);
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleCameraClick = () => {
+    fileInputRef.current?.click();
+  };
 
   const updateProfile = async () => {
     const {
@@ -88,7 +84,7 @@ export default function SetupModal() {
 
     const { error: updateError } = await supabase
       .from("profiles")
-      .update({ first_name, last_name, storeName })
+      .update({ first_name, last_name, store_name, first_time: false })
       .eq("id", user.id);
 
     if (updateError) {
@@ -96,19 +92,41 @@ export default function SetupModal() {
       return;
     }
 
-    router.push("/user");
+    setIsFirstTime(false);
+    setPageLoading(true);
+    setTimeout(() => setPageLoading(false), 800);
   };
 
-  if (pageLoading) return <LoadingScreen />;
+  // CASE 1: still fetching
+  if (isFirstTime === null) {
+    return (
+      <div className="fixed inset-0 z-[9999999] flex items-center justify-center bg-black/30 backdrop-blur-md">
+        <LoadingScreen />
+      </div>
+    );
+  }
 
+  // CASE 2: not first time
+  if (isFirstTime === false) {
+    if (pageLoading) {
+      return (
+        <div className="fixed inset-0 z-[9999999] flex items-center justify-center bg-black/30 backdrop-blur-md">
+          <LoadingScreen />
+        </div>
+      );
+    }
+    return null;
+  }
+
+  // CASE 3: first time → show modal
   return (
-    <div
-      className="w-full 4xl:flex-none flex-1 flex items-center overflow-hidden fixed z-[9999999] backdrop-blur-md bg-black/30 h-[100dvh]"
-    >
-      <div className="w-full max-w-[1280px] !mx-auto sm:px-5 px-4 3xl:py-20 py-10 flex justify-center">
-        <div className="w-full max-w-[500px] rounded-3xl sm:py-10 p-8 gap-4 flex flex-col text-center items-center bg-secondaryBackground border dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+    <div className="fixed inset-0 z-[9999999] flex items-center justify-center bg-black/30 backdrop-blur-md">
+      <div className="w-full max-w-[1280px] sm:px-5 px-4 3xl:py-20 py-10 flex justify-center">
+        <div className="w-full max-w-[500px] rounded-3xl sm:py-10 p-8 gap-4 flex flex-col text-center items-center bg-secondaryBackground border shadow-md">
           <div className="w-full flex flex-col gap-1 !mb-5">
-            <h1 className="lg:text-2xl text-xl font-semibold">Complete Your Profile</h1>
+            <h1 className="lg:text-2xl text-xl font-semibold">
+              Complete Your Profile
+            </h1>
             <p className="lg:text-base text-sm text-secondary">
               This helps personalize your experience
             </p>
@@ -144,7 +162,7 @@ export default function SetupModal() {
 
           <input
             type="text"
-            value={storeName}
+            value={store_name}
             onChange={(e) => setStoreName(e.target.value)}
             placeholder="Name's Convenient Store"
             className="w-full lg:h-12 h-11 border transition-default rounded-full px-4 placeholder:text-secondary text-foreground lg:text-base text-sm tracking-wide outline-none text-center lg:!mt-4 !mt-2"
