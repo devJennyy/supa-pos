@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
@@ -13,9 +14,9 @@ import {
 import { Button } from "@/components/ui/button";
 import SectionTitle from "@/components/ui/section-title";
 import { subDays } from "date-fns";
-import { useState } from "react";
 import { DatePicker } from "@/components/ui/date-picker";
 import { useRightSidebar } from "../../layout";
+import TransactionHistorySkeleton from "@/components/sales/skeletons/Transactions";
 
 interface Transaction {
   id: string;
@@ -57,7 +58,18 @@ const Page = () => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     subDays(new Date(), 1)
   );
+  const [isLoading, setIsLoading] = useState(true);
   const { openRight } = useRightSidebar();
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <TransactionHistorySkeleton />;
+  }
 
   return (
     <main className="flex flex-1 flex-col gap-8 lg:p-5 p-4">
