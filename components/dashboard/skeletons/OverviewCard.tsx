@@ -6,7 +6,7 @@ const OverviewCardSkeleton = () => {
     <div className="w-full flex flex-col gap-4">
       <div className="flex justify-between">
         <SkeletonCard className="h-6 w-1/8" />
-        <SkeletonCard className="h-6 w-1/6" />
+        <SkeletonCard className="h-6 w-1/8" />
       </div>
 
       <div className="grid auto-rows-min gap-4 lg:grid-cols-4 grid-cols-2">
