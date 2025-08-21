@@ -108,7 +108,7 @@ export default function Layout({ children }: LayoutProps) {
                 {/* User Info */}
                 <div className="flex items-center gap-4">
                   <div
-                    className="w-12 h-12 rounded-full border bg-secondaryBackground flex items-center justify-center 
+                    className="w-12 h-12 rounded-full border bg-input flex items-center justify-center 
              text-lg font-semibold transition cursor-pointer"
                   >
                     {profile?.store_name?.charAt(0).toUpperCase() || "?"}
