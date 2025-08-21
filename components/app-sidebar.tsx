@@ -16,14 +16,14 @@ import { BsBoxFill, BsFillMoonStarsFill } from "react-icons/bs";
 import { IoStatsChart } from "react-icons/io5";
 import { HiDocumentReport } from "react-icons/hi";
 import { RiSettings3Fill } from "react-icons/ri";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { MdLogout } from "react-icons/md";
-import { supabase } from "@/app/supabaseClient";
+import { UserAuth } from "@/app/context/AuthContext";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
   const pathname = usePathname();
-  const router = useRouter();
+  const { signOut } = UserAuth()!;
 
   const navMainItems = [
     { title: "Dashboard", url: "/user/dashboard", icon: FaHome, iconSize: 19 },
@@ -79,12 +79,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   ];
 
   const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error("Error signing out:", error.message);
-    } else {
-      router.push("/");
-    }
+    signOut();
   };
 
   const logoutItem = {

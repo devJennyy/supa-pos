@@ -1,17 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"
+"use client";
+
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { supabase } from "../supabaseClient";
+import { useRouter } from "next/navigation";
+
+type ProfileType = {
+  id: string;
+  first_name: string;
+  last_name: string;
+  store_name: string;
+  email: string;
+  setup_complete: boolean;
+  [key: string]: any;
+};
 
 type AuthContextType = {
   session: any;
+  profile: ProfileType | null;
   signUpNewUser: (
     email: string,
     password: string,
     firstName: string,
     lastName: string,
-    storeName: string,
+    storeName: string
   ) => Promise<{ success: boolean; data?: any; error?: any }>;
   signInUser: (
     email: string,
@@ -34,6 +47,48 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<any>(undefined);
+  const [profile, setProfile] = useState<ProfileType | null>(null);
+  const router = useRouter();
+
+  // Fetch profile by userId
+  const fetchUserProfile = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", userId)
+        .single();
+
+      if (error) {
+        console.error("Error fetching profile:", error);
+        setProfile(null);
+        return;
+      }
+
+      setProfile(data);
+    } catch (err) {
+      console.error("Unexpected error fetching profile:", err);
+      setProfile(null);
+    }
+  };
+
+  // Monitor session changes
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      if (session?.user?.id) fetchUserProfile(session.user.id);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      if (session?.user?.id) fetchUserProfile(session.user.id);
+      else setProfile(null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   // Sign up
   const signUpNewUser = async (
@@ -41,34 +96,18 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     password: string,
     firstName: string,
     lastName: string,
-    storeName: string,
+    storeName: string
   ) => {
     try {
       const { data: signUpData, error: signUpError } =
-        await supabase.auth.signUp({
-          email,
-          password,
-        });
+        await supabase.auth.signUp({ email, password });
 
       if (signUpError || !signUpData.user) {
         console.error("Sign-up failed:", signUpError);
-        return {
-          success: false,
-          error: signUpError || { message: "No user returned" },
-        };
+        return { success: false, error: signUpError || { message: "No user returned" } };
       }
 
       const userId = signUpData.user.id;
-
-      console.log("User ID:", signUpData.user.id);
-      console.log({
-          id: userId,
-          first_name: firstName,
-          last_name: lastName,
-          store_name: storeName,
-          email,
-          setup_complete: false,
-        });
 
       const { error: profileError } = await supabase.from("profiles").insert([
         {
@@ -86,75 +125,32 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         return { success: false, error: profileError };
       }
 
+      await fetchUserProfile(userId);
+
       return { success: true, data: signUpData };
     } catch (err) {
       console.error("Unexpected error:", err);
-      return {
-        success: false,
-        error: { message: "Unexpected error occurred." },
-      };
+      return { success: false, error: { message: "Unexpected error occurred." } };
     }
   };
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
 
   // Sign in
   const signInUser = async (email: string, password: string) => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
       if (error || !data.session) {
-        console.error(
-          "Sign in error occurred: ",
-          error || "No session returned"
-        );
-        return {
-          success: false,
-          error: error?.message || "No session returned",
-        };
+        console.error("Sign in error:", error || "No session returned");
+        return { success: false, error: error?.message || "No session returned" };
       }
 
-      console.log("Sign in success: ", data);
+      if (data.session.user?.id) await fetchUserProfile(data.session.user.id);
+
       return { success: true, data };
-    } catch (error) {
-      console.error("An unexpected error occurred: ", error);
+    } catch (err) {
+      console.error("Unexpected sign-in error:", err);
       return { success: false, error: "Unexpected error" };
     }
-  };
-
-  // Sign out
-  const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error("There was an error: ", error);
-      return;
-    }
-
-    return new Promise<void>((resolve) => {
-      const { data: listener } = supabase.auth.onAuthStateChange(
-        (_event, session) => {
-          if (!session) {
-            listener.subscription.unsubscribe();
-            resolve();
-          }
-        }
-      );
-    });
   };
 
   // Sign in with Google
@@ -162,9 +158,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
-        options: {
-          redirectTo: `${window.location.origin}/user`,
-        },
+        options: { redirectTo: `${window.location.origin}/user` },
       });
 
       if (error) {
@@ -174,22 +168,17 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
       return { success: true, data };
     } catch (err) {
-      console.error("Unexpected error:", err);
-      return {
-        success: false,
-        error: { message: "Unexpected error occurred" },
-      };
+      console.error("Unexpected Google sign-in error:", err);
+      return { success: false, error: { message: "Unexpected error occurred" } };
     }
   };
 
-  // Sign in with Github
+  // Sign in with GitHub
   const signInWithGitHub = async () => {
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "github",
-        options: {
-          redirectTo: `${window.location.origin}/user`,
-        },
+        options: { redirectTo: `${window.location.origin}/user` },
       });
 
       if (error) {
@@ -199,18 +188,29 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
       return { success: true, data };
     } catch (err) {
-      console.error("Unexpected error:", err);
-      return {
-        success: false,
-        error: { message: "Unexpected error occurred" },
-      };
+      console.error("Unexpected GitHub sign-in error:", err);
+      return { success: false, error: { message: "Unexpected error occurred" } };
     }
+  };
+
+  // Sign out
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Sign-out error:", error);
+      return;
+    }
+    setProfile(null);
+    setSession(null);
+
+    router.push("/");
   };
 
   return (
     <AuthContext.Provider
       value={{
         session,
+        profile,
         signUpNewUser,
         signInUser,
         signOut,
@@ -223,6 +223,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// Hook to use AuthContext
 export const UserAuth = () => {
   return useContext(AuthContext);
 };

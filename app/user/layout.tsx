@@ -20,6 +20,7 @@ import { IoMdClose } from "react-icons/io";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { HiOutlineSearch } from "react-icons/hi";
 import SetupModal from "@/components/ui/complete-setup";
+import { UserAuth } from "../context/AuthContext";
 
 type SidebarContextType = {
   isRightOpen: boolean;
@@ -42,6 +43,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const pathname = usePathname();
   const rightSidebarWidth = 380;
+  const { profile } = UserAuth()!;
 
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
   const [hasOpenedOnce, setHasOpenedOnce] = useState(false);
@@ -114,7 +116,7 @@ export default function Layout({ children }: LayoutProps) {
 
                   <div className="flex flex-col">
                     <p className="font-semibold text-sm">
-                      Jenny’s Convenient Store
+                      {profile?.store_name}
                     </p>
                     <p className="text-secondary text-xs font-medium">
                       Sunday, 22 August 2025

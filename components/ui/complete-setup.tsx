@@ -118,7 +118,7 @@ export default function SetupModal() {
     return null;
   }
 
-  // First time → show modal
+  // First time - show modal
   return (
     <div className="fixed inset-0 z-[9999999] flex items-center justify-center bg-black/30 backdrop-blur-md">
       <div className="w-full max-w-[1280px] sm:px-5 px-4 3xl:py-20 py-10 flex justify-center">
