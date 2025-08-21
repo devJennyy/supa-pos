@@ -109,9 +109,9 @@ export default function Layout({ children }: LayoutProps) {
                 <div className="flex items-center gap-4">
                   <div
                     className="w-12 h-12 rounded-full border bg-secondaryBackground flex items-center justify-center 
-                    text-lg font-semibold transition cursor-pointer"
+             text-lg font-semibold transition cursor-pointer"
                   >
-                    J
+                    {profile?.store_name?.charAt(0).toUpperCase() || "?"}
                   </div>
 
                   <div className="flex flex-col">
@@ -119,7 +119,13 @@ export default function Layout({ children }: LayoutProps) {
                       {profile?.store_name}
                     </p>
                     <p className="text-secondary text-xs font-medium">
-                      Sunday, 22 August 2025
+                      {`${new Date().toLocaleDateString("en-GB", {
+                        weekday: "long",
+                      })}, ${new Date().toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "long",
+                        year: "numeric",
+                      })}`}
                     </p>
                   </div>
                 </div>
