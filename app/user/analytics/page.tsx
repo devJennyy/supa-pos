@@ -1,7 +1,7 @@
 "use client";
 
 import OverviewCard from "@/components/dashboard/OverviewCard";
-import CustomOverview from "@/components/dashboard/CustomOverview";
+import CustomOverview from "@/components/analytics/CustomOverview";
 import { Chart } from "@/components/ui/chart-area";
 import { ChartBarMultiple } from "@/components/ui/chart-bar-multiple";
 import { ChartPieLegend } from "@/components/ui/chart-pie-legend";
