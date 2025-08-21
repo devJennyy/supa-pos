@@ -16,6 +16,7 @@ const StocksSkeleton = () => {
         </div>
 
         <SkeletonCard className="3xl:h-[980px] lg:h-[480px] h-[200px] w-full" />
+
         <div className="flex flex-col gap-2">
           <SkeletonCard className="h-5 w-1/4" />
           <SkeletonCard className="h-5 w-1/4" />
