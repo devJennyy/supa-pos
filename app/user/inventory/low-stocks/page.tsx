@@ -68,7 +68,7 @@ function classNames(...s: (string | undefined | false)[]) {
   return s.filter(Boolean).join(" ");
 }
 
-export default function LowStockPage({ data = MOCK }: { data?: StockItem[] }) {
+export default function LowStockPage() {
   const [query, setQuery] = React.useState("");
   const [category, setCategory] = React.useState<string>("all");
   const [onlyLow, setOnlyLow] = React.useState(true);
@@ -80,20 +80,20 @@ export default function LowStockPage({ data = MOCK }: { data?: StockItem[] }) {
   }, []);
 
   const categories = React.useMemo(() => {
-    const set = new Set<string>(data.map((d) => d.category));
+    const set = new Set<string>(MOCK.map((d) => d.category));
     return ["all", ...Array.from(set)];
-  }, [data]);
+  }, []);
 
   const filtered = React.useMemo(() => {
     const q = query.trim().toLowerCase();
-    return data.filter((d) => {
+    return MOCK.filter((d) => {
       const matchesQ = !q || d.name.toLowerCase().includes(q);
       const matchesC = category === "all" || d.category === category;
       const { label } = statusOf(d);
       const matchesLow = !onlyLow || label !== "Ok";
       return matchesQ && matchesC && matchesLow;
     });
-  }, [data, query, category, onlyLow]);
+  }, [query, category, onlyLow]);
 
   const renderTable = () => (
     <Table className="rounded-lg border overflow-hidden">
