@@ -60,7 +60,7 @@ const transactions: Transaction[] = [
   },
 ];
 
-const Page = () => {
+export default function TransactionPage() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     subDays(new Date(), 1)
   );
@@ -188,5 +188,3 @@ const Page = () => {
     </main>
   );
 };
-
-export default Page;

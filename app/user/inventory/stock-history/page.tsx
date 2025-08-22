@@ -57,7 +57,7 @@ const history: StockHistoryItem[] = [
   },
 ];
 
-export default function Page({
+export default function StockHistoryPage({
   data = history,
 }: {
   data?: StockHistoryItem[];

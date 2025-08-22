@@ -46,7 +46,7 @@ const stockData: Record<"daily" | "weekly" | "monthly", StockHistoryItem[]> = {
   ],
 };
 
-export default function Page() {
+export default function ReportPage() {
   const [tab, setTab] = useState<"daily" | "weekly" | "monthly">("daily");
 
   const getTitle = () => {

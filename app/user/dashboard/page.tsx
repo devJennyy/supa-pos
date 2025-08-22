@@ -6,7 +6,7 @@ import { Stocks } from "@/components/dashboard/Stocks";
 import OverviewCardSkeleton from "@/components/dashboard/skeletons/OverviewCard";
 import StocksSkeleton from "@/components/dashboard/skeletons/Stocks";
 
-export default function Page() {
+export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

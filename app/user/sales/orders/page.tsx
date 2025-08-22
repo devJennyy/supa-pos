@@ -6,7 +6,7 @@ import Categories from "@/components/ui/categories";
 import CategorySkeleton from "@/components/sales/skeletons/Categories";
 import ItemSelectionSkeleton from "@/components/sales/skeletons/Items";
 
-const Page = () => {
+export default function OrderPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -30,5 +30,3 @@ const Page = () => {
     </main>
   );
 };
-
-export default Page;

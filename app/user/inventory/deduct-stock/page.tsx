@@ -98,7 +98,7 @@ const MOCK: StockItem[] = [
   },
 ];
 
-export default function Page({ data = MOCK }: { data?: StockItem[] }) {
+export default function DeductStockPage({ data = MOCK }: { data?: StockItem[] }) {
   const [query, setQuery] = React.useState("");
   const [category, setCategory] = React.useState<string>("all");
   const [isLoading, setIsLoading] = useState(true);

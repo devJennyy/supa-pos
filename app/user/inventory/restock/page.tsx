@@ -6,7 +6,7 @@ import ItemSelectionSkeleton from "@/components/inventory/skeleton/Items";
 import Categories from "@/components/ui/categories";
 import React, { useEffect, useState } from "react";
 
-const Page = () => {
+export default function RestockPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -29,6 +29,4 @@ const Page = () => {
       )}
     </main>
   );
-};
-
-export default Page;
+}

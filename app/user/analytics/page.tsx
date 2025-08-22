@@ -6,7 +6,7 @@ import { Chart } from "@/components/ui/chart-area";
 import { ChartBarMultiple } from "@/components/ui/chart-bar-multiple";
 import { ChartPieLegend } from "@/components/ui/chart-pie-legend";
 
-export default function Page() {
+export default function AnalyticsPage() {
   return (
     <main className="flex flex-1 flex-col gap-8 lg:p-5 p-4">
       <OverviewCard />

@@ -68,7 +68,7 @@ function classNames(...s: (string | undefined | false)[]) {
   return s.filter(Boolean).join(" ");
 }
 
-export default function Page({ data = MOCK }: { data?: StockItem[] }) {
+export default function LowStockPage({ data = MOCK }: { data?: StockItem[] }) {
   const [query, setQuery] = React.useState("");
   const [category, setCategory] = React.useState<string>("all");
   const [onlyLow, setOnlyLow] = React.useState(true);
