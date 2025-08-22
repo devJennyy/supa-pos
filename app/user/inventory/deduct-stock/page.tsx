@@ -24,6 +24,13 @@ import SectionTitle from "@/components/ui/section-title";
 import { Label } from "@/components/ui/label";
 import DeductStocksSkeleton from "@/components/inventory/skeleton/DeductStock";
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
 export type StockItem = {
   id: string;
   name: string;
@@ -33,22 +40,76 @@ export type StockItem = {
 };
 
 const MOCK: StockItem[] = [
-  { id: "1", name: "Eggs", category: "Ingredients", stock: 4, unitDescription: "1 tray (12 pcs) medium" },
-  { id: "2", name: "All-Purpose Flour", category: "Ingredients", stock: 4, unitDescription: "1 kg bag" },
-  { id: "3", name: "Butter (Unsalted)", category: "Ingredients", stock: 7, unitDescription: "1 block" },
-  { id: "4", name: "Chocolate Chips", category: "Ingredients", stock: 13, unitDescription: "1 pack" },
-  { id: "5", name: "Cupcake Box (6s)", category: "Packaging", stock: 22, unitDescription: "1 box" },
-  { id: "6", name: "White Sugar", category: "Ingredients", stock: 5, unitDescription: "1 kg bag" },
-  { id: "7", name: "Vanilla Extract", category: "Ingredients", stock: 0, unitDescription: "1 bottle" },
-  { id: "8", name: "Delivery Tape", category: "Supplies", stock: 9, unitDescription: "1 roll" },
-  { id: "9", name: "Feeling Fresh", category: "Products", stock: 4, unitDescription: "55g" },
+  {
+    id: "1",
+    name: "Eggs",
+    category: "Ingredients",
+    stock: 4,
+    unitDescription: "1 tray (12 pcs) medium",
+  },
+  {
+    id: "2",
+    name: "All-Purpose Flour",
+    category: "Ingredients",
+    stock: 4,
+    unitDescription: "1 kg bag",
+  },
+  {
+    id: "3",
+    name: "Butter (Unsalted)",
+    category: "Ingredients",
+    stock: 7,
+    unitDescription: "1 block",
+  },
+  {
+    id: "4",
+    name: "Chocolate Chips",
+    category: "Ingredients",
+    stock: 13,
+    unitDescription: "1 pack",
+  },
+  {
+    id: "5",
+    name: "Cupcake Box (6s)",
+    category: "Packaging",
+    stock: 22,
+    unitDescription: "1 box",
+  },
+  {
+    id: "6",
+    name: "White Sugar",
+    category: "Ingredients",
+    stock: 5,
+    unitDescription: "1 kg bag",
+  },
+  {
+    id: "7",
+    name: "Vanilla Extract",
+    category: "Ingredients",
+    stock: 0,
+    unitDescription: "1 bottle",
+  },
+  {
+    id: "8",
+    name: "Delivery Tape",
+    category: "Supplies",
+    stock: 9,
+    unitDescription: "1 roll",
+  },
+  {
+    id: "9",
+    name: "Feeling Fresh",
+    category: "Products",
+    stock: 4,
+    unitDescription: "55g",
+  },
 ];
 
 export default function DeductStockPage() {
-  const [query, setQuery] = React.useState("");
-  const [category, setCategory] = React.useState<string>("all");
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState<string>("all");
   const [isLoading, setIsLoading] = useState(true);
-  const [deductValues, setDeductValues] = React.useState<Record<string, number>>({});
+  const [deductValues, setDeductValues] = useState<Record<string, number>>({});
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1000);
@@ -101,7 +162,11 @@ export default function DeductStockPage() {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                 />
-                <Button variant="default" size="icon" onClick={() => setQuery("")}>
+                <Button
+                  variant="default"
+                  size="icon"
+                  onClick={() => setQuery("")}
+                >
                   <RefreshCcw className="h-4 w-4" />
                 </Button>
               </div>
@@ -124,54 +189,120 @@ export default function DeductStockPage() {
             </div>
           </div>
 
-          {/* Table */}
-          <Card className="border border-border/50 px-5 bg-secondaryBackground/30 !mt-2">
-            <Table className="rounded-lg border overflow-hidden">
-              <TableHeader className="sticky top-0 bg-input z-10 h-14">
-                <TableRow>
-                  <TableHead className="w-[35%] px-5">Item</TableHead>
-                  <TableHead className="w-[25%]">Category</TableHead>
-                  <TableHead className="w-[20%]">Unit</TableHead>
-                  <TableHead className="w-[20%]">Deduct</TableHead>
-                  <TableHead className="w-[10%]"></TableHead>
-                </TableRow>
-              </TableHeader>
+          {/* Desktop Table */}
+          <div className="hidden md:block">
+            <Card className="border border-border/50 px-5 bg-secondaryBackground/30 !mt-2">
+              <Table className="rounded-lg border overflow-hidden">
+                <TableHeader className="sticky top-0 bg-input z-10 h-14">
+                  <TableRow>
+                    <TableHead className="w-[35%] px-5">Item</TableHead>
+                    <TableHead className="w-[25%]">Category</TableHead>
+                    <TableHead className="w-[20%]">Unit</TableHead>
+                    <TableHead className="w-[20%]">Deduct</TableHead>
+                    <TableHead className="w-[10%]"></TableHead>
+                  </TableRow>
+                </TableHeader>
 
-              <TableBody className="bg-secondaryBackground">
-                {filtered.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell className="font-medium px-5 text-secondary">
-                      {item.name}
-                    </TableCell>
-                    <TableCell>{item.category}</TableCell>
-                    <TableCell>{item.unitDescription || "unit"}</TableCell>
-                    <TableCell>
+                <TableBody className="bg-secondaryBackground">
+                  {filtered.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell className="font-medium px-5 text-secondary">
+                        {item.name}
+                      </TableCell>
+                      <TableCell>{item.category}</TableCell>
+                      <TableCell>{item.unitDescription || "unit"}</TableCell>
+                      <TableCell>
+                        <Input
+                          type="number"
+                          min={0}
+                          value={deductValues[item.id] || ""}
+                          onChange={(e) =>
+                            handleDeductChange(item.id, e.target.value)
+                          }
+                          className="w-20 h-8"
+                        />
+                      </TableCell>
+                      <TableCell className="pr-5">
+                        <Button
+                          size="sm"
+                          variant="default"
+                          onClick={() => handleDeductItem(item.id)}
+                        >
+                          Deduct Item
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+
+                  {filtered.length === 0 && (
+                    <TableRow>
+                      <TableCell
+                        colSpan={5}
+                        className="text-center py-10 text-muted-foreground"
+                      >
+                        No items match your filters.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </Card>
+          </div>
+
+          {/* Mobile Accordion */}
+          <div className="block md:hidden">
+            <Accordion type="single" collapsible className="space-y-3 w-full">
+              {filtered.map((item) => (
+                <AccordionItem
+                  key={item.id}
+                  value={item.id}
+                  className="border rounded-lg overflow-hidden"
+                >
+                  <AccordionTrigger className="flex items-center justify-between w-full p-3 bg-secondaryBackground rounded-t rounded-b-none">
+                    <div className="flex flex-col text-left gap-1">
+                      <span className="font-medium">{item.name}</span>
+                      <span className="text-xs text-muted-foreground">
+                        Unit: {item.unitDescription || "unit"}
+                      </span>
+                    </div>
+                  </AccordionTrigger>
+
+                  <AccordionContent className="px-3 pb-3 border-t space-y-3 text-sm">
+                    <div className="flex justify-between items-center !mt-3">
+                      <span className="text-muted-foreground">Category:</span>
+                      <span>{item.category}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground">Deduct:</span>
                       <Input
                         type="number"
                         min={0}
                         value={deductValues[item.id] || ""}
-                        onChange={(e) => handleDeductChange(item.id, e.target.value)}
+                        onChange={(e) =>
+                          handleDeductChange(item.id, e.target.value)
+                        }
                         className="w-20 h-8"
                       />
-                    </TableCell>
-                    <TableCell className="pr-5">
-                      <Button size="sm" variant="default" onClick={() => handleDeductItem(item.id)}>
-                        Deduct Item
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="default"
+                      className="w-full !mt-5 flex items-center justify-center gap-2"
+                      onClick={() => handleDeductItem(item.id)}
+                    >
+                      Deduct Item
+                    </Button>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
 
-                {filtered.length === 0 && (
-                  <TableRow>
-                    <TableCell colSpan={5} className="text-center py-10 text-muted-foreground">
-                      No items match your filters.
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </Card>
+              {filtered.length === 0 && (
+                <p className="text-center text-muted-foreground py-6">
+                  No items match your filters.
+                </p>
+              )}
+            </Accordion>
+          </div>
         </>
       )}
     </main>

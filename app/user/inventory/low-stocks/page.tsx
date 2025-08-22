@@ -226,7 +226,7 @@ export default function LowStockPage() {
                     </AccordionTrigger>
 
                     <AccordionContent className="px-3 pb-3 border-t space-y-3 text-sm">
-                      <div className="flex justify-between !mt-2">
+                      <div className="flex justify-between !mt-3">
                         <span className="text-muted-foreground">Category:</span>
                         <span>{item.category}</span>
                       </div>
