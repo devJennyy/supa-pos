@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -14,7 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { DatePicker } from "@/components/ui/date-picker";
-import { subDays } from "date-fns";
+import { subDays, format } from "date-fns";
 import StockHistorySkeleton from "@/components/inventory/skeleton/StockHistory";
 
 export type StockHistoryItem = {
@@ -24,7 +25,7 @@ export type StockHistoryItem = {
   unitDescription?: string;
   action: "Added" | "Deducted";
   quantity: number;
-  timestamp: string;
+  timestamp: string; // stored as formatted string
 };
 
 const history: StockHistoryItem[] = [
@@ -62,13 +63,8 @@ export default function StockHistoryPage({
 }: {
   data?: StockHistoryItem[];
 }) {
-  const [tab, setTab] = React.useState<"all" | "deducted" | "added">("all");
-
-  const filteredData = data.filter((item) => {
-    if (tab === "deducted") return item.action === "Deducted";
-    if (tab === "added") return item.action === "Added";
-    return true;
-  });
+  const [todayTab, setTodayTab] = useState<"all" | "deducted" | "added">("all");
+  const [dateTab, setDateTab] = useState<"all" | "deducted" | "added">("all");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     subDays(new Date(), 1)
   );
@@ -79,12 +75,34 @@ export default function StockHistoryPage({
     return () => clearTimeout(timer);
   }, []);
 
+  // Filter for Today (using today’s date)
+  const todayString = format(new Date(), "yyyy-MM-dd");
+  const todayData = data.filter((item) =>
+    item.timestamp.startsWith(todayString)
+  );
+  const filteredToday = todayData.filter((item) => {
+    if (todayTab === "deducted") return item.action === "Deducted";
+    if (todayTab === "added") return item.action === "Added";
+    return true;
+  });
+
+  // Filter for selected custom date
+  const selectedDateString = selectedDate
+    ? format(selectedDate, "yyyy-MM-dd")
+    : "";
+  const customDateData = data.filter((item) =>
+    selectedDateString ? item.timestamp.startsWith(selectedDateString) : true
+  );
+  const filteredCustom = customDateData.filter((item) => {
+    if (dateTab === "deducted") return item.action === "Deducted";
+    if (dateTab === "added") return item.action === "Added";
+    return true;
+  });
+
   return (
     <main className="flex flex-1 flex-col gap-4 lg:p-5 p-4">
       {isLoading ? (
-        <>
-          <StockHistorySkeleton />
-        </>
+        <StockHistorySkeleton />
       ) : (
         <>
           <SectionTitle
@@ -93,13 +111,8 @@ export default function StockHistoryPage({
             direction="col"
           />
 
-          {/* Today's History */}
-          <Tabs
-            value={tab}
-            onValueChange={(value) =>
-              setTab(value as "all" | "deducted" | "added")
-            }
-          >
+          {/* Today’s History */}
+          <Tabs value={todayTab} onValueChange={(v) => setTodayTab(v as any)}>
             <div className="flex lg:flex-row flex-col justify-between lg:!mb-1 !mb-2 gap-2">
               <SectionTitle title="Today" />
               <TabsList>
@@ -109,7 +122,7 @@ export default function StockHistoryPage({
               </TabsList>
             </div>
             <Card className="border border-border/50 px-5 bg-secondaryBackground/30">
-              <TabsContent value={tab}>
+              <TabsContent value={todayTab}>
                 <Table className="rounded-lg border overflow-hidden">
                   <TableHeader className="sticky top-0 bg-input z-10 h-14">
                     <TableRow>
@@ -121,32 +134,33 @@ export default function StockHistoryPage({
                       <TableHead className="w-[20%]">Date & Time</TableHead>
                     </TableRow>
                   </TableHeader>
-
                   <TableBody className="bg-secondaryBackground">
-                    {filteredData.map((item) => (
-                      <TableRow key={item.id}>
-                        <TableCell className="font-medium px-5 text-secondary h-14">
-                          {item.name}
-                        </TableCell>
-                        <TableCell>{item.category}</TableCell>
-                        <TableCell>{item.unitDescription || "unit"}</TableCell>
-                        <TableCell>
-                          <Badge
-                            variant={
-                              item.action === "Added"
-                                ? "default"
-                                : "destructive"
-                            }
-                          >
-                            {item.action}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>{item.quantity}</TableCell>
-                        <TableCell className="pr-5">{item.timestamp}</TableCell>
-                      </TableRow>
-                    ))}
-
-                    {filteredData.length === 0 && (
+                    {filteredToday.length > 0 ? (
+                      filteredToday.map((item) => (
+                        <TableRow key={item.id}>
+                          <TableCell className="font-medium px-5 text-secondary h-14">
+                            {item.name}
+                          </TableCell>
+                          <TableCell>{item.category}</TableCell>
+                          <TableCell>{item.unitDescription || "unit"}</TableCell>
+                          <TableCell>
+                            <Badge
+                              variant={
+                                item.action === "Added"
+                                  ? "default"
+                                  : "destructive"
+                              }
+                            >
+                              {item.action}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>{item.quantity}</TableCell>
+                          <TableCell className="pr-5">
+                            {item.timestamp}
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
                       <TableRow>
                         <TableCell
                           colSpan={6}
@@ -163,13 +177,7 @@ export default function StockHistoryPage({
           </Tabs>
 
           {/* Custom Date History */}
-          <Tabs
-            value={tab}
-            onValueChange={(value) =>
-              setTab(value as "all" | "deducted" | "added")
-            }
-            className="!mt-5"
-          >
+          <Tabs value={dateTab} onValueChange={(v) => setDateTab(v as any)} className="!mt-5">
             <div className="flex lg:flex-row flex-col justify-between lg:!mb-1 !mb-2 gap-2">
               <DatePicker date={selectedDate} setDate={setSelectedDate} />
               <TabsList>
@@ -179,7 +187,7 @@ export default function StockHistoryPage({
               </TabsList>
             </div>
             <Card className="border border-border/50 px-5 bg-secondaryBackground/30">
-              <TabsContent value={tab}>
+              <TabsContent value={dateTab}>
                 <Table className="rounded-lg border overflow-hidden">
                   <TableHeader className="sticky top-0 bg-input z-10 h-14">
                     <TableRow>
@@ -191,32 +199,33 @@ export default function StockHistoryPage({
                       <TableHead className="w-[20%]">Date & Time</TableHead>
                     </TableRow>
                   </TableHeader>
-
                   <TableBody className="bg-secondaryBackground">
-                    {filteredData.map((item) => (
-                      <TableRow key={item.id}>
-                        <TableCell className="font-medium px-5 text-secondary h-14">
-                          {item.name}
-                        </TableCell>
-                        <TableCell>{item.category}</TableCell>
-                        <TableCell>{item.unitDescription || "unit"}</TableCell>
-                        <TableCell>
-                          <Badge
-                            variant={
-                              item.action === "Added"
-                                ? "default"
-                                : "destructive"
-                            }
-                          >
-                            {item.action}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>{item.quantity}</TableCell>
-                        <TableCell className="pr-5">{item.timestamp}</TableCell>
-                      </TableRow>
-                    ))}
-
-                    {filteredData.length === 0 && (
+                    {filteredCustom.length > 0 ? (
+                      filteredCustom.map((item) => (
+                        <TableRow key={item.id}>
+                          <TableCell className="font-medium px-5 text-secondary h-14">
+                            {item.name}
+                          </TableCell>
+                          <TableCell>{item.category}</TableCell>
+                          <TableCell>{item.unitDescription || "unit"}</TableCell>
+                          <TableCell>
+                            <Badge
+                              variant={
+                                item.action === "Added"
+                                  ? "default"
+                                  : "destructive"
+                              }
+                            >
+                              {item.action}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>{item.quantity}</TableCell>
+                          <TableCell className="pr-5">
+                            {item.timestamp}
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
                       <TableRow>
                         <TableCell
                           colSpan={6}
