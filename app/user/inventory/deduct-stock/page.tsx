@@ -33,98 +33,41 @@ export type StockItem = {
 };
 
 const MOCK: StockItem[] = [
-  {
-    id: "1",
-    name: "Eggs",
-    category: "Ingredients",
-    stock: 4,
-    unitDescription: "1 tray (12 pcs) medium",
-  },
-  {
-    id: "2",
-    name: "All-Purpose Flour",
-    category: "Ingredients",
-    stock: 4,
-    unitDescription: "1 kg bag",
-  },
-  {
-    id: "3",
-    name: "Butter (Unsalted)",
-    category: "Ingredients",
-    stock: 7,
-    unitDescription: "1 block",
-  },
-  {
-    id: "4",
-    name: "Chocolate Chips",
-    category: "Ingredients",
-    stock: 13,
-    unitDescription: "1 pack",
-  },
-  {
-    id: "5",
-    name: "Cupcake Box (6s)",
-    category: "Packaging",
-    stock: 22,
-    unitDescription: "1 box",
-  },
-  {
-    id: "6",
-    name: "White Sugar",
-    category: "Ingredients",
-    stock: 5,
-    unitDescription: "1 kg bag",
-  },
-  {
-    id: "7",
-    name: "Vanilla Extract",
-    category: "Ingredients",
-    stock: 0,
-    unitDescription: "1 bottle",
-  },
-  {
-    id: "8",
-    name: "Delivery Tape",
-    category: "Supplies",
-    stock: 9,
-    unitDescription: "1 roll",
-  },
-  {
-    id: "9",
-    name: "Feeling Fresh",
-    category: "Products",
-    stock: 4,
-    unitDescription: "55g",
-  },
+  { id: "1", name: "Eggs", category: "Ingredients", stock: 4, unitDescription: "1 tray (12 pcs) medium" },
+  { id: "2", name: "All-Purpose Flour", category: "Ingredients", stock: 4, unitDescription: "1 kg bag" },
+  { id: "3", name: "Butter (Unsalted)", category: "Ingredients", stock: 7, unitDescription: "1 block" },
+  { id: "4", name: "Chocolate Chips", category: "Ingredients", stock: 13, unitDescription: "1 pack" },
+  { id: "5", name: "Cupcake Box (6s)", category: "Packaging", stock: 22, unitDescription: "1 box" },
+  { id: "6", name: "White Sugar", category: "Ingredients", stock: 5, unitDescription: "1 kg bag" },
+  { id: "7", name: "Vanilla Extract", category: "Ingredients", stock: 0, unitDescription: "1 bottle" },
+  { id: "8", name: "Delivery Tape", category: "Supplies", stock: 9, unitDescription: "1 roll" },
+  { id: "9", name: "Feeling Fresh", category: "Products", stock: 4, unitDescription: "55g" },
 ];
 
-export default function DeductStockPage({ data = MOCK }: { data?: StockItem[] }) {
+export default function DeductStockPage() {
   const [query, setQuery] = React.useState("");
   const [category, setCategory] = React.useState<string>("all");
   const [isLoading, setIsLoading] = useState(true);
+  const [deductValues, setDeductValues] = React.useState<Record<string, number>>({});
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
-  const [deductValues, setDeductValues] = React.useState<
-    Record<string, number>
-  >({});
-
   const categories = React.useMemo(() => {
-    const set = new Set<string>(data.map((d) => d.category));
+    const set = new Set<string>(MOCK.map((d) => d.category));
     return ["all", ...Array.from(set)];
-  }, [data]);
+  }, []);
 
   const filtered = React.useMemo(() => {
     const q = query.trim().toLowerCase();
-    return data.filter((item) => {
+    return MOCK.filter((item) => {
       const matchesSearch = !q || item.name.toLowerCase().includes(q);
       const matchesCategory = category === "all" || item.category === category;
       return matchesSearch && matchesCategory;
     });
-  }, [data, query, category]);
+  }, [query, category]);
 
   const handleDeductChange = (id: string, value: string) => {
     const num = parseInt(value) || 0;
@@ -138,9 +81,7 @@ export default function DeductStockPage({ data = MOCK }: { data?: StockItem[] })
   return (
     <main className="flex flex-1 flex-col gap-4 lg:p-5 p-4">
       {isLoading ? (
-        <>
-          <DeductStocksSkeleton />
-        </>
+        <DeductStocksSkeleton />
       ) : (
         <>
           <SectionTitle
@@ -160,11 +101,7 @@ export default function DeductStockPage({ data = MOCK }: { data?: StockItem[] })
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                 />
-                <Button
-                  variant="default"
-                  size="icon"
-                  onClick={() => setQuery("")}
-                >
+                <Button variant="default" size="icon" onClick={() => setQuery("")}>
                   <RefreshCcw className="h-4 w-4" />
                 </Button>
               </div>
@@ -213,18 +150,12 @@ export default function DeductStockPage({ data = MOCK }: { data?: StockItem[] })
                         type="number"
                         min={0}
                         value={deductValues[item.id] || ""}
-                        onChange={(e) =>
-                          handleDeductChange(item.id, e.target.value)
-                        }
+                        onChange={(e) => handleDeductChange(item.id, e.target.value)}
                         className="w-20 h-8"
                       />
                     </TableCell>
                     <TableCell className="pr-5">
-                      <Button
-                        size="sm"
-                        variant="default"
-                        onClick={() => handleDeductItem(item.id)}
-                      >
+                      <Button size="sm" variant="default" onClick={() => handleDeductItem(item.id)}>
                         Deduct Item
                       </Button>
                     </TableCell>
@@ -233,10 +164,7 @@ export default function DeductStockPage({ data = MOCK }: { data?: StockItem[] })
 
                 {filtered.length === 0 && (
                   <TableRow>
-                    <TableCell
-                      colSpan={5}
-                      className="text-center py-10 text-muted-foreground"
-                    >
+                    <TableCell colSpan={5} className="text-center py-10 text-muted-foreground">
                       No items match your filters.
                     </TableCell>
                   </TableRow>
