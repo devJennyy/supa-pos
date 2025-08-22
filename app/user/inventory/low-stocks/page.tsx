@@ -25,7 +25,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RefreshCcw } from "lucide-react";
 import SectionTitle from "@/components/ui/section-title";
 import { FiPlus } from "react-icons/fi";
-import StocksSkeleton from "@/components/dashboard/skeletons/Stocks";
 
 import {
   Accordion,
@@ -33,6 +32,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import LowStockSkeleton from "@/components/inventory/skeleton/LowStocks";
 
 export type StockItem = {
   id: string;
@@ -100,7 +100,7 @@ export default function LowStockPage() {
   return (
     <main className="flex flex-1 flex-col gap-4 lg:p-5 p-4">
       {isLoading ? (
-        <StocksSkeleton />
+        <LowStockSkeleton />
       ) : (
         <>
           <SectionTitle

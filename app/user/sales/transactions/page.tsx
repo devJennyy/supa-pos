@@ -66,19 +66,19 @@ export default function TransactionPage() {
           <Table className="rounded-lg border overflow-hidden">
             <TableHeader className="sticky top-0 bg-input z-10 h-14">
               <TableRow>
-                <TableHead>Reference #</TableHead>
+                <TableHead className="px-5">Reference #</TableHead>
                 <TableHead>Date</TableHead>
                 <TableHead>Time</TableHead>
                 <TableHead>Items</TableHead>
                 <TableHead>Total</TableHead>
-                <TableHead className="w-[15%]">Payment Method</TableHead>
-                <TableHead className="w-[10%]">Action</TableHead>
+                <TableHead className="w-[10%]">Mop</TableHead>
+                <TableHead className="w-[15%]">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody className="bg-secondaryBackground">
               {transactions.map((txn) => (
                 <TableRow key={txn.id} className="text-[13px]">
-                  <TableCell className="font-medium text-secondary">{txn.id}</TableCell>
+                  <TableCell className="font-medium text-secondary px-5">{txn.id}</TableCell>
                   <TableCell>{txn.date}</TableCell>
                   <TableCell>{txn.time}</TableCell>
                   <TableCell>{txn.items}</TableCell>
@@ -167,19 +167,19 @@ export default function TransactionPage() {
             <Table className="rounded-lg border overflow-hidden">
               <TableHeader className="sticky top-0 bg-input z-10 h-14">
                 <TableRow>
-                  <TableHead>Reference #</TableHead>
+                  <TableHead className="px-5">Reference #</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Time</TableHead>
                   <TableHead>Items</TableHead>
                   <TableHead>Total</TableHead>
-                  <TableHead className="w-[15%]">Payment Method</TableHead>
-                  <TableHead className="w-[10%]">Action</TableHead>
+                  <TableHead className="w-[10%]">Mop</TableHead>
+                  <TableHead className="w-[15%]">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody className="bg-secondaryBackground">
                 {transactions.map((txn) => (
                   <TableRow key={txn.id} className="text-[13px]">
-                    <TableCell className="font-medium text-secondary">{txn.id}</TableCell>
+                    <TableCell className="font-medium text-secondary px-5">{txn.id}</TableCell>
                     <TableCell>{txn.date}</TableCell>
                     <TableCell>{txn.time}</TableCell>
                     <TableCell>{txn.items}</TableCell>

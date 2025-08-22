@@ -28,11 +28,11 @@ const DeductStocksSkeleton = () => {
 
       <div className="border border-border/50 px-5 bg-secondaryBackground/30 rounded-xl !mt-2">
         <div className="flex justify-between py-3 border-b">
-          <SkeletonCard className="h-4 w-[25%]" />
-          <SkeletonCard className="h-4 w-[20%]" />
-          <SkeletonCard className="h-4 w-[20%]" />
-          <SkeletonCard className="h-4 w-[15%]" />
-          <SkeletonCard className="h-4 w-[10%]" />
+          <SkeletonCard className="h-8 w-[25%]" />
+          <SkeletonCard className="h-8 w-[20%]" />
+          <SkeletonCard className="h-8 w-[20%]" />
+          <SkeletonCard className="h-8 w-[15%]" />
+          <SkeletonCard className="h-8 w-[10%]" />
         </div>
 
         <div className="flex flex-col divide-y">
