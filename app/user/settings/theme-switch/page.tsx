@@ -5,7 +5,7 @@ import { Check } from "lucide-react";
 import SectionTitle from "@/components/ui/section-title";
 
 export default function ThemeSwitchPage() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
   const isDark = theme === "dark";
 
   return (
