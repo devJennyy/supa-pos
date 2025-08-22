@@ -24,7 +24,8 @@ import {
 import { FiChevronRight } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Image from "next/image";
-import ThemeToggle from "./theme-toggle";
+import { UserAuth } from "@/app/context/AuthContext";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -70,18 +71,17 @@ function SidebarProvider({
   const isMobile = useIsMobile();
   const [openMobile, setOpenMobile] = React.useState(false);
   function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState(false);
+    const [isMobile, setIsMobile] = React.useState(false);
 
-  React.useEffect(() => {
-    const checkScreen = () => setIsMobile(window.innerWidth < 1024);
-    checkScreen();
-    window.addEventListener("resize", checkScreen);
-    return () => window.removeEventListener("resize", checkScreen);
-  }, []);
+    React.useEffect(() => {
+      const checkScreen = () => setIsMobile(window.innerWidth < 1024);
+      checkScreen();
+      window.addEventListener("resize", checkScreen);
+      return () => window.removeEventListener("resize", checkScreen);
+    }, []);
 
-  return isMobile;
-}
-
+    return isMobile;
+  }
 
   const [_open, _setOpen] = React.useState(defaultOpen);
   const open = openProp ?? _open;
@@ -188,87 +188,87 @@ function Sidebar({
   }
 
   if (isMobile && side === "left") {
+    return (
+      <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+        <SheetContent
+          data-sidebar="sidebar"
+          data-slot="sidebar"
+          data-mobile="true"
+          className="bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
+          style={
+            {
+              "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
+            } as React.CSSProperties
+          }
+          side={side}
+        >
+          <SheetHeader className="sr-only">
+            <SheetTitle>Sidebar</SheetTitle>
+            <SheetDescription>Displays the mobile sidebar.</SheetDescription>
+          </SheetHeader>
+          <div className="flex h-full w-full flex-col">{children}</div>
+        </SheetContent>
+      </Sheet>
+    );
+  }
+
   return (
-    <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
-      <SheetContent
-        data-sidebar="sidebar"
-        data-slot="sidebar"
-        data-mobile="true"
-        className="bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
-        style={
-          {
-            "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
-          } as React.CSSProperties
-        }
-        side={side}
+    <div
+      className={cn(
+        "group peer text-sidebar-foreground",
+        side === "right" ? "block" : "hidden lg:block"
+      )}
+      data-state={state}
+      data-collapsible={state === "collapsed" ? collapsible : ""}
+      data-variant={variant}
+      data-side={side}
+      data-slot="sidebar"
+    >
+      {/* Handles the sidebar gap on desktop */}
+      <div
+        data-slot="sidebar-gap"
+        className={cn(
+          "relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear",
+          "group-data-[collapsible=offcanvas]:w-20",
+          "group-data-[side=right]:rotate-180",
+          variant === "floating" || variant === "inset"
+            ? "group-data-[ollapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]"
+            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon)"
+        )}
+      />
+      <div
+        data-slot="sidebar-container"
+        className={cn(
+          "fixed inset-y-0 z-10 h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
+          side === "left"
+            ? "left-0 group-data-[collapsible=offcanvas]:w-20"
+            : "right-0 group-data-[collapsible=offcanvas]:w-20",
+          variant === "floating" || variant === "inset"
+            ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
+            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l",
+          className
+        )}
+        {...props}
       >
-        <SheetHeader className="sr-only">
-          <SheetTitle>Sidebar</SheetTitle>
-          <SheetDescription>Displays the mobile sidebar.</SheetDescription>
-        </SheetHeader>
-        <div className="flex h-full w-full flex-col">{children}</div>
-      </SheetContent>
-    </Sheet>
+        <div
+          data-sidebar="sidebar"
+          data-slot="sidebar-inner"
+          className="z-0 bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
+        >
+          {children}
+        </div>
+      </div>
+    </div>
   );
 }
 
-  return (
-  <div
-    className={cn(
-      "group peer text-sidebar-foreground",
-      side === "right" ? "block" : "hidden lg:block"
-    )}
-    data-state={state}
-    data-collapsible={state === "collapsed" ? collapsible : ""}
-    data-variant={variant}
-    data-side={side}
-    data-slot="sidebar"
-  >
-    {/* Handles the sidebar gap on desktop */}
-    <div
-      data-slot="sidebar-gap"
-      className={cn(
-        "relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear",
-        "group-data-[collapsible=offcanvas]:w-20",
-        "group-data-[side=right]:rotate-180",
-        variant === "floating" || variant === "inset"
-          ? "group-data-[ollapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]"
-          : "group-data-[collapsible=icon]:w-(--sidebar-width-icon)"
-      )}
-    />
-    <div
-      data-slot="sidebar-container"
-      className={cn(
-        "fixed inset-y-0 z-10 h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
-        side === "left"
-          ? "left-0 group-data-[collapsible=offcanvas]:w-20"
-          : "right-0 group-data-[collapsible=offcanvas]:w-20",
-        variant === "floating" || variant === "inset"
-          ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
-          : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l",
-        className
-      )}
-      {...props}
-    >
-      <div
-        data-sidebar="sidebar"
-        data-slot="sidebar-inner"
-        className="z-0 bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
-      >
-        {children}
-      </div>
-    </div>
-  </div>
-);
-
-}
-
-function SidebarTrigger({ 
+function SidebarTrigger({
   className,
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar } = useSidebar();
+  const { profile } = UserAuth()!;
 
   return (
     <>
@@ -286,7 +286,7 @@ function SidebarTrigger({
         }}
         {...props}
       >
-        <FiChevronRight className="text-foreground"/>
+        <FiChevronRight className="text-foreground" />
         <span className="sr-only">Toggle Sidebar</span>
       </Button>
 
@@ -330,7 +330,20 @@ function SidebarTrigger({
           />
         </a>
 
-        <ThemeToggle />
+        <Popover>
+          <PopoverTrigger asChild>
+            <div
+              className="w-10 h-10 rounded-full border bg-input flex items-center justify-center 
+          text-lg font-semibold transition cursor-pointer"
+            >
+              {profile?.store_name?.charAt(0).toUpperCase() || "?"}
+            </div>
+          </PopoverTrigger>
+
+          <PopoverContent className="w-fit bg-secondaryBackground border p-3 !mr-4 !mt-1">
+            <p className="text-sm">{profile?.store_name || "SupaPOS"}</p>
+          </PopoverContent>
+        </Popover>
       </div>
     </>
   );
@@ -606,7 +619,6 @@ function SidebarMenuButton({
   );
 }
 
-
 function SidebarMenuAction({
   className,
   asChild = false,
@@ -761,7 +773,6 @@ function SidebarMenuSubButton({
     />
   );
 }
-
 
 export {
   Sidebar,

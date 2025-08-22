@@ -1,12 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Check } from "lucide-react";
 import SectionTitle from "@/components/ui/section-title";
 
 export default function ThemeSwitchPage() {
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
   const isDark = theme === "dark";
+
+  useEffect(() => {
+    if (document.documentElement.classList.contains("dark")) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  }, []);
 
   return (
     <div className="flex flex-1 flex-col lg:p-5 p-4 transition-default">
@@ -30,7 +38,7 @@ export default function ThemeSwitchPage() {
               }`}
               onClick={() => {
                 setTheme("dark");
-                document.documentElement.classList.toggle("dark", true);
+                document.documentElement.classList.add("dark");
               }}
             >
               <div className="overflow-hidden relative w-full sm:h-80 h-40 rounded-2xl border shadow-sm transition-all duration-500 ease-in-out bg-[#1A202C] text-white flex flex-col">
@@ -78,7 +86,7 @@ export default function ThemeSwitchPage() {
               }`}
               onClick={() => {
                 setTheme("light");
-                document.documentElement.classList.toggle("dark", false);
+                document.documentElement.classList.remove("dark");
               }}
             >
               <div className="overflow-hidden relative w-full sm:h-80 h-40 rounded-2xl border shadow-sm transition-all duration-500 ease-in-out bg-[#FCFCFD] flex flex-col">
