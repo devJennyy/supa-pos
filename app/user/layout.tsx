@@ -42,7 +42,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const pathname = usePathname();
-  const rightSidebarWidth = 380;
+  // const rightSidebarWidth = 380;
   const { profile } = UserAuth()!;
 
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
@@ -134,12 +134,12 @@ export default function Layout({ children }: LayoutProps) {
 
             {/* Content */}
             <motion.div
-              animate={{
-                marginRight:
-                  showRightSidebar && isRightSidebarOpen
-                    ? rightSidebarWidth
-                    : 0,
-              }}
+              // animate={{
+              //   marginRight:
+              //     showRightSidebar && isRightSidebarOpen
+              //       ? rightSidebarWidth
+              //       : 0,
+              // }}
               transition={{ type: "tween", duration: 0.3 }}
               className="flex flex-col min-h-[calc(100%-4rem)]"
             >
