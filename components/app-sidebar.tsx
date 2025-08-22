@@ -66,13 +66,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const settingsItems = [
     {
       title: "Account Settings",
-      url: "/user/settings",
+      url: "/user/settings/account-settings",
       icon: RiSettings3Fill,
       iconSize: 19,
     },
     {
       title: "Theme Color",
-      url: "/user/theme",
+      url: "/user/settings/theme-switch",
       icon: BsFillMoonStarsFill,
       iconSize: 15,
     },
