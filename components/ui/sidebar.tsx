@@ -570,9 +570,14 @@ function SidebarMenuButton({
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     onClick?.(e);
-    if (isMobile) setOpenMobile(false);
-  };
 
+    const hasChildren =
+      (e.currentTarget as HTMLElement).dataset.hasChildren === "true";
+
+    if (isMobile && !hasChildren) {
+      setOpenMobile(false);
+    }
+  };
 
   const button = (
     <Comp
@@ -600,6 +605,7 @@ function SidebarMenuButton({
     </Tooltip>
   );
 }
+
 
 function SidebarMenuAction({
   className,

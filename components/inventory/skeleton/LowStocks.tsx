@@ -4,7 +4,7 @@ import React from "react";
 import SkeletonCard from "@/components/ui/skeleton-loading";
 
 const LowStockSkeleton = () => {
-  const skeletonItems = Array.from({ length: 3 }); // 3 big cards
+  const skeletonItems = Array.from({ length: 3 });
 
   return (
     <main className="flex flex-1 flex-col gap-6 lg:p-5 p-4">

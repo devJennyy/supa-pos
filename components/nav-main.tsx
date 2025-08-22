@@ -87,6 +87,7 @@ export function NavMain({
                   ) : hasChildren ? (
                     <SidebarMenuButton
                       tooltip={item.title}
+                      data-has-children="true"
                       className={`flex gap-3 items-center relative px-3 h-14 sidebar-btn transition-default cursor-pointer ${
                         item.isActive ? "bg-input" : ""
                       }`}
@@ -111,6 +112,7 @@ export function NavMain({
                     <SidebarMenuButton
                       tooltip={item.title}
                       onClick={item.onClick}
+                      data-has-children="false"
                       className={`flex gap-3 items-center relative px-3 h-14 sidebar-btn transition-default cursor-pointer ${
                         item.isActive ? "bg-input" : ""
                       }`}
@@ -134,6 +136,7 @@ export function NavMain({
                     <Link href={item.url ?? "#"} className="block">
                       <SidebarMenuButton
                         tooltip={item.title}
+                        data-has-children="false"
                         className={`flex gap-3 items-center relative px-3 h-14 sidebar-btn transition-default cursor-pointer ${
                           item.isActive ? "bg-input" : ""
                         }`}
