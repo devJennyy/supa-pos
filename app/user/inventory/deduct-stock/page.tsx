@@ -22,7 +22,7 @@ import {
 import { RefreshCcw } from "lucide-react";
 import SectionTitle from "@/components/ui/section-title";
 import { Label } from "@/components/ui/label";
-import DeductStocksSkeleton from "@/components/inventory/skeleton/Deduct Stock";
+import DeductStocksSkeleton from "@/components/inventory/skeleton/DeductStock";
 
 export type StockItem = {
   id: string;
