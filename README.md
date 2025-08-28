@@ -1,12 +1,12 @@
 <div align="center">
    <br />
-    <a href="https://supa-pos.vercel.app/" target="_blank">
+    <a href="https://supapos.vercel.app/" target="_blank">
       <img src="https://github.com/devJennyy/supa-pos/blob/master/public/images/sneak-peak-ui.png" alt="Project Banner">
     </a>
   <br />
 
    <br />
-    <a href="https://supa-pos.vercel.app/" target="_blank">
+    <a href="https://supapos.vercel.app/" target="_blank">
       <img src="https://github.com/devJennyy/supa-pos/blob/master/public/images/sneak-peak-ui-mobile.png" alt="Project Banner">
     </a>
   <br />
