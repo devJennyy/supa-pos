@@ -1,4 +1,16 @@
 <div align="center">
+   <br />
+    <a href="https://supa-pos.vercel.app/" target="_blank">
+      <img src="https://github.com/devJennyy/supa-pos/blob/master/public/images/sneak-peak-ui.png" alt="Project Banner">
+    </a>
+  <br />
+
+   <br />
+    <a href="https://supa-pos.vercel.app/" target="_blank">
+      <img src="https://github.com/devJennyy/supa-pos/blob/master/public/images/sneak-peak-ui-mobile.png" alt="Project Banner">
+    </a>
+  <br />
+  
   <div>
     <img src="https://img.shields.io/badge/-React_JS-black?style=for-the-badge&logo=react&logoColor=white&color=61DAFB" alt="React.js" />
     <img src="https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logo=typescript&logoColor=white&color=3178C6" alt="TypeScript" />
@@ -16,6 +28,11 @@
     With light and dark mode support, Supa POS adapts to your working environment and makes managing your business simple, fast, and visually clear.
     It’s also fully responsive, ensuring a smooth experience whether you’re using it on desktop, tablet, or mobile devices.
   </div>
+
+  </br>
+  
+  ``` Currently Work in Progress! ```
+  
   </br>
 </div>
 
