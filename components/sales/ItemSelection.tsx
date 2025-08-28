@@ -97,7 +97,7 @@ const ItemSelection = () => {
                 </div>
               </div>
 
-              <h1 className="font-semibold lg:text-lg !my-1">
+              <h1 className="font-semibold lg:text-lg lg:!my-1">
                 ₱ {item.productPrice}
               </h1>
 

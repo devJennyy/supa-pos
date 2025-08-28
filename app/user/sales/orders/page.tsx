@@ -23,7 +23,7 @@ export default function OrderPage() {
         </>
       ) : (
         <>
-          <Categories showAddButton />
+          <Categories />
           <ItemSelection />
         </>
       )}
