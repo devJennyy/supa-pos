@@ -9,7 +9,7 @@ const About = () => {
     {
       title: "Fast & Accurate Sales",
       description:
-        "Ring up sales quickly, manage discounts, and track every transaction in real-time.",
+        "Process transactions quickly and track every sale in real-time easily.",
     },
     {
       title: "Inventory Management",
@@ -22,7 +22,6 @@ const About = () => {
         "Understand your business trends with detailed sales and inventory reports.",
     },
   ];
-
 
   const containerVariants: Variants = {
     hidden: {},
@@ -46,15 +45,32 @@ const About = () => {
     <section className="bg-secondaryBackground w-full border-t mt-[-1px] lg:py-16 py-10">
       <div className="w-full max-w-[1440px] !mx-auto flex flex-col justify-center items-center lg:px-16 sm:px-10 px-5 lg:gap-14 gap-8">
         <div className="flex flex-col justify-center items-center gap-5">
-          <div className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs border rounded-full">
+          <motion.div
+            className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs border rounded-full"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.5 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          >
             <div className="bg-primary py-1 px-3 rounded-full">About</div>
             <p className="pr-2">Helping your business thrive</p>
-          </div>
-          <h1 className="capitalize lg:text-[2.5rem] text-2xl font-semibold leading-normal text-center px-5">
+          </motion.div>
+
+          <motion.h1
+            className="capitalize lg:text-[2.5rem] text-2xl font-semibold leading-normal text-center px-5"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.5 }}
+            transition={{
+              duration: 0.6,
+              delay: 0.4,
+              ease: [0.25, 0.1, 0.25, 1],
+            }}
+          >
             The <span className="text-primary pr-1">Easiest Way</span>
             <br className="sm:block hidden" />
             to Manage Your Business
-          </h1>
+          </motion.h1>
         </div>
 
         {/* Desktop */}
