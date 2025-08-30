@@ -7,21 +7,22 @@ import { motion, Variants } from "framer-motion";
 const About = () => {
   const data = [
     {
-      title: "Resource Access",
+      title: "Fast & Accurate Sales",
       description:
-        "Visitors can access a wide range of resources, including ebooks, reports.",
+        "Ring up sales quickly, manage discounts, and track every transaction in real-time.",
     },
     {
-      title: "Analytics",
+      title: "Inventory Management",
       description:
-        "Get insights and analytics to track your business growth effectively.",
+        "Monitor stock levels, get low-stock alerts, and update products effortlessly.",
     },
     {
-      title: "Support",
+      title: "Insights & Reports",
       description:
-        "24/7 customer support to help you with any queries or issues.",
+        "Understand your business trends with detailed sales and inventory reports.",
     },
   ];
+
 
   const containerVariants: Variants = {
     hidden: {},
