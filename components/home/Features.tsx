@@ -123,23 +123,24 @@ const Features = () => {
 
           {/* Card 3 */}
           <div className="row-span-2 lg:h-175 md:h-85 h-32 md:rounded-3xl rounded-2xl md:p-2 p-1 border">
-            <div className="h-full md:rounded-2xl rounded-lg border bg-secondaryBackground p-5">
-              <div className="flex flex-col justify-between items-center text-center gap-4">
+            <div className="h-full md:rounded-2xl rounded-lg border bg-secondaryBackground flex flex-col">
+              <div className="flex-1 flex flex-col gap-4 mt-4 p-5">
+              </div>
+
+              <div className="flex-none flex flex-col justify-start items-start text-left gap-2 p-5">
                 <h1 className="text-xl font-semibold">Inventory Management</h1>
                 <p className="text-secondary text-sm">
                   Track stock levels in real-time, reduce wastage, and know
                   exactly when to restock.
                 </p>
               </div>
-
-              <div className="flex-1 flex flex-col gap-4 mt-4 py-4"></div>
             </div>
           </div>
 
           {/* Card 4 */}
-          <div className="lg:col-span-2 md:h-85 h-32 md:rounded-3xl rounded-2xl md:p-2 p-1 border">
-            <div className="h-full md:rounded-2xl rounded-lg border bg-secondaryBackground p-5">
-              <div className="flex flex-col justify-between items-center text-center gap-4">
+          <div className="lg:col-span-2 md:h-85 h-32 md:rounded-3xl rounded-2xl md:p-2 p-1 border overflow-hidden">
+            <div className="flex h-full md:rounded-2xl rounded-lg border bg-secondaryBackground overflow-hidden">
+              <div className="w-2/6 h-full flex flex-col justify-end items-start text-left gap-4 p-5 z-10">
                 <h1 className="text-xl font-semibold">Reports & Analytics</h1>
                 <p className="text-secondary text-sm">
                   Gain insights into sales, revenue, and customer behavior to
@@ -147,7 +148,19 @@ const Features = () => {
                 </p>
               </div>
 
-              <div className="flex-1 flex flex-col gap-4 mt-4 py-4"></div>
+              <motion.div
+                className="flex-1 h-full flex justify-end items-end"
+                initial={{ x: "50%", opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{
+                  duration: 1,
+                  ease: [0.25, 0.1, 0.25, 1],
+                  delay: 0.2,
+                }}
+              >
+                <div className="w-5/6 h-5/6 bg-gradient-to-br from-primary/50 to-primary/0 rounded-tl-2xl" />
+              </motion.div>
             </div>
           </div>
         </div>
