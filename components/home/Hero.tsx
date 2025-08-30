@@ -3,13 +3,10 @@
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [hideButtons, setHideButtons] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
-
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end center"],
@@ -28,22 +25,6 @@ const Hero = () => {
     damping: 20,
     mass: 0.3,
   });
-  useEffect(() => {
-    if (window.innerWidth >= 640) return;
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY) {
-        setHideButtons(true);
-      } else {
-        setHideButtons(false);
-      }
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
 
   return (
     <section
@@ -70,20 +51,7 @@ const Hero = () => {
           devices
         </p>
 
-        <div
-          className={`sm:hidden flex gap-3 transition-all duration-300 ${
-            hideButtons ? "opacity-0 h-0 overflow-hidden" : "opacity-100 h-auto"
-          }`}
-        >
-          <Button className="!mt-2 lg:w-32 lg:h-10 w-28 h-8.5 lg:text-sm text-xs">
-            Get Started
-          </Button>
-          <Button className="!mt-2 lg:w-32 lg:h-10 w-28 h-8.5 bg-transparent border border-primary text-primary lg:text-sm text-xs">
-            Explore
-          </Button>
-        </div>
-
-        <div className="sm:flex gap-3 hidden">
+        <div className="flex gap-3">
           <Button className="!mt-2 lg:w-32 lg:h-10 w-28 h-8.5 lg:text-sm text-xs">
             Get Started
           </Button>
