@@ -67,7 +67,7 @@ const Hero = () => {
           alt="Image Preview"
           width={500}
           height={500}
-          className="lg:rounded-t-xl rounded-t-lg w-full object-cover"
+          className="lg:rounded-t-xl rounded-t-lg w-full object-cover !mb-5" 
           priority
         />
       </div>
