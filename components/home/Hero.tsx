@@ -61,7 +61,7 @@ const Hero = () => {
         </div>
       </motion.div>
 
-      <div className="z-30 w-full overflow-hidden lg:max-w-[1200px] max-w-[540px] lg:rounded-t-3xl rounded-t-xl bg-secondaryFill border lg:!mt-10 !mt-20 transition-slow lg:px-3 lg:pt-3 px-2 pt-2">
+      <div className="z-30 w-full overflow-hidden xl:max-w-[1350px] lg:max-w-[1200px] max-w-[540px] lg:rounded-t-3xl rounded-t-xl bg-secondaryFill border lg:!mt-10 !mt-20 transition-slow lg:px-3 lg:pt-3 px-2 pt-2">
         <Image
           src="/images/sales-order.svg"
           alt="Image Preview"

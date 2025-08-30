@@ -42,8 +42,9 @@ const About = () => {
   };
 
   return (
-    <div className="bg-secondaryBackground w-full border-t mt-[-1px] lg:py-16 py-10 flex flex-col justify-center items-center lg:px-16 sm:px-10 px-5 lg:gap-14 relative">
-      <div className="flex flex-col justify-center items-center gap-5">
+    <div className="bg-secondaryBackground w-full border-t mt-[-1px] lg:py-16 py-10">
+      <div className="w-full max-w-[1440px] !mx-auto flex flex-col justify-center items-center lg:px-16 sm:px-10 px-5 lg:gap-14">
+        <div className="flex flex-col justify-center items-center gap-5">
         <div className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs border rounded-full">
           <div className="bg-primary py-1 px-3 rounded-full">About</div>
           <p className="pr-2">Free, easy and fast.</p>
@@ -87,7 +88,7 @@ const About = () => {
         {data.map((item, index) => (
           <motion.div
             key={index}
-            className="group relative w-full sm:max-w-[450px] h-[320px] border bg-background rounded-2xl p-4 flex flex-col justify-end cursor-pointer"
+            className="group relative w-full sm:max-w-[350px] sm:h-[380px] h-[320px] border bg-background rounded-2xl p-4 flex flex-col justify-end cursor-pointer"
             variants={cardVariants}
             initial="hidden"
             whileInView="visible"
@@ -99,7 +100,7 @@ const About = () => {
               <div className="w-full flex justify-between items-center">
                 <h1 className="text-base font-semibold">{item.title}</h1>
                 <div className="rounded-full p-1.5 bg-primary">
-                  <FiArrowUpRight size={18} />
+                  <FiArrowUpRight size={16} />
                 </div>
               </div>
               <p className="text-secondary text-sm sm:pr-10">
@@ -108,6 +109,7 @@ const About = () => {
             </div>
           </motion.div>
         ))}
+      </div>
       </div>
     </div>
   );

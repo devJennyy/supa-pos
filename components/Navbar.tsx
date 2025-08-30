@@ -22,7 +22,7 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 w-full md:h-20 h-16 bg-secondaryBackground border-b border-border flex justify-center">
       <div
-        className="w-full max-w-[1280px] mx-auto h-full flex justify-between items-center sm:px-5 px-4"
+        className="w-full max-w-[1440px] mx-auto h-full flex justify-between items-center sm:px-5 px-4"
         role="navigation"
       >
         {/* Logo */}
