@@ -43,7 +43,7 @@ const About = () => {
 
   return (
     <section className="bg-secondaryBackground w-full border-t mt-[-1px] lg:py-16 py-10">
-      <div className="w-full max-w-[1440px] !mx-auto flex flex-col justify-center items-center lg:px-16 sm:px-10 px-5 lg:gap-14 gap-8">
+      <div className="w-full max-w-[1440px] !mx-auto flex flex-col justify-center items-center xl:px-16 sm:px-10 px-5 lg:gap-14 gap-8">
         <div className="flex flex-col justify-center items-center gap-5">
           <motion.div
             className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs border rounded-full"
@@ -84,7 +84,7 @@ const About = () => {
           {data.map((item, index) => (
             <motion.div
               key={index}
-              className="group relative w-full h-[450px] border bg-background rounded-2xl p-5 flex flex-col justify-end cursor-pointer"
+              className="group relative w-full xl:h-[450px] h-[350px] border bg-background rounded-2xl p-5 flex flex-col justify-end cursor-pointer"
               variants={cardVariants}
               whileHover={{ y: -16 }}
               transition={{ type: "tween", duration: 0.3 }}
