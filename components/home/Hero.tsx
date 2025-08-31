@@ -35,9 +35,13 @@ const Hero = () => {
         style={{ scale: textScale, opacity: textOpacity }}
         className="flex flex-col items-center gap-5 sticky top-24 lg:pt-24 pt-10 z-10"
       >
-        <div className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs border rounded-full">
+        {/* <div className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs border rounded-full">
           <div className="bg-primary py-1 px-3 rounded-full">SupaPOS</div>
           <p className="pr-2">Free, easy and fast.</p>
+        </div> */}
+        <div className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs border rounded-full">
+          <div className="bg-primary py-1 px-3 rounded-full">Update</div>
+          <p className="pr-2">Currently a work in progress</p>
         </div>
 
         <h1 className="capitalize lg:text-[3.5rem] text-3xl font-semibold leading-tight text-center">
@@ -67,7 +71,7 @@ const Hero = () => {
           alt="Image Preview"
           width={500}
           height={500}
-          className="lg:rounded-t-xl rounded-t-lg w-full object-cover !mb-5" 
+          className="lg:rounded-t-xl rounded-t-lg w-full object-cover !mb-5"
           priority
         />
       </div>
