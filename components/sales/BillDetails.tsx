@@ -54,7 +54,7 @@ const summary = [
   },
   {
     label: "Date",
-    value: "Sunday, 16, 13 2025",
+    value: "Sunday, 16 September 2025",
   },
   {
     label: "Time",
