@@ -4,12 +4,12 @@ import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Eye, EyeOff } from "lucide-react";
 import { useEffect, useState } from "react";
-import { UserAuth } from "../context/AuthContext";
 import LoadingScreen from "@/components/ui/loading";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { UserAuth } from "@/app/context/AuthContext";
 
 const Page = () => {
   const router = useRouter();

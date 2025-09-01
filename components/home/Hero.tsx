@@ -30,7 +30,7 @@ const Hero = () => {
   return (
     <section id="hero"
       ref={containerRef}
-      className="w-full flex flex-col justify-center items-center xl:px-16 sm:px-10 px-5 lg:gap-10 relative"
+      className="scroll-mt-20 w-full flex flex-col justify-center items-center xl:px-16 sm:px-10 px-5 lg:gap-10 relative"
     >
       <motion.div
         style={{ scale: textScale, opacity: textOpacity }}

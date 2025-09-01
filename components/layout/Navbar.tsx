@@ -9,9 +9,9 @@ import Link from "next/link";
 import ThemeToggle from "../ui/theme-toggle";
 
 const navLinks = [
-  { label: "Home", href: "#hero" },
-  { label: "Features", href: "#features" },
-  { label: "Why POS?", href: "#why-pos" },
+  { label: "Home", href: "/#hero" },
+  { label: "Features", href: "/#features" },
+  { label: "Why POS?", href: "/#why-pos" },
 ];
 
 const Navbar = () => {

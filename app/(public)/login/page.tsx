@@ -3,23 +3,14 @@
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Eye, EyeOff } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../../components/ui/dialog";
-import { Input } from "../../components/ui/input";
-import { Label } from "../../components/ui/label";
 import { useEffect, useState } from "react";
-import { UserAuth } from "../context/AuthContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import LoadingScreen from "@/components/ui/loading";
 import { Button } from "@/components/ui/button";
+import { UserAuth } from "@/app/context/AuthContext";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 const Page = () => {
   const router = useRouter();
@@ -29,7 +20,6 @@ const Page = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [pageLoading, setPageLoading] = useState(true);
   const [formLoading, setFormLoading] = useState(false);
 
   const { session, signInUser, signInWithGoogle, signInWithGitHub } =
@@ -93,15 +83,6 @@ const Page = () => {
       router.push("/user");
     }
   }, [session, router]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setPageLoading(false);
-    }, 650);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (pageLoading) return <LoadingScreen />;
 
   return (
     <main
