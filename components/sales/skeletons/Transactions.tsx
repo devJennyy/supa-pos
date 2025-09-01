@@ -85,8 +85,8 @@ const TransactionHistorySkeleton = () => {
             {/* Accordion Item 1 */}
             <div className="border rounded-lg overflow-hidden">
               <div className="flex flex-col gap-2 px-3 py-4 bg-secondaryBackground/20 rounded-t">
-                <SkeletonCard className="h-4 w-3/4" /> {/* Reference # */}
-                <SkeletonCard className="h-3 w-1/2" /> {/* Date */}
+                <SkeletonCard className="h-4 w-3/4" />
+                <SkeletonCard className="h-3 w-1/2" />
               </div>
             </div>
             {/* Accordion Item 2 */}

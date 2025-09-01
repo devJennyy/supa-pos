@@ -152,7 +152,7 @@ export default function DeductStockPage() {
           />
 
           {/* Filters */}
-          <div className="flex flex-col gap-3 md:flex-row md:items-end !mt-3">
+          <div className="flex flex-col lg:gap-3 gap-5 md:flex-row md:items-end !mt-3">
             <div className="grid gap-3 w-full">
               <Label htmlFor="search">Search</Label>
               <div className="flex items-center gap-2">

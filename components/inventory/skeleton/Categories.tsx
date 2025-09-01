@@ -5,8 +5,8 @@ const CategorySkeleton = () => {
     <div className="w-full flex flex-col gap-4 !mt-3">
       {/* Section Title */}
       <div className="flex justify-between items-center">
-        <SkeletonCard className="h-6 w-1/12" />
-        <SkeletonCard className="h-6 w-1/8" />
+        <SkeletonCard className="h-6 lg:w-1/12 sm:w-1/8 w-1/4" />
+        <SkeletonCard className="h-6 lg:w-1/8 sm:w-1/4 w-1/2" />
       </div>
 
       {/* Skeleton rows */}

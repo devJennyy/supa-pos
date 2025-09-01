@@ -9,8 +9,8 @@ const ItemSelectionSkeleton = () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center">
-        <SkeletonCard className="h-6 w-1/12" />
-        <SkeletonCard className="h-6 w-1/8" />
+        <SkeletonCard className="h-6 lg:w-1/12 sm:w-1/8 w-1/4" />
+        <SkeletonCard className="h-6 lg:w-1/8 sm:w-1/4 w-1/2" />
       </div>
 
       <div className="grid lg:gap-5 gap-3 lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] grid-cols-[repeat(auto-fill,minmax(140px,1fr))]">

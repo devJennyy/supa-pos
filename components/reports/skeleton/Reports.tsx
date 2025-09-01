@@ -5,10 +5,12 @@ import SkeletonCard from "@/components/ui/skeleton-loading";
 
 const ReportSkeleton = () => {
   return (
-    <div className="w-full flex flex-col gap-4">
-      <div className="flex flex-col gap-2">
-        <SkeletonCard className="h-5 w-1/6" />
-        <SkeletonCard className="lg:h-5 h-8 w-5/6 lg:w-1/2" />
+    <div className="w-full flex flex-col gap-3">
+       <div className="flex flex-col gap-2">
+        <SkeletonCard className="h-6 w-1/6" />
+        <SkeletonCard className="h-5 sm:w-1/3 w-full" />
+
+        <SkeletonCard className="sm:hidden h-5 w-1/2" />
       </div>
 
       <div className="flex lg:flex-row flex-col justify-between gap-2 !mt-2">
