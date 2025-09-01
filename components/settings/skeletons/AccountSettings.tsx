@@ -5,7 +5,7 @@ import SkeletonCard from "@/components/ui/skeleton-loading";
 
 const AccountSettingsSkeleton = () => {
   return (
-    <div className="w-full max-w-4xl mx-auto p-6 space-y-8">
+    <div className="w-full max-w-4xl mx-auto space-y-8">
       <SkeletonCard className="h-7 w-1/5" />
 
       <div className="shadow-md rounded-2xl w-full border p-6 space-y-6">

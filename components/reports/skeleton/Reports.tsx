@@ -64,11 +64,6 @@ const ReportSkeleton = () => {
         <div className="flex justify-end mt-4">
           <SkeletonCard className="h-7 w-24 rounded-md" />
         </div>
-
-        <div className="flex justify-between text-sm !my-6 px-2">
-          <SkeletonCard className="h-4 w-24" />
-          <SkeletonCard className="h-4 w-24" />
-        </div>
       </div>
     </div>
   );

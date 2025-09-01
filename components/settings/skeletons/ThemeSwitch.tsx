@@ -5,7 +5,7 @@ import SkeletonCard from "@/components/ui/skeleton-loading";
 
 const ThemeSwitchSkeleton = () => {
   return (
-    <div className="flex flex-1 flex-col lg:p-5 p-4 transition-default">
+    <div className="flex flex-1 flex-col transition-default">
       <div className="space-y-2">
         <SkeletonCard className="h-6 w-48" />
         <SkeletonCard className="h-4 w-72" />
