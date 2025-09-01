@@ -6,6 +6,7 @@ import { supabase } from "@/app/supabaseClient";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import LoadingScreen from "@/components/ui/loading";
+import { UserAuth } from "@/app/context/AuthContext";
 
 export default function SetupModal() {
   const [pageLoading, setPageLoading] = useState(true);
@@ -14,6 +15,8 @@ export default function SetupModal() {
   const [fullName, setFullName] = useState("");
   const [store_name, setStoreName] = useState("");
   const [isFirstTime, setIsFirstTime] = useState<boolean | null>(null);
+  const auth = UserAuth()!;
+  const { refreshProfile } = auth;
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -28,28 +31,29 @@ export default function SetupModal() {
         return;
       }
 
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("first_name, last_name, store_name, first_time")
-        .eq("id", user.id)
-        .single();
+      setTimeout(async () => {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("first_name, last_name, store_name, first_time")
+          .eq("id", user.id)
+          .maybeSingle();
 
-      if (error) {
-        console.error("Error fetching profile:", error);
-        setIsFirstTime(false);
-        return;
-      }
+        if (error || !data) {
+          setIsFirstTime(false);
+          return;
+        }
 
-      setIsFirstTime(data.first_time);
-      setFullName(`${data.first_name} ${data.last_name}`);
-      setStoreName(data.store_name || "");
+        setIsFirstTime(data.first_time);
+        setFullName(`${data.first_name} ${data.last_name}`);
+        setStoreName(data.store_name || "");
 
-      if (data.first_time === false) {
-        setPageLoading(true);
-        setTimeout(() => setPageLoading(false), 800);
-      } else {
-        setPageLoading(false);
-      }
+        if (data.first_time === false) {
+          setPageLoading(true);
+          setTimeout(() => setPageLoading(false), 800);
+        } else {
+          setPageLoading(false);
+        }
+      }, 1000);
     };
 
     fetchProfile();
@@ -90,6 +94,10 @@ export default function SetupModal() {
     if (updateError) {
       console.error("Error updating profile:", updateError);
       return;
+    }
+
+    if (refreshProfile) {
+      await refreshProfile();
     }
 
     setIsFirstTime(false);

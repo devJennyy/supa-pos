@@ -75,7 +75,6 @@ const Page = () => {
   const handleGoogleLogin = async () => {
     const result = await signInWithGoogle();
     if (!result?.success) {
-      alert("Google sign-in failed: " + result?.error.message);
     } else {
       router.push("/user");
     }
@@ -84,7 +83,6 @@ const Page = () => {
   const handleGitHubLogin = async () => {
     const result = await signInWithGitHub();
     if (!result?.success) {
-      alert("GitHub sign-in failed: " + result?.error.message);
     } else {
       router.push("/user");
     }
@@ -262,6 +260,7 @@ const Page = () => {
 
           <div className="w-full flex flex-col gap-3 !mt-[-10px]">
             <button
+              type="button"
               onClick={() => handleGoogleLogin()}
               className="w-full h-12 dark:bg-input/50 hover:dark:bg-input active:dark:bg-input dark:border bg-input/20 hover:bg-input/30 active:bg-input/30 border transition-default rounded-full flex justify-center items-center gap-2 cursor-pointer"
             >
@@ -269,6 +268,7 @@ const Page = () => {
               <p className="text-sm">Continue with Google</p>
             </button>
             <button
+              type="button"
               onClick={() => handleGitHubLogin()}
               className="w-full h-12 dark:bg-input/50 hover:dark:bg-input active:dark:bg-input dark:border bg-input/20 hover:bg-input/30 active:bg-input/30 border transition-default rounded-full flex justify-center items-center gap-2 cursor-pointer"
             >

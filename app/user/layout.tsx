@@ -5,6 +5,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import {
@@ -43,7 +44,9 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const pathname = usePathname();
   // const rightSidebarWidth = 380;
-  const { profile } = UserAuth()!;
+  const auth = UserAuth();
+  const profile = auth?.profile;
+  const refreshProfile = auth?.refreshProfile;
 
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
   const [hasOpenedOnce, setHasOpenedOnce] = useState(false);
@@ -68,6 +71,27 @@ export default function Layout({ children }: LayoutProps) {
 
   const closeRight = useCallback(() => {
     setIsRightSidebarOpen(false);
+  }, []);
+
+  const cleanUrl = () => {
+    if (window.location.hash) {
+      window.history.replaceState(
+        null,
+        document.title,
+        window.location.pathname + window.location.search
+      );
+    }
+  };
+
+  useEffect(() => {
+    const init = async () => {
+      if (refreshProfile) {
+        await refreshProfile();
+      }
+      cleanUrl();
+    };
+
+    init();
   }, []);
 
   return (

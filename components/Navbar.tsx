@@ -9,9 +9,9 @@ import Link from "next/link";
 import ThemeToggle from "./ui/theme-toggle";
 
 const navLinks = [
-  { label: "Home", href: "/homepage" },
-  { label: "Features", href: "#features" },
+  { label: "Home", href: "/" },
   { label: "About", href: "#about" },
+   { label: "Features", href: "#features" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -26,7 +26,7 @@ const Navbar = () => {
         role="navigation"
       >
         {/* Logo */}
-        <a href="/homepage" className="md:w-full md:max-w-43">
+        <Link href="/" className="md:w-full md:max-w-43">
           <Image
             src="/logo/logo-light.svg"
             alt="Logo Light"
@@ -43,7 +43,7 @@ const Navbar = () => {
             height={40}
             priority
           />
-        </a>
+        </Link>
 
         {/* Desktop Nav */}
         <ul className="md:flex h-10 hidden">

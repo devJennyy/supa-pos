@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -41,7 +42,7 @@ const Hero = () => {
         </div> */}
         <div className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs border rounded-full">
           <div className="bg-primary py-1 px-3 rounded-full">Update</div>
-          <p className="pr-2">Currently a work in progress</p>
+          <p className="pr-2">Currently work in progress</p>
         </div>
 
         <h1 className="capitalize lg:text-[3.5rem] text-3xl font-semibold leading-tight text-center">
@@ -56,11 +57,17 @@ const Hero = () => {
         </p>
 
         <div className="flex gap-3">
-          <Button className="!mt-2 lg:w-32 lg:h-10 w-28 h-8.5 lg:text-sm text-xs">
-            Get Started
+          <Button
+            asChild
+            className="!mt-2 lg:w-32 lg:h-10 w-28 h-8.5 lg:text-sm text-xs"
+          >
+            <Link href="/login">Get Started</Link>
           </Button>
-          <Button className="!mt-2 lg:w-32 lg:h-10 w-28 h-8.5 bg-transparent border border-primary text-primary lg:text-sm text-xs">
-            Explore
+          <Button
+            asChild
+            className="!mt-2 lg:w-32 lg:h-10 w-28 h-8.5 bg-transparent border border-primary text-primary lg:text-sm text-xs hover:bg-primary hover:text-foreground transition-default"
+          >
+            <Link href="#about">Explore</Link>
           </Button>
         </div>
       </motion.div>

@@ -41,6 +41,7 @@ type AuthContextType = {
     error?: any;
   }>;
   signOut: () => Promise<void>;
+  refreshProfile: () => Promise<{ success: boolean; data?: any; error?: any }>; 
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -50,45 +51,103 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [profile, setProfile] = useState<ProfileType | null>(null);
   const router = useRouter();
 
-  // Fetch profile by userId
   const fetchUserProfile = async (userId: string) => {
     try {
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
         .eq("id", userId)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error("Error fetching profile:", error);
         setProfile(null);
-        return;
+        return { success: false, error };
       }
 
-      setProfile(data);
+      if (data) {
+        setProfile(data);
+        return { success: true, data };
+      } else {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
+        if (session) {
+          const { id, email, user_metadata } = session.user;
+
+          const firstName =
+            user_metadata?.given_name ||
+            user_metadata?.full_name?.split(" ")[0] ||
+            "";
+          const lastName =
+            user_metadata?.family_name ||
+            user_metadata?.full_name?.split(" ").slice(1).join(" ") ||
+            "";
+          const storeName = "";
+
+          const { error: profileError, data: insertedProfile } = await supabase
+            .from("profiles")
+            .upsert(
+              [
+                {
+                  id,
+                  first_name: firstName,
+                  last_name: lastName,
+                  store_name: storeName,
+                  email,
+                  setup_complete: false,
+                },
+              ],
+              { onConflict: "id" }
+            )
+            .select()
+            .single();
+
+          if (profileError) {
+            console.error("Profile upsert failed:", profileError);
+            setProfile(null);
+            return { success: false, error: profileError };
+          }
+
+          setProfile(insertedProfile);
+          return { success: true, data: insertedProfile };
+        }
+      }
+
+      setProfile(null);
+      return { success: false, error: "Profile not found" };
     } catch (err) {
       console.error("Unexpected error fetching profile:", err);
       setProfile(null);
+      return { success: false, error: err };
     }
   };
 
-  // Monitor session changes
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      if (session?.user?.id) fetchUserProfile(session.user.id);
-    });
+useEffect(() => {
+  supabase.auth.getSession().then(({ data: { session } }) => {
+    setSession(session);
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      if (session?.user?.id) fetchUserProfile(session.user.id);
-      else setProfile(null);
-    });
+    if (session?.user?.id) {
+      fetchUserProfile(session.user.id);
+    }
+  });
 
-    return () => subscription.unsubscribe();
-  }, []);
+  const {
+    data: { subscription },
+  } = supabase.auth.onAuthStateChange((_event, session) => {
+    setSession(session);
+
+    if (session?.user?.id) {
+      fetchUserProfile(session.user.id);
+    } else {
+      setProfile(null);
+    }
+  });
+
+  return () => subscription.unsubscribe();
+}, []);
+
 
   // Sign up
   const signUpNewUser = async (
@@ -104,7 +163,10 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
       if (signUpError || !signUpData.user) {
         console.error("Sign-up failed:", signUpError);
-        return { success: false, error: signUpError || { message: "No user returned" } };
+        return {
+          success: false,
+          error: signUpError || { message: "No user returned" },
+        };
       }
 
       const userId = signUpData.user.id;
@@ -130,18 +192,27 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       return { success: true, data: signUpData };
     } catch (err) {
       console.error("Unexpected error:", err);
-      return { success: false, error: { message: "Unexpected error occurred." } };
+      return {
+        success: false,
+        error: { message: "Unexpected error occurred." },
+      };
     }
   };
 
   // Sign in
   const signInUser = async (email: string, password: string) => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
       if (error || !data.session) {
         console.error("Sign in error:", error || "No session returned");
-        return { success: false, error: error?.message || "No session returned" };
+        return {
+          success: false,
+          error: error?.message || "No session returned",
+        };
       }
 
       if (data.session.user?.id) await fetchUserProfile(data.session.user.id);
@@ -156,29 +227,48 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   // Sign in with Google
   const signInWithGoogle = async () => {
     try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { data: oauthData, error: oauthError } = await supabase.auth.signInWithOAuth({
         provider: "google",
-        options: { redirectTo: `${window.location.origin}/user` },
+        options: { redirectTo: `${window.location.origin}/user/dashboard` },
       });
 
-      if (error) {
-        console.error("Google sign-in error:", error);
-        return { success: false, error };
+      if (oauthError) {
+        console.error("Google sign-in error:", oauthError);
+        return { success: false, error: oauthError };
       }
 
-      return { success: true, data };
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session?.user) {
+        return { success: false, error: "No session found after Google sign-in" };
+      }
+
+      const user = session.user;
+
+      const profileResult = await fetchUserProfile(user.id);
+
+      if (!profileResult.success) {
+        console.error("Failed to fetch or create profile:", profileResult.error);
+        return { success: false, error: profileResult.error };
+      }
+
+      return { success: true, data: session };
     } catch (err) {
       console.error("Unexpected Google sign-in error:", err);
       return { success: false, error: { message: "Unexpected error occurred" } };
     }
   };
 
+
+
   // Sign in with GitHub
   const signInWithGitHub = async () => {
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "github",
-        options: { redirectTo: `${window.location.origin}/user` },
+        options: { redirectTo: `${window.location.origin}/user/dashboard` },
       });
 
       if (error) {
@@ -189,22 +279,37 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       return { success: true, data };
     } catch (err) {
       console.error("Unexpected GitHub sign-in error:", err);
-      return { success: false, error: { message: "Unexpected error occurred" } };
+      return {
+        success: false,
+        error: { message: "Unexpected error occurred" },
+      };
     }
   };
 
   // Sign out
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error("Sign-out error:", error);
-      return;
-    }
-    setProfile(null);
-    setSession(null);
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
 
-    router.push("/");
+      setProfile(null);
+      setSession(null);
+
+      router.replace("/");
+    } catch (err: any) {
+      console.error("Sign-out error:", err.message);
+      alert("Failed to sign out. Please try again.");
+    }
   };
+
+  const refreshProfile = async () => {
+    if (session?.user?.id) {
+      const result = await fetchUserProfile(session.user.id);
+      return result;
+    }
+    return { success: false, error: "No session available" };
+  };
+
 
   return (
     <AuthContext.Provider
@@ -216,6 +321,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         signOut,
         signInWithGoogle,
         signInWithGitHub,
+        refreshProfile,
       }}
     >
       {children}
@@ -223,7 +329,10 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Hook to use AuthContext
 export const UserAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthContextProvider");
+  }
   return useContext(AuthContext);
 };

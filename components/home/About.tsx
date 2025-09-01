@@ -24,25 +24,27 @@ const About = () => {
   ];
 
   const containerVariants: Variants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.2,
-      },
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.4,
     },
-  };
+  },
+};
 
-  const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] },
-    },
-  };
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 60 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: "easeInOut" },
+  },
+};
+
+
 
   return (
-    <section className="bg-secondaryBackground w-full border-t mt-[-1px] lg:py-16 py-10">
+    <section id="about" className="scroll-mt-20 bg-secondaryBackground w-full border-t mt-[-1px] lg:py-16 py-10">
       <div className="w-full max-w-[1440px] !mx-auto flex flex-col justify-center items-center xl:px-16 sm:px-10 px-5 lg:gap-14 gap-8">
         <div className="flex flex-col justify-center items-center gap-5">
           <motion.div
@@ -79,7 +81,7 @@ const About = () => {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.2 }}
+          viewport={{ once: false, amount: 0.3 }}
         >
           {data.map((item, index) => (
             <motion.div
@@ -132,7 +134,6 @@ const About = () => {
                 )}
 
                 {index === 1 && (
-                  // RINGS
                   <div className="absolute inset-0 flex items-center justify-center">
                     {[...Array(3)].map((_, i) => (
                       <motion.div
@@ -143,7 +144,7 @@ const About = () => {
                           opacity: [0.4, 0.1, 0.4],
                         }}
                         transition={{
-                          duration: 4 + i, // each ring different speed
+                          duration: 4 + i,
                           repeat: Infinity,
                           ease: "easeInOut",
                           delay: i * 0.5,
@@ -155,14 +156,13 @@ const About = () => {
                 )}
 
                 {index === 2 && (
-                  // DOUBLE BORDER DIAMONDS (Bottom Right)
                   <>
                     {[...Array(2)].map((_, i) => (
                       <motion.div
                         key={i}
                         initial={{ rotate: 0, scale: 1 }}
                         animate={{
-                          rotate: i % 2 === 0 ? 360 : -360, // one clockwise, one counter
+                          rotate: i % 2 === 0 ? 360 : -360,
                           scale: [1, 1.15, 1],
                           opacity: [0.6, 0.9, 0.6],
                         }}
@@ -182,7 +182,7 @@ const About = () => {
                         key={i}
                         initial={{ rotate: 0, scale: 1 }}
                         animate={{
-                          rotate: i % 2 === 0 ? 360 : -360, // one clockwise, one counter
+                          rotate: i % 2 === 0 ? 360 : -360,
                           scale: [1, 1.15, 1],
                           opacity: [0.6, 0.9, 0.6],
                         }}

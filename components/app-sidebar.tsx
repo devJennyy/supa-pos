@@ -86,7 +86,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     title: "Logout",
     icon: MdLogout,
     iconSize: 18,
-    onClick: handleLogout,
+    onClick: () => handleLogout(),
   };
 
   const cleanPath = pathname.replace(/\/+$/, "");
