@@ -15,13 +15,13 @@ import {
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { AppSidebar } from "@/components/app-sidebar";
 import { RightSidebar } from "@/components/sales/BillDetails";
 import { IoMdClose } from "react-icons/io";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { HiOutlineSearch } from "react-icons/hi";
 import SetupModal from "@/components/ui/complete-setup";
 import { UserAuth } from "../context/AuthContext";
+import { AppSidebar } from "@/components/layout/Sidebar";
 
 type SidebarContextType = {
   isRightOpen: boolean;

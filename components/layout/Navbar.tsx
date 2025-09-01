@@ -4,15 +4,14 @@ import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import Link from "next/link";
-import ThemeToggle from "./ui/theme-toggle";
+import ThemeToggle from "../ui/theme-toggle";
 
 const navLinks = [
   { label: "Home", href: "#hero" },
   { label: "Features", href: "#features" },
-   { label: "Why POS?", href: "#why-pos" },
-  { label: "Contact", href: "#contact" },
+  { label: "Why POS?", href: "#why-pos" },
 ];
 
 const Navbar = () => {

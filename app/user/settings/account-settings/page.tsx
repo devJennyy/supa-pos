@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { Camera } from "lucide-react";
 import Image from "next/image";
 import SectionTitle from "@/components/ui/section-title";
-import AccountSettingsSkeleton from "@/components/settings/AccountSettings";
+import AccountSettingsSkeleton from "@/components/settings/skeletons/AccountSettings";
 
 export default function AccountSettingsPage() {
   const [isLoading, setIsLoading] = useState(true);

@@ -1,6 +1,6 @@
 import React from "react";
-import { SidebarMenuButton } from "./ui/sidebar";
 import Image from "next/image";
+import { SidebarMenuButton } from "./sidebar";
 
 const logo = () => {
   return (

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { NavMain } from "@/components/nav-main";
+import { NavMain } from "@/components/ui/nav-main";
 import {
   Sidebar,
   SidebarContent,
@@ -10,7 +10,6 @@ import {
   SidebarSeparator,
   useSidebar,
 } from "@/components/ui/sidebar";
-import Logo from "./logo";
 import { FaHome, FaTags } from "react-icons/fa";
 import { BsBoxFill, BsFillMoonStarsFill } from "react-icons/bs";
 import { IoStatsChart } from "react-icons/io5";
@@ -19,6 +18,7 @@ import { RiSettings3Fill } from "react-icons/ri";
 import { usePathname } from "next/navigation";
 import { MdLogout } from "react-icons/md";
 import { UserAuth } from "@/app/context/AuthContext";
+import Logo from "../ui/logo";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
