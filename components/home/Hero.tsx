@@ -28,7 +28,7 @@ const Hero = () => {
   });
 
   return (
-    <section
+    <section id="hero"
       ref={containerRef}
       className="w-full flex flex-col justify-center items-center xl:px-16 sm:px-10 px-5 lg:gap-10 relative"
     >
