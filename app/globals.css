@@ -61,7 +61,10 @@ html {
 
   --breakpoint-3xl: 1920px;
   --breakpoint-4xl: 2560px;
-
+}
+::selection {
+  background: #1F3038;
+  color: #4FD1C5;
 }
 
 :root {
