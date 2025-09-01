@@ -2,14 +2,9 @@ import SkeletonCard from "@/components/ui/skeleton-loading";
 
 const CategorySkeleton = () => {
   return (
-    <div className="w-full flex flex-col gap-4 !mt-3">
-      {/* Section Title */}
-      <div className="flex justify-between items-center">
-        <SkeletonCard className="h-6 w-1/12" />
-        <SkeletonCard className="h-6 w-1/8" />
-      </div>
+    <div className="w-full flex flex-col gap-4">
+      <SkeletonCard className="h-6 lg:w-1/12 sm:w-1/8 w-1/4" />
 
-      {/* Skeleton rows */}
       <div className="w-full flex gap-3 pb-4">
         {[...Array(9)].map((_, index) => (
           <div

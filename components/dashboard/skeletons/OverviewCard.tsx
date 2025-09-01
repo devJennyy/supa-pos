@@ -1,12 +1,12 @@
-import SkeletonCard from '@/components/ui/skeleton-loading'
-import React from 'react'
+import SkeletonCard from "@/components/ui/skeleton-loading";
+import React from "react";
 
 const OverviewCardSkeleton = () => {
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="flex justify-between">
-        <SkeletonCard className="h-6 w-1/8" />
-        <SkeletonCard className="h-6 w-1/8" />
+        <SkeletonCard className="h-6 lg:w-1/8 w-1/6" />
+        <SkeletonCard className="h-6 lg:w-1/8 w-1/2" />
       </div>
 
       <div className="grid auto-rows-min gap-4 lg:grid-cols-4 grid-cols-2">
@@ -23,7 +23,7 @@ const OverviewCardSkeleton = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default OverviewCardSkeleton
+export default OverviewCardSkeleton;

@@ -8,7 +8,7 @@ const ItemSelectionSkeleton = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <SkeletonCard className="h-6 w-1/6" />
+      <SkeletonCard className="h-6 lg:w-1/12 sm:w-1/8 w-1/4" />
 
       <div className="grid lg:gap-5 gap-3 lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] grid-cols-[repeat(auto-fill,minmax(140px,1fr))]">
         {skeletonItems.map((_, index) => (

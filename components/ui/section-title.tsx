@@ -14,7 +14,7 @@ const SectionTitle = ({ title, label, direction = "row" }: SectionTitleProps) =>
       }`}
     >
       <h1 className="font-semibold text-foreground">{title}</h1>
-      {label && <p className="lg:text-sm text-xs text-secondary">{label}</p>}
+      {label && <p className="lg:text-sm text-[13px] text-secondary">{label}</p>}
     </div>
   );
 };

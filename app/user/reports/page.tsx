@@ -12,7 +12,15 @@ import {
 import SectionTitle from "@/components/ui/section-title";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
-import StockHistory from "@/components/reports/skeleton/StockHistory";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import ReportSkeleton from "@/components/reports/skeleton/Reports";
 
 export type StockHistoryItem = {
   id: string;
@@ -155,6 +163,7 @@ const stockData: Record<"daily" | "weekly" | "monthly", StockHistoryItem[]> = {
 export default function ReportPage() {
   const [tab, setTab] = useState<"daily" | "weekly" | "monthly">("daily");
   const [isLoading, setIsLoading] = useState(true);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1500);
@@ -175,7 +184,6 @@ export default function ReportPage() {
   };
 
   const data = stockData[tab];
-
   const totalQuantity = data.reduce((sum, item) => sum + item.quantity, 0);
   const totalValue = data.reduce(
     (sum, item) => sum + item.quantity * item.price,
@@ -185,9 +193,7 @@ export default function ReportPage() {
   return (
     <main className="flex flex-1 flex-col lg:p-5 p-4">
       {isLoading ? (
-        <>
-          <StockHistory />
-        </>
+        <ReportSkeleton />
       ) : (
         <>
           <SectionTitle
@@ -203,7 +209,7 @@ export default function ReportPage() {
             }
             className="!mt-5"
           >
-            <div className="flex lg:flex-row flex-col justify-between items-center lg:!mb-1 !mb-2 gap-2">
+            <div className="flex lg:flex-row flex-col justify-between lg:items-center lg:!mb-1 !mb-2 gap-2">
               <SectionTitle title={getTitle()} />
               <TabsList>
                 <TabsTrigger value="daily">Daily</TabsTrigger>
@@ -212,7 +218,8 @@ export default function ReportPage() {
               </TabsList>
             </div>
 
-            <Card className="border border-border/50 px-5 bg-secondaryBackground/30">
+            {/* Desktop Table */}
+            <Card className="border border-border/50 px-5 bg-secondaryBackground/30 hidden md:block">
               <TabsContent value={tab}>
                 <Table className="rounded-lg border overflow-hidden">
                   <TableHeader className="sticky top-0 bg-input z-10 h-14">
@@ -271,6 +278,81 @@ export default function ReportPage() {
                 </div>
               </TabsContent>
             </Card>
+
+            {/* Mobile Accordion */}
+            <div className="block md:hidden">
+              <Accordion type="single" collapsible className="space-y-3 w-full">
+                {(showAll ? data : data.slice(0, 4)).map((item) => (
+                  <AccordionItem
+                    key={item.id}
+                    value={item.id}
+                    className="border rounded-lg overflow-hidden"
+                  >
+                    <AccordionTrigger className="flex items-center justify-between w-full p-3 bg-secondaryBackground rounded-t rounded-b-none">
+                      <div className="flex flex-col text-left gap-1">
+                        <span className="font-medium">{item.name}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {item.timestamp}
+                        </span>
+                      </div>
+                    </AccordionTrigger>
+
+                    <AccordionContent className="px-3 pb-3 border-t space-y-3 text-sm">
+                      <div className="flex justify-between !mt-3">
+                        <span className="text-muted-foreground">Action:</span>
+                        <span>{item.action}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Quantity:</span>
+                        <span>{item.quantity.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Price:</span>
+                        <span>₱{item.price.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-muted-foreground">Total:</span>
+                        <Badge className="rounded-sm opacity-90">
+                          ₱{(item.price * item.quantity).toLocaleString()}
+                        </Badge>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+
+                {data.length === 0 && (
+                  <p className="text-center text-muted-foreground py-6">
+                    No data available.
+                  </p>
+                )}
+              </Accordion>
+
+              {!showAll && data.length > 4 && (
+                <div className="flex justify-end mt-4">
+                  <Button
+                    onClick={() => setShowAll(true)}
+                    className="border bg-input/50 text-[13px] py-1 px-4"
+                  >
+                    View More
+                  </Button>
+                </div>
+              )}
+
+              <div className="flex justify-between text-sm lg:!mt-4 lg:!my-0 !my-6 px-2">
+                <span>
+                  Total Qty:{" "}
+                  <span className="text-primary font-bold">
+                    {totalQuantity.toLocaleString()}
+                  </span>
+                </span>
+                <span>
+                  Total Value:{" "}
+                  <span className="text-primary font-bold">
+                    ₱{totalValue.toLocaleString()}
+                  </span>
+                </span>
+              </div>
+            </div>
           </Tabs>
         </>
       )}

@@ -4,9 +4,9 @@ import React from "react";
 const StocksSkeleton = () => {
   return (
     <div className="w-full flex flex-col gap-4 !mt-3">
-      <div className="flex justify-between">
+      <div className="flex lg:flex-row flex-col justify-between gap-2">
         <SkeletonCard className="h-6 w-1/8" />
-        <SkeletonCard className="h-6 w-1/6" />
+        <SkeletonCard className="h-6 lg:w-1/6 w-1/2" />
       </div>
 
       <div className="flex flex-col p-5 justify-between bg-secondaryBackground border w-full h-[200px] lg:h-[664px] 3xl:h-[980px] rounded-xl">

@@ -5,8 +5,8 @@ const OverviewCardSkeleton = () => {
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="flex justify-between">
-        <SkeletonCard className="h-6 w-1/8" />
-        <SkeletonCard className="h-6 w-1/8" />
+        <SkeletonCard className="h-6 lg:w-1/8 w-1/6" />
+        <SkeletonCard className="h-6 lg:w-1/8 w-1/2" />
       </div>
 
       <div className="grid auto-rows-min gap-4 lg:grid-cols-4 grid-cols-2">
@@ -23,10 +23,10 @@ const OverviewCardSkeleton = () => {
         ))}
       </div>
 
-      <div className="w-full flex justify-between !mt-5">
-        <SkeletonCard className="h-6 w-1/8" />
+      <div className="w-full flex lg:flex-row flex-col justify-between !mt-5 gap-3">
+        <SkeletonCard className="h-6 lg:w-1/8 w-1/6" />
 
-        <div className="flex gap-2 w-1/2">
+        <div className="flex gap-2 sm:w-1/2">
           <SkeletonCard className="h-6 flex-1" />
           <SkeletonCard className="h-6 flex-1" />
           <SkeletonCard className="h-6 flex-1" />

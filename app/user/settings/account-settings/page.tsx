@@ -20,7 +20,7 @@ export default function AccountSettingsPage() {
   }, []);
 
   return (
-    <main className="w-full max-w-4xl mx-auto p-6 space-y-8">
+    <main className="w-full lg:max-w-4xl lg:mx-auto flex flex-1 flex-col lg:gap-8 gap-6 lg:p-5 p-4">
       {isLoading ? (
         <>
           <AccountSettingsSkeleton />
@@ -54,8 +54,8 @@ export default function AccountSettingsPage() {
                 </p>
               </div>
 
-              <div className="flex gap-4 w-full">
-                <div className="grid gap-2 w-1/2">
+              <div className="flex sm:flex-row flex-col gap-4 w-full">
+                <div className="grid gap-2 sm:w-1/2 w-full">
                   <Label htmlFor="firstName">First Name</Label>
                   <Input
                     id="firstName"
@@ -63,7 +63,7 @@ export default function AccountSettingsPage() {
                     className="w-full"
                   />
                 </div>
-                <div className="grid gap-2 w-1/2">
+                <div className="grid gap-2 sm:w-1/2 w-full">
                   <Label htmlFor="lastName">Last Name</Label>
                   <Input
                     id="lastName"
@@ -117,8 +117,8 @@ export default function AccountSettingsPage() {
               <CardTitle>Security</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 w-full">
-              <div className="flex gap-4 w-full">
-                <div className="grid gap-2 w-1/2">
+              <div className="flex lg:flex-row flex-col gap-4 w-full">
+                <div className="grid gap-2 lg:w-1/2 w-full">
                   <Label htmlFor="password">New Password</Label>
                   <Input
                     id="password"
@@ -127,7 +127,7 @@ export default function AccountSettingsPage() {
                     className="w-full"
                   />
                 </div>
-                <div className="grid gap-2 w-1/2">
+                <div className="grid gap-2 lg:w-1/2 w-full">
                   <Label htmlFor="confirmPassword">Confirm Password</Label>
                   <Input
                     id="confirmPassword"

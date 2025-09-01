@@ -26,6 +26,7 @@ const Chart = () => {
           <SkeletonCard className="h-5 w-1/4" />
         </div>
       </div>
+
       <div className="flex flex-col p-5 justify-between bg-secondaryBackground border w-full h-[200px] lg:h-[664px] 3xl:h-[980px] rounded-xl">
         <div className="flex flex-col gap-2">
           <SkeletonCard className="h-5 w-1/8" />
