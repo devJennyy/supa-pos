@@ -37,16 +37,16 @@ const chartConfig = {
 
 export function ChartPieLegend() {
   return (
-    <Card className="flex flex-col w-full">
-      <CardHeader className="items-center pb-0">
+    <Card className="flex flex-col justify-between w-full lg:gap-0 gap-2">
+      <CardHeader>
         <CardTitle>Payment Mix</CardTitle>
         <CardDescription>June 2025</CardDescription>
       </CardHeader>
 
-      <CardContent className="flex-1 pb-0">
+      <CardContent>
         <ChartContainer
           config={chartConfig}
-          className="sm:!mx-auto sm:aspect-square 3xl:h-[700px] lg:h-[400px] sm:h-[300px] h-[220px] sm:!mt-0 !mt-[-2rem] sm!ml-[3rem] !ml-[-3rem]"
+          className="!mx-auto aspect-square 2xl:h-[250px] xl:h-[320px] sm:h-[230px] h-[220px]"
         >
           <PieChart>
              <ChartTooltip content={<ChartTooltipContent hideLabel />} />
@@ -93,7 +93,7 @@ export function ChartPieLegend() {
       </CardContent>
 
       <CardFooter>
-        <div className="flex w-full flex-col gap-2 text-sm sm:!mt-0 !mt-[-1rem]">
+        <div className="flex w-full flex-col gap-2 text-sm">
           <div className="text-muted-foreground flex items-center gap-2 leading-normal">
             Showing you the payment breakdown of your sales
           </div>

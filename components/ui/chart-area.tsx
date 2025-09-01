@@ -46,7 +46,7 @@ export function Chart() {
         <CardTitle>Showing your monthly profit</CardTitle>
         <CardDescription>Data shown: January - June 2024</CardDescription>
       </CardHeader>
-      <CardContent className="3xl:h-[750px] lg:h-[350px] h-[200px]">
+      <CardContent className="3xl:h-[750px] 2xl:h-[300px] xl:h-[293px] h-[200px]">
         <ChartContainer config={chartConfig} className="w-full h-full">
           <AreaChart
             accessibilityLayer
