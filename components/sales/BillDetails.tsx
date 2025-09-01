@@ -144,9 +144,9 @@ export function RightSidebar({
         <div className="flex flex-col gap-4 !mt-4">
           <h1 className="text-sm">Select Payment</h1>
           <div className="flex justify-between items-center gap-3">
-            <div className="w-full h-25 rounded-xl border bg-input flex flex-col justify-center items-center gap-2 cursor-pointer">
+            <div className="w-full h-25 rounded-xl border border-borderBrand dark:border-border bg-input flex flex-col justify-center items-center gap-2 cursor-pointer">
               <FaMoneyBillWave size={24} className="text-primary" />
-              <p className="text-secondary text-sm">Cash</p>
+              <p className="text-primary dark:text-secondary text-sm">Cash</p>
             </div>
             <div className="w-full h-25 rounded-xl border flex flex-col justify-center items-center gap-2 hover:bg-input hover:text-primary text-secondary transition-default cursor-pointer">
               <BsCreditCardFill size={22} />
@@ -161,7 +161,7 @@ export function RightSidebar({
 
         <div className="flex flex-col gap-3 lg:!mt-16 !mt-8">
           <Button className="h-12 font-semibold">Process Transaction</Button>
-          <Button className="h-12 text-primary border border-primary bg-transparent font-medium hover:bg-primary/10">
+          <Button className="h-12 text-primary border border-borderBrand dark:border-primary bg-input dark:bg-transparent font-medium hover:bg-primary/10">
             Print Receipt
           </Button>
         </div>

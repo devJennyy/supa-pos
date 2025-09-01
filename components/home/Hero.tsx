@@ -40,8 +40,8 @@ const Hero = () => {
           <div className="bg-primary py-1 px-3 rounded-full">SupaPOS</div>
           <p className="pr-2">Free, easy and fast.</p>
         </div> */}
-        <div className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs border rounded-full">
-          <div className="bg-primary py-1 px-3 rounded-full">Update</div>
+        <div className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs bg-input dark:bg-transparent border dark:border-border border-borderBrand/80 rounded-full">
+          <div className="bg-primary py-1 px-3 rounded-full text-white">Update</div>
           <p className="pr-2">Currently work in progress</p>
         </div>
 
@@ -65,16 +65,26 @@ const Hero = () => {
           </Button>
           <Button
             asChild
-            className="!mt-2 lg:w-32 lg:h-10 w-28 h-8.5 bg-transparent border border-primary text-primary lg:text-sm text-xs hover:bg-primary hover:text-foreground transition-default"
+            className="!mt-2 lg:w-32 lg:h-10 w-28 h-8.5 dark:bg-transparent border border-borderBrand bg-input dark:text-primary hover:dark:text-white lg:text-sm text-xs hover:bg-primary dark:hover:bg-primary hover:text-white text-foreground transition-default"
           >
-            <Link href="#about">Explore</Link>
+            <Link href="/#features">Explore</Link>
           </Button>
         </div>
       </motion.div>
 
-      <div className="z-30 w-full overflow-hidden xl:max-w-[1350px] lg:max-w-[1200px] max-w-[540px] lg:rounded-t-3xl rounded-t-xl bg-secondaryFill border lg:!mt-10 !mt-20 transition-slow lg:px-3 lg:pt-3 px-2 pt-2">
+      <div className="dark:block hidden z-30 w-full overflow-hidden xl:max-w-[1350px] lg:max-w-[1200px] max-w-[540px] lg:rounded-t-3xl rounded-t-xl bg-secondaryFill border lg:!mt-10 !mt-20 transition-slow lg:px-3 lg:pt-3 px-2 pt-2">
         <Image
           src="/images/sales-order.svg"
+          alt="Image Preview"
+          width={500}
+          height={500}
+          className="lg:rounded-t-xl rounded-t-lg w-full object-cover !mb-5"
+          priority
+        />
+      </div>
+      <div className="dark:hidden block z-30 w-full overflow-hidden xl:max-w-[1350px] lg:max-w-[1200px] max-w-[540px] lg:rounded-t-3xl rounded-t-xl bg-input border border-borderBrand lg:!mt-10 !mt-20 transition-slow lg:px-3 lg:pt-3 px-2 pt-2">
+        <Image
+          src="/images/sales-order-light.svg"
           alt="Image Preview"
           width={500}
           height={500}

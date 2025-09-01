@@ -66,13 +66,13 @@ html {
 
 :root {
   --radius: 0.625rem;
-  --background: #FCFCFD;
+  --background: #FCFBFC;
   --secondaryBackground: #FFFFFF;
   --tertiary-background: #F9F9FA;
   --foreground: #1A1A1A;
-  --primary: #4FD1C5;
+  --primary: #27AB9E;
   --primary-foreground: #FFFFFF;
-  --secondary: #98989A;
+  --secondary: #777777;
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: #98989A;
