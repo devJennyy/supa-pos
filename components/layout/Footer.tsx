@@ -7,17 +7,15 @@ const Footer = () => {
     {
       url: "https://www.linkedin.com/in/jennypieloor/",
       id: "linkedin",
-      label: "www.linkedin.com/in/jennypieloor/",
       icon: FaLinkedinIn,
       size: 16,
       smSize: 12,
       className: "lg:w-8 lg:h-8 md:w-7 md:h-7 w-6 h-6",
     },
     {
-      url: "https://github.com/devJennyy",
+      url: "https://devjenny-portfolio-legacy.vercel.app/",
       id: "globe",
       icon: FaGlobe,
-      label: "Portfolio: In Development",
       size: 14,
       smSize: 12,
       className: "lg:w-8 lg:h-8 md:w-7 md:h-7 w-6 h-6",
@@ -26,7 +24,6 @@ const Footer = () => {
       url: "https://github.com/devJennyy",
       id: "github",
       icon: FaGithub,
-      label: "github.com/devJennyy",
       size: 16,
       smSize: 12,
       className: "lg:w-8 lg:h-8 md:w-7 md:h-7 w-6 h-6",
@@ -35,14 +32,13 @@ const Footer = () => {
       url: "mailto:devjenny.official@gmail.com?subject=Job%20opportunity%20at%20Company%20Name",
       id: "gmail",
       icon: MdEmail,
-      label: "devjenny.official@gmail.com",
       size: 17,
       smSize: 14,
       className: "lg:w-8 lg:h-8 md:w-7 md:h-7 w-6 h-6",
     },
   ];
   return (
-    <footer className="w-full border-y border-stroke">
+    <footer className="w-full border-y">
       <div className="w-full max-w-[1280px] !mx-auto flex justify-center items-center 4xl:py-7 py-4 sm:px-5 px-4 ">
         {/* This code svcks, but I kinda like the output so... NO JUDGING PLS! */}
         <div className="flex md:flex-row flex-col justify-between items-center w-full text-secondary text-xs lg:text-sm 4xl:text-lg font-light md:gap-0 gap-5">
@@ -73,7 +69,7 @@ const Footer = () => {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`group flex justify-center items-center rounded-full border hover:bg-input hover:border-borderBrand dark:border-border hover:text-primaryText transition-default ${className}`}
+                    className={`group flex justify-center items-center rounded-full border hover:bg-input hover:border-borderBrand dark:border-border hover:text-primary transition-default ${className}`}
                   >
                     <Icon size={size} className="lg:block hidden" />
                     <Icon size={smSize} className="lg:hidden" />
