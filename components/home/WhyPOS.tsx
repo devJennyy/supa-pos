@@ -47,7 +47,7 @@ const WhyPOS = () => {
           <div className="xl:h-85 lg:h-75 h-32 md:rounded-3xl rounded-2xl p-2 border border-borderBrand dark:border-border overflow-hidden">
             <motion.div
               className="h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-white dark:bg-secondaryBackground flex flex-col"
-              whileHover={{ scale: 1.07 }}
+              whileHover={{ scale: 1.07, backgroundColor: "#F6FBFB" }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
               <motion.div
@@ -115,7 +115,7 @@ const WhyPOS = () => {
           <div className="xl:h-85 lg:h-75 h-32 md:rounded-3xl rounded-2xl p-2 border border-borderBrand dark:border-border overflow-hidden">
             <motion.div
               className="h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-white dark:bg-secondaryBackground flex flex-col relative overflow-hidden"
-              whileHover={{ scale: 1.07 }}
+              whileHover={{ scale: 1.07, backgroundColor: "#F6FBFB" }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
               <motion.div
@@ -166,8 +166,8 @@ const WhyPOS = () => {
           {/* Card 3 */}
           <div className="row-span-2 xl:h-175 lg:h-155 md:h-85 h-32 md:rounded-3xl rounded-2xl p-2 border border-borderBrand dark:border-border overflow-hidden">
             <motion.div
-              className="h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-white dark:bg-secondaryBackground flex flex-col justify-between overflow-hidden"
-              whileHover={{ scale: 1.07 }}
+              className="group h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-white dark:bg-secondaryBackground flex flex-col justify-between overflow-hidden"
+              whileHover={{ scale: 1.07, backgroundColor: "#F6FBFB" }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
               <motion.div
@@ -182,7 +182,8 @@ const WhyPOS = () => {
               >
                 {/* Phone */}
                 <motion.div
-                  className="flex items-center gap-4 p-4 bg-gradient-to-r dark:from-input/50 dark:to-input/10 from-input to-input/0 rounded-xl"
+                  className="flex items-center gap-4 p-4 bg-gradient-to-r dark:from-input/50 dark:to-input/10 from-input to-input/0 rounded-xl 
+                   group-hover:from-white group-hover:to-transparent transition-colors duration-300"
                   variants={{
                     hidden: { x: 100, opacity: 0 },
                     visible: {
@@ -208,7 +209,8 @@ const WhyPOS = () => {
 
                 {/* Tablet */}
                 <motion.div
-                  className="flex items-center gap-4 p-4 bg-gradient-to-r dark:from-input/50 dark:to-input/10 from-input to-input/0 rounded-xl"
+                  className="flex items-center gap-4 p-4 bg-gradient-to-r dark:from-input/50 dark:to-input/10 from-input to-input/0 rounded-xl 
+                   group-hover:from-white group-hover:to-transparent transition-colors duration-300"
                   variants={{
                     hidden: { x: 100, opacity: 0 },
                     visible: {
@@ -235,7 +237,8 @@ const WhyPOS = () => {
 
                 {/* Web */}
                 <motion.div
-                  className="flex items-center gap-4 p-4 bg-gradient-to-r dark:from-input/50 dark:to-input/10 from-input to-input/0 rounded-xl"
+                  className="flex items-center gap-4 p-4 bg-gradient-to-r dark:from-input/50 dark:to-input/10 from-input to-input/0 rounded-xl 
+                   group-hover:from-white group-hover:to-transparent transition-colors duration-300"
                   variants={{
                     hidden: { x: 100, opacity: 0 },
                     visible: {
@@ -288,7 +291,7 @@ const WhyPOS = () => {
           <motion.div className="lg:col-span-2 xl:h-85 lg:h-75 h-32 md:rounded-3xl rounded-2xl p-2 border border-borderBrand dark:border-border overflow-hidden">
             <motion.div
               className="flex h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-white dark:bg-secondaryBackground overflow-hidden"
-              whileHover={{ scale: 1.07 }}
+              whileHover={{ scale: 1.07, backgroundColor: "#F6FBFB" }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
               <motion.div
