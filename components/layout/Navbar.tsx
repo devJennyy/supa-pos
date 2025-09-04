@@ -19,7 +19,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 w-full md:h-20 h-16 bg-secondaryBackground border-b border-border flex justify-center">
+    <nav className="sticky top-0 z-50 w-full md:h-20 h-16 bg-secondaryBackground border-b border-border flex justify-center transition-colors duration-500 ease-in-out">
       <div
         className="w-full max-w-[1440px] mx-auto h-full flex justify-between items-center sm:px-5 px-4"
         role="navigation"

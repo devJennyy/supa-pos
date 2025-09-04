@@ -5,7 +5,7 @@ import React from 'react'
 
 const Homepage = () => {
   return (
-    <main>
+    <main className='transition-colors duration-500 ease-in-out'>
       <Hero />
       <Features />
       <WhyPOS />

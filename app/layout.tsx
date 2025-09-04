@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="antialiased">
+      <body className="antialiased transition-colors duration-500 ease-in-out">
         <ThemeProvider attribute="class" enableSystem defaultTheme="system">
           <AuthContextProvider>
             {children}

@@ -7,7 +7,7 @@ const WhyPOS = () => {
   return (
     <section
       id="why-pos"
-      className="scroll-mt-20 w-full border-t mt-[-1px] lg:py-16 py-10"
+      className="scroll-mt-20 w-full border-t mt-[-1px] lg:py-16 py-10 transition-colors duration-500 ease-in-out"
     >
       <div className="w-full max-w-[1440px] !mx-auto flex flex-col justify-center items-center xl:px-16 sm:px-10 px-5 lg:gap-14 gap-8">
         <div className="flex flex-col justify-center items-center gap-5">

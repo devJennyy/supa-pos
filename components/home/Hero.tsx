@@ -30,7 +30,7 @@ const Hero = () => {
   return (
     <section id="hero"
       ref={containerRef}
-      className="scroll-mt-20 w-full flex flex-col justify-center items-center xl:px-16 sm:px-10 px-5 lg:gap-10 relative"
+      className="scroll-mt-20 w-full flex flex-col justify-center items-center xl:px-16 sm:px-10 px-5 lg:gap-10 relative transition-colors duration-500 ease-in-out"
     >
       <motion.div
         style={{ scale: textScale, opacity: textOpacity }}
@@ -72,7 +72,7 @@ const Hero = () => {
         </div>
       </motion.div>
 
-      <div className="dark:block hidden z-30 w-full overflow-hidden xl:max-w-[1350px] lg:max-w-[1200px] max-w-[540px] lg:rounded-t-3xl rounded-t-xl bg-secondaryFill border lg:!mt-10 !mt-20 transition-slow lg:px-3 lg:pt-3 px-2 pt-2">
+      <div className="dark:block hidden z-30 w-full overflow-hidden xl:max-w-[1350px] lg:max-w-[1200px] max-w-[540px] lg:rounded-t-3xl rounded-t-xl bg-secondaryFill border lg:!mt-10 !mt-20 transition-slow lg:px-3 lg:pt-3 px-2 pt-2 transition-colors duration-500 ease-in-out">
         <Image
           src="/images/sales-order.svg"
           alt="Image Preview"
