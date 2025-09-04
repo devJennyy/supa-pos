@@ -131,7 +131,7 @@ const WhyPOS = () => {
               </motion.div>
               <div className="relative flex-1 mt-4 w-full h-full">
                 <motion.div
-                  className="absolute top-8 left-5 right-5 h-[150px] rounded-t-2xl z-10 bg-gradient-to-b dark:from-input dark:via-input/80 dark:to-input/5 from-primary/25 to-primary/5"
+                  className="absolute top-8 left-5 right-5 h-[150px] rounded-t-2xl z-10 bg-gradient-to-b dark:from-input dark:via-input/80 dark:to-input/5 from-[#CCEBE8] to-primary/5"
                   initial={{ x: 100, opacity: 0 }}
                   whileInView={{ x: 0, opacity: 1 }}
                   viewport={{ once: false, amount: 0.3 }}
@@ -322,7 +322,7 @@ const WhyPOS = () => {
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-input/40 dark:bg-secondaryBackground flex flex-col">
+            <div className="h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-input/30 dark:bg-secondaryBackground flex flex-col">
               <motion.div
                 className="flex flex-col items-center text-center gap-4 p-5"
                 initial={{ opacity: 0, y: 20 }}
@@ -389,7 +389,7 @@ const WhyPOS = () => {
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <div className="h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-input dark:bg-secondaryBackground flex flex-col relative overflow-hidden">
+            <div className="h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-input/30 dark:bg-secondaryBackground flex flex-col relative overflow-hidden">
               <motion.div
                 className="flex flex-col justify-between items-center text-center gap-4 p-5 z-20 relative"
                 initial={{ opacity: 0, y: 20 }}
@@ -436,7 +436,7 @@ const WhyPOS = () => {
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-input dark:bg-secondaryBackground flex lg:flex-col flex-col-reverse lg:justify-between overflow-hidden">
+            <div className="h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-input/30 dark:bg-secondaryBackground flex lg:flex-col flex-col-reverse lg:justify-between overflow-hidden">
               <motion.div
                 className="flex flex-col gap-4 xl:!mt-2 pl-20"
                 initial="hidden"
@@ -526,7 +526,7 @@ const WhyPOS = () => {
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <div className="flex flex-col h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-input dark:bg-secondaryBackground overflow-hidden">
+            <div className="flex flex-col h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-input/30 dark:bg-secondaryBackground overflow-hidden">
               <motion.div
                 className="lg:w-2/6 h-full flex flex-col lg:justify-end lg:items-start items-center lg:text-left text-center gap-4 p-5 z-10"
                 initial={{ opacity: 0, y: 20 }}
