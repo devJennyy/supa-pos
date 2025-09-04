@@ -46,8 +46,10 @@ const WhyPOS = () => {
           {/* Card 1 */}
           <div className="xl:h-85 lg:h-75 h-32 md:rounded-3xl rounded-2xl p-2 border border-borderBrand dark:border-border overflow-hidden">
             <motion.div
-              className="h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-white dark:bg-secondaryBackground flex flex-col"
-              whileHover={{ scale: 1.07, backgroundColor: "#F6FBFB" }}
+              className="group h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border 
+             bg-white dark:bg-secondaryBackground flex flex-col justify-between overflow-hidden
+             hover:bg-[#F6FBFB] dark:hover:bg-[#1F2733]"
+              whileHover={{ scale: 1.07 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
               <motion.div
@@ -114,8 +116,10 @@ const WhyPOS = () => {
           {/* Card 2 */}
           <div className="xl:h-85 lg:h-75 h-32 md:rounded-3xl rounded-2xl p-2 border border-borderBrand dark:border-border overflow-hidden">
             <motion.div
-              className="h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-white dark:bg-secondaryBackground flex flex-col relative overflow-hidden"
-              whileHover={{ scale: 1.07, backgroundColor: "#F6FBFB" }}
+              className="group h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border 
+             bg-white dark:bg-secondaryBackground flex flex-col relative overflow-hidden
+             hover:bg-[#F6FBFB] dark:hover:bg-[#1F2733]"
+              whileHover={{ scale: 1.07 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
               <motion.div
@@ -166,8 +170,10 @@ const WhyPOS = () => {
           {/* Card 3 */}
           <div className="row-span-2 xl:h-175 lg:h-155 md:h-85 h-32 md:rounded-3xl rounded-2xl p-2 border border-borderBrand dark:border-border overflow-hidden">
             <motion.div
-              className="group h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-white dark:bg-secondaryBackground flex flex-col justify-between overflow-hidden"
-              whileHover={{ scale: 1.07, backgroundColor: "#F6FBFB" }}
+              className="group h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border 
+             bg-white dark:bg-secondaryBackground flex flex-col justify-between overflow-hidden
+             hover:bg-[#F6FBFB] dark:hover:bg-[#1F2733]"
+              whileHover={{ scale: 1.07 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
               <motion.div
@@ -290,8 +296,10 @@ const WhyPOS = () => {
           {/* Card 4 */}
           <motion.div className="lg:col-span-2 xl:h-85 lg:h-75 h-32 md:rounded-3xl rounded-2xl p-2 border border-borderBrand dark:border-border overflow-hidden">
             <motion.div
-              className="flex h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-white dark:bg-secondaryBackground overflow-hidden"
-              whileHover={{ scale: 1.07, backgroundColor: "#F6FBFB" }}
+              className="flex h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border 
+             bg-white dark:bg-secondaryBackground overflow-hidden
+             hover:bg-[#F6FBFB] dark:hover:bg-[#1F2733] transition-colors duration-300"
+              whileHover={{ scale: 1.07 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
               <motion.div
