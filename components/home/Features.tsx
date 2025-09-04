@@ -45,12 +45,12 @@ const Features = () => {
   return (
     <section
       id="features"
-      className="scroll-mt-20 bg-secondaryBackground w-full border-t mt-[-1px] lg:py-16 py-10"
+      className="scroll-mt-20 bg-secondaryBackground w-full border-t dark:border-border border-borderBrand !mt-[-1px] lg:py-16 py-10"
     >
       <div className="w-full max-w-[1440px] !mx-auto flex flex-col justify-center items-center xl:px-16 sm:px-10 px-5 lg:gap-14 gap-8">
         <div className="flex flex-col justify-center items-center gap-5">
           <motion.div
-            className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs bg-input dark:bg-transparent border dark:border-border border-borderBrand/80 rounded-full"
+            className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs bg-input/40 dark:bg-transparent border dark:border-border border-borderBrand/80 rounded-full"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.5 }}
@@ -91,7 +91,7 @@ const Features = () => {
             {data.map((item, index) => (
               <motion.div
                 key={index}
-                className="group relative w-full xl:h-[450px] h-[350px] border border-borderBrand dark:border-border bg-input dark:bg-background rounded-2xl p-5 flex flex-col justify-end cursor-pointer overflow-hidden"
+                className="group relative w-full xl:h-[450px] h-[350px] border border-borderBrand/50 dark:border-border bg-input/40 dark:bg-background rounded-2xl p-5 flex flex-col justify-end cursor-pointer overflow-hidden"
                 variants={cardVariants}
                 whileHover={{ y: -16 }}
                 transition={{ type: "tween", duration: 0.3 }}
@@ -217,7 +217,7 @@ const Features = () => {
             {data.map((item, index) => (
               <motion.div
                 key={index}
-                className="group relative w-full sm:max-w-[350px] h-[320px] border border-borderBrand dark:border-border bg-input dark:bg-background rounded-2xl p-5 flex flex-col justify-end cursor-pointer overflow-hidden"
+                className="group relative w-full sm:max-w-[350px] h-[320px] border border-borderBrand/50 dark:border-border bg-input/40 dark:bg-background rounded-2xl p-5 flex flex-col justify-end cursor-pointer overflow-hidden"
                 variants={cardVariants}
                 initial="hidden"
                 whileInView="visible"

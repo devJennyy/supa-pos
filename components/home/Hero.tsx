@@ -40,7 +40,7 @@ const Hero = () => {
           <div className="bg-primary py-1 px-3 rounded-full">SupaPOS</div>
           <p className="pr-2">Free, easy and fast.</p>
         </div> */}
-        <div className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs bg-input dark:bg-transparent border dark:border-border border-borderBrand/80 rounded-full">
+        <div className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs bg-input/40 dark:bg-transparent border dark:border-border border-borderBrand/80 rounded-full">
           <div className="bg-primary py-1 px-3 rounded-full text-white">Update</div>
           <p className="pr-2">Currently work in progress</p>
         </div>
