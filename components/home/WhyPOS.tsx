@@ -1,22 +1,43 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const WhyPOS = () => {
+  const containerVariants: Variants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.5,
+      },
+    },
+  };
+
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
+
   return (
     <section
       id="why-pos"
       className="scroll-mt-20 w-full border-t mt-[-1px] lg:py-16 py-10 transition-colors duration-500 ease-in-out"
     >
       <div className="w-full max-w-[1440px] !mx-auto flex flex-col justify-center items-center xl:px-16 sm:px-10 px-5 lg:gap-14 gap-8">
-        <div className="flex flex-col justify-center items-center gap-5">
+        <motion.div
+          className="flex flex-col justify-center items-center gap-5"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.5 }}
+        >
           <motion.div
             className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs bg-input/40 dark:bg-transparent border dark:border-border border-borderBrand/80 rounded-full"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.5 }}
-            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            variants={cardVariants}
           >
             <div className="bg-primary py-1 px-3 rounded-full text-white">
               Why SupaPOS?
@@ -26,20 +47,13 @@ const WhyPOS = () => {
 
           <motion.h1
             className="capitalize lg:text-[2.5rem] text-2xl font-semibold leading-normal text-center px-5"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.5 }}
-            transition={{
-              duration: 0.6,
-              delay: 0.4,
-              ease: [0.25, 0.1, 0.25, 1],
-            }}
+            variants={cardVariants}
           >
-            The <span className="text-primary pr-1">smartest way</span>
+            The <span className="text-primary pr-1">Smartest way</span>
             <br className="sm:block hidden" />
             to run your business
           </motion.h1>
-        </div>
+        </motion.div>
 
         {/* Desktop */}
         <div className="hidden lg:grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-5 gap-4">
@@ -50,7 +64,7 @@ const WhyPOS = () => {
              bg-white dark:bg-secondaryBackground flex flex-col justify-between overflow-hidden
              hover:bg-[#F6FBFB] dark:hover:bg-[#1F2733]"
               whileHover={{ scale: 1.07 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
               <motion.div
                 className="flex flex-col items-center text-center gap-3 p-7"
@@ -120,7 +134,7 @@ const WhyPOS = () => {
              bg-white dark:bg-secondaryBackground flex flex-col relative overflow-hidden
              hover:bg-[#F6FBFB] dark:hover:bg-[#1F2733]"
               whileHover={{ scale: 1.07 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
               <motion.div
                 className="flex flex-col justify-between items-center text-center gap-3 p-7 z-20 relative"
@@ -174,7 +188,7 @@ const WhyPOS = () => {
              bg-white dark:bg-secondaryBackground flex flex-col justify-between overflow-hidden
              hover:bg-[#F6FBFB] dark:hover:bg-[#1F2733]"
               whileHover={{ scale: 1.07 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
               <motion.div
                 className="flex flex-col gap-4 xl:!mt-2 p-7"
@@ -300,7 +314,7 @@ const WhyPOS = () => {
              bg-white dark:bg-secondaryBackground overflow-hidden
              hover:bg-[#F6FBFB] dark:hover:bg-[#1F2733] transition-colors duration-300"
               whileHover={{ scale: 1.07 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
               <motion.div
                 className="w-2/6 h-full flex flex-col justify-end items-start text-left gap-4 pl-10 pb-8 z-10"
@@ -347,7 +361,7 @@ const WhyPOS = () => {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.7 }}
           >
             <div className="h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-input/30 dark:bg-secondaryBackground flex flex-col">
               <motion.div
@@ -414,7 +428,7 @@ const WhyPOS = () => {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
           >
             <div className="h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-input/30 dark:bg-secondaryBackground flex flex-col relative overflow-hidden">
               <motion.div
@@ -461,7 +475,7 @@ const WhyPOS = () => {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
           >
             <div className="h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-input/30 dark:bg-secondaryBackground flex lg:flex-col flex-col-reverse lg:justify-between overflow-hidden">
               <motion.div
@@ -551,7 +565,7 @@ const WhyPOS = () => {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
           >
             <div className="flex flex-col h-full md:rounded-2xl rounded-lg border border-borderBrand dark:border-border bg-input/30 dark:bg-secondaryBackground overflow-hidden">
               <motion.div

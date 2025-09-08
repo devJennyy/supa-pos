@@ -28,17 +28,17 @@ const Features = () => {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.4,
+        staggerChildren: 0.5,
       },
     },
   };
 
   const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 60 },
+    hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: "easeInOut" },
+      transition: { duration: 0.8, ease: "easeOut" },
     },
   };
 
@@ -47,14 +47,17 @@ const Features = () => {
       id="features"
       className="scroll-mt-20 bg-secondaryBackground w-full border-t dark:border-border border-borderBrand !mt-[-1px] lg:py-16 py-10 transition-colors duration-500 ease-in-out"
     >
-      <div className="w-full max-w-[1440px] !mx-auto flex flex-col justify-center items-center xl:px-16 sm:px-10 px-5 lg:gap-14 gap-8">
-        <div className="flex flex-col justify-center items-center gap-5">
+      <div className="w-full max-w-[1440px] !mx-auto flex flex-col justify-center items-center xl:px-16 sm:px-10 px-5 lg:gap-14 gap-5">
+        <motion.div
+          className="flex flex-col justify-center items-center gap-5"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.5 }}
+        >
           <motion.div
             className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs bg-input/40 dark:bg-transparent border dark:border-border border-borderBrand/80 rounded-full"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.5 }}
-            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            variants={cardVariants}
           >
             <div className="bg-primary py-1 px-3 rounded-full text-white">
               Features
@@ -64,20 +67,13 @@ const Features = () => {
 
           <motion.h1
             className="capitalize lg:text-[2.5rem] text-2xl font-semibold leading-normal text-center px-5"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.5 }}
-            transition={{
-              duration: 0.6,
-              delay: 0.4,
-              ease: [0.25, 0.1, 0.25, 1],
-            }}
+            variants={cardVariants}
           >
             The <span className="text-primary pr-1">Easiest Way</span>
             <br className="sm:block hidden" />
             to Manage Your Business
           </motion.h1>
-        </div>
+        </motion.div>
 
         {/* Desktop */}
         <Link href="/login">
@@ -94,7 +90,7 @@ const Features = () => {
                 className="group relative w-full xl:h-[450px] h-[350px] border border-borderBrand/50 dark:border-border bg-input/40 dark:bg-background rounded-2xl p-5 flex flex-col justify-end cursor-pointer overflow-hidden"
                 variants={cardVariants}
                 whileHover={{ y: -16 }}
-                transition={{ type: "tween", duration: 0.3 }}
+                transition={{ type: "tween", duration: 0.4 }}
               >
                 <div className="absolute top-3 right-3 z-20 transition-opacity duration-500 opacity-100 group-hover:opacity-0">
                   <div className="border bg-primary dark:bg-secondaryBackground text-white text-lg font-bold w-10 h-10 flex items-center justify-center rounded-md">
@@ -223,7 +219,7 @@ const Features = () => {
                 whileInView="visible"
                 viewport={{ once: false, amount: 0.2 }}
                 whileHover={{ y: -16 }}
-                transition={{ type: "tween", duration: 0.3 }}
+                transition={{ type: "tween", duration: 0.4 }}
               >
                 <div className="absolute top-3 right-3 z-20 transition-opacity duration-500 opacity-100">
                   <div className="border bg-primary dark:bg-secondaryBackground text-white text-lg font-bold w-10 h-10 flex items-center justify-center rounded-md">
