@@ -87,13 +87,17 @@ const WhyPOS = () => {
               </motion.div>
 
               <div className="flex-1 flex flex-col xl:gap-4 gap-3 mt-2 pb-4">
-                <div className="w-full flex justify-end">
+                <div className="w-full flex justify-end overflow-hidden">
                   <motion.div
                     className="w-5/6 xl:h-10 h-7 rounded-l-full bg-gradient-to-r dark:from-input dark:to-input/5 from-primary/25 to-primary/5"
-                    initial={{ scaleX: 0 }}
+                    initial={{ scaleX: 0.1 }}
                     whileInView={{ scaleX: 1 }}
                     viewport={{ once: false, amount: 0.3 }}
-                    transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
+                    transition={{
+                      duration: 1,
+                      delay: 0.2,
+                      ease: [0.25, 0.1, 0.25, 1],
+                    }}
                     style={{ transformOrigin: "right" }}
                   />
                 </div>
@@ -113,13 +117,17 @@ const WhyPOS = () => {
                   />
                 </div>
 
-                <div className="w-full flex justify-end">
+                <div className="w-full flex justify-end overflow-hidden">
                   <motion.div
                     className="w-5/6 xl:h-10 h-7 rounded-l-full bg-gradient-to-r dark:from-input dark:to-input/5 from-primary/25 to-primary/5"
-                    initial={{ scaleX: 0 }}
+                    initial={{ scaleX: 0.1 }}
                     whileInView={{ scaleX: 1 }}
                     viewport={{ once: false, amount: 0.3 }}
-                    transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
+                    transition={{
+                      duration: 1,
+                      delay: 0.2,
+                      ease: [0.25, 0.1, 0.25, 1],
+                    }}
                     style={{ transformOrigin: "right" }}
                   />
                 </div>
