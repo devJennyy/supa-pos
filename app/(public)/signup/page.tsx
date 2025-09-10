@@ -4,7 +4,6 @@ import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Eye, EyeOff } from "lucide-react";
 import { useEffect, useState } from "react";
-import LoadingScreen from "@/components/ui/loading";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
@@ -29,7 +28,6 @@ const Page = () => {
   const [rePasswordError, setRePasswordError] = useState(false);
   const [passwordMismatch, setPasswordMismatch] = useState(false);
   const [error, setError] = useState("");
-  const [pageLoading, setPageLoading] = useState(true);
   const [formLoading, setFormLoading] = useState(false);
 
   const { session, signUpNewUser, signInWithGoogle, signInWithGitHub } =
@@ -115,15 +113,6 @@ const Page = () => {
     }
   }, [router, session]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setPageLoading(false);
-    }, 650);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (pageLoading) return <LoadingScreen />;
-
   return (
     <main
       id="/register-account"
@@ -132,11 +121,11 @@ const Page = () => {
       <div className="w-full max-w-[1280px] !mx-auto sm:px-5 px-4 3xl:py-20 py-10 flex lg:flex-row flex-col-reverse justify-center lg:items-start items-center">
         <form
           onSubmit={handleSignUp}
-          className="w-full max-w-[500px] rounded-3xl sm:py-10 p-8 gap-10 flex flex-col justify-start bg-secondaryBackground border dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
+          className="w-full max-w-[500px] rounded-2xl sm:p-8 p-6 gap-6 flex flex-col justify-start bg-secondaryBackground border dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
         >
-          <div className="w-full flex flex-col gap-1 ">
+          <div className="w-full flex flex-col gap-2">
             <h1 className="text-2xl font-semibold">Create an account</h1>
-            <p className="text-base text-secondary">
+            <p className="lg:text-base text-sm text-secondary">
               Please enter your details.
             </p>
           </div>
@@ -169,7 +158,7 @@ const Page = () => {
                       }));
                     }
                   }}
-                  className={`w-full h-11 px-4 border rounded-lg outline-none 
+                  className={`w-full h-10 px-4 border rounded-lg outline-none 
         ${firstNameError ? "border-red-500" : "border"} 
         darkfocus:shadow-sm focus-visible:ring-1 dark:ring-stone-50 ring-stone-700`}
                 />
@@ -201,7 +190,7 @@ const Page = () => {
                       }));
                     }
                   }}
-                  className={`w-full h-11 px-4 border rounded-lg outline-none 
+                  className={`w-full h-10 px-4 border rounded-lg outline-none 
         ${lastNameError ? "border-red-500" : "border"} 
         darkfocus:shadow-sm focus-visible:ring-1 dark:ring-stone-50 ring-stone-700`}
                 />
@@ -226,7 +215,7 @@ const Page = () => {
                       email: e.target.value,
                     }))
                   }
-                  className={`w-full h-11 px-4 border rounded-lg outline-none
+                  className={`w-full h-10 px-4 border rounded-lg outline-none
         ${emailError ? "border-red-500" : "border"} 
         darkfocus:shadow-sm focus-visible:ring-1 dark:ring-stone-50 ring-stone-700`}
                 />
@@ -255,7 +244,7 @@ const Page = () => {
                       password: e.target.value,
                     }))
                   }
-                  className={`w-full h-11 px-4 pr-11 border rounded-lg outline-none
+                  className={`w-full h-10 px-4 pr-11 border rounded-lg outline-none
         ${passwordError ? "border-red-500" : "border"} 
         darkfocus:shadow-sm focus-visible:ring-1 dark:ring-stone-50 ring-stone-700 
         [appearance:textfield] [&::-ms-reveal]:hidden [&::-ms-clear]:hidden [&::-webkit-credentials-auto-fill-button]:hidden`}
@@ -295,7 +284,7 @@ const Page = () => {
                   }))
                 }
                 className={cn(
-                  "w-full h-11 px-4 pr-11 border rounded-lg outline-none darkfocus:shadow-sm focus-visible:ring-1 dark:ring-stone-100 ring-stone-700 [appearance:textfield] [&::-ms-reveal]:hidden [&::-ms-clear]:hidden [&::-webkit-credentials-auto-fill-button]:hidden",
+                  "w-full h-10 px-4 pr-11 border rounded-lg outline-none darkfocus:shadow-sm focus-visible:ring-1 dark:ring-stone-100 ring-stone-700 [appearance:textfield] [&::-ms-reveal]:hidden [&::-ms-clear]:hidden [&::-webkit-credentials-auto-fill-button]:hidden",
                   rePasswordError || passwordMismatch
                     ? "border-red-500 text-red-600"
                     : "border"
@@ -313,7 +302,7 @@ const Page = () => {
               aria-label="Create account"
               type="submit"
               disabled={formLoading}
-              className="font-semibold text-base rounded-lg h-12 w-full flex justify-center items-center"
+              className="font-semibold sm:text-base text-sm rounded-lg h-10 w-full flex justify-center items-center"
             >
               Create account
             </Button>
@@ -325,24 +314,24 @@ const Page = () => {
             )}
           </div>
 
-          <div className="w-full h-[1px] rounded-full !mt-[-5px] dark:bg-foreground/0 bg-gradient-to-l from-foreground/0 via-foreground to-foreground/0"></div>
+          <div className="sm:my-1 w-full h-[1px] rounded-full dark:bg-secondary/0 bg-gradient-to-l from-secondary/0 via-secondary to-secondary/0"></div>
 
-          <div className="w-full flex flex-col gap-3 !mt-[-10px]">
+          <div className="w-full flex flex-col gap-3">
             <button
               type="button"
               onClick={() => handleGoogleLogin()}
-              className="w-full h-12 dark:bg-input/50 hover:dark:bg-input active:dark:bg-input dark:border bg-input/20 hover:bg-input/30 active:bg-input/30 border transition-default rounded-full flex justify-center items-center gap-2 cursor-pointer"
+              className="w-full sm:h-12 h-10 dark:bg-input/50 hover:dark:bg-input active:dark:bg-input dark:border bg-input/20 hover:bg-input/30 active:bg-input/30 border transition-default rounded-full flex justify-center items-center gap-2 cursor-pointer"
             >
-              <FcGoogle size={20} />
-              <p className="text-sm">Continue with Google</p>
+               <FcGoogle className="sm:text-[20px] text-[16px]" />
+              <p className="sm:text-sm text-[13px]">Continue with Google</p>
             </button>
             <button
               type="button"
               onClick={() => handleGitHubLogin()}
-              className="w-full h-12 dark:bg-input/50 hover:dark:bg-input active:dark:bg-input dark:border bg-input/20 hover:bg-input/30 active:bg-input/30 border transition-default rounded-full flex justify-center items-center gap-2 cursor-pointer"
+              className="w-full sm:h-12 h-10 dark:bg-input/50 hover:dark:bg-input active:dark:bg-input dark:border bg-input/20 hover:bg-input/30 active:bg-input/30 border transition-default rounded-full flex justify-center items-center gap-2 cursor-pointer"
             >
-              <FaGithub size={18} />
-              <p className="text-sm">Sign in with Github</p>
+               <FaGithub className="sm:text-[18px] text-[15px]" />
+              <p className="sm:text-sm text-[13px]">Sign in with Github</p>
             </button>
           </div>
 
@@ -357,11 +346,11 @@ const Page = () => {
           </p>
         </form>
 
-        <div className="w-full lg:max-w-1/2 max-w-[450px] lg:p-10 lg:!mb-0 !mb-5">
-          <div className="p-5 flex flex-col gap-3 w-full lg:items-start items-center">
-            <h1 className="text-[2rem] font-semibold">Start your Writual</h1>
-            <p className="text-secondary text-lg md:max-w-[340px] lg:text-left text-center">
-              A fast, easy, and free way to write notes, manage your daily
+        <div className="w-full lg:max-w-1/2 max-w-[450px] lg:p-10 lg:!mb-0 !mb-8">
+          <div className="sm:p-5 px-5 flex flex-col sm:gap-3 gap-2 w-full lg:items-start items-center">
+            <h1 className="sm:text-[2rem] text-[1.5rem] font-semibold">Start your Writual</h1>
+            <p className="text-secondary md:max-w-[340px] lg:text-left text-center">
+               A fast, easy, and free way to write notes, manage your daily
               tasks, and build better habits.
             </p>
           </div>

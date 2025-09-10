@@ -92,7 +92,7 @@ export default function Layout({ children }: LayoutProps) {
     };
 
     init();
-  }, []);
+  }, [refreshProfile]);
 
   return (
     <RightSidebarContext.Provider

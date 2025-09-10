@@ -3,10 +3,12 @@
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
+import { AuthModal } from "../ui/AuthModal";
 
 const Hero = () => {
+  const [showAuth, setShowAuth] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -28,7 +30,8 @@ const Hero = () => {
   });
 
   return (
-    <section id="hero"
+    <section
+      id="hero"
       ref={containerRef}
       className="scroll-mt-20 w-full flex flex-col justify-center items-center xl:px-16 sm:px-10 px-5 lg:gap-10 relative transition-colors duration-500 ease-in-out"
     >
@@ -41,7 +44,9 @@ const Hero = () => {
           <p className="pr-2">Free, easy and fast.</p>
         </div> */}
         <div className="flex justify-center items-center gap-3 p-1 w-fit h-fit lg:text-sm text-xs bg-input/40 dark:bg-transparent border dark:border-border border-borderBrand/80 rounded-full">
-          <div className="bg-primary py-1 px-3 rounded-full text-white">Update</div>
+          <div className="bg-primary py-1 px-3 rounded-full text-white">
+            Update
+          </div>
           <p className="pr-2">Currently work in progress</p>
         </div>
 
@@ -59,10 +64,18 @@ const Hero = () => {
         <div className="flex gap-3">
           <Button
             asChild
-            className="!mt-2 lg:w-32 lg:h-10 w-28 h-8.5 lg:text-sm text-xs"
+            className="!mt-2 lg:w-32 lg:h-10 w-28 h-8.5 lg:text-sm text-xs lg:hidden"
           >
             <Link href="/login">Get Started</Link>
           </Button>
+
+          <Button
+            onClick={() => setShowAuth(true)}
+            className="z-50 !mt-2 lg:w-32 lg:h-10 w-28 h-8.5 lg:text-sm text-xs lg:flex hidden"
+          >
+            Get Started
+          </Button>
+
           <Button
             asChild
             className="!mt-2 lg:w-32 lg:h-10 w-28 h-8.5 dark:bg-transparent border border-borderBrand bg-input dark:text-primary hover:dark:text-white lg:text-sm text-xs hover:bg-primary dark:hover:bg-primary hover:text-white text-foreground transition-default"
@@ -71,6 +84,7 @@ const Hero = () => {
           </Button>
         </div>
       </motion.div>
+      {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
 
       <div className="dark:block hidden z-30 w-full overflow-hidden xl:max-w-[1350px] lg:max-w-[1200px] max-w-[540px] lg:rounded-t-3xl rounded-t-xl bg-secondaryFill border lg:!mt-10 !mt-20 transition-slow lg:px-3 lg:pt-3 px-2 pt-2 transition-colors duration-500 ease-in-out">
         <Image

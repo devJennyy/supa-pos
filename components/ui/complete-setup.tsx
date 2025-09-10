@@ -172,7 +172,7 @@ export default function SetupModal() {
             type="text"
             value={store_name}
             onChange={(e) => setStoreName(e.target.value)}
-            placeholder="Name's Convenient Store"
+            placeholder="Supapos's Convenient Store"
             className="w-full lg:h-12 h-11 border transition-default rounded-full px-4 placeholder:text-secondary text-foreground lg:text-base text-sm tracking-wide outline-none text-center lg:!mt-4 !mt-2"
           />
 

@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import ThemeToggle from "../ui/theme-toggle";
+import { AuthModal } from "../ui/AuthModal";
 
 const navLinks = [
   { label: "Home", href: "/#hero" },
@@ -15,6 +16,7 @@ const navLinks = [
 ];
 
 const Navbar = () => {
+  const [showAuth, setShowAuth] = useState(false);
   const [active, setActive] = useState("Home");
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -69,9 +71,16 @@ const Navbar = () => {
         <div className="md:w-full md:max-w-43 flex md:gap-3 gap-2 h-10">
           <ThemeToggle />
 
-          <Button asChild className="md:block hidden">
-            <Link href="/login">Get Started</Link>
-          </Button>
+          <>
+            <Button
+              className="md:block hidden"
+              onClick={() => setShowAuth(true)}
+            >
+              Get Started
+            </Button>
+
+            {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
+          </>
 
           <div className="md:hidden">
             <button
@@ -123,9 +132,17 @@ const Navbar = () => {
                   {link.label}
                 </a>
               ))}
-              <Button asChild>
+              <Button asChild className="lg:hidden">
                 <Link href="/login">Get Started</Link>
               </Button>
+              <Button
+                onClick={() => setShowAuth(true)}
+                className="lg:flex hidden"
+              >
+                Get Started
+              </Button>
+
+              {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
             </div>
           </motion.div>
         )}
