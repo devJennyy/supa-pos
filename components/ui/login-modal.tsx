@@ -105,7 +105,7 @@ export const LoginModal: FC<LoginModalProps> = ({
     <main className="fixed inset-0 z-50 flex items-center justify-center dark:bg-black/50 bg-black/60 backdrop-blur-sm">
       <form
         onSubmit={handleLogIn}
-        className="relative w-full max-w-[500px] rounded-3xl sm:py-10 p-8 gap-10 flex flex-col justify-start dark:bg-secondaryBackground bg-background border dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
+        className="relative w-full max-w-[500px] rounded-3xl sm:py-10 p-8 gap-8 flex flex-col justify-start dark:bg-secondaryBackground bg-background border dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
       >
         <div className="absolute top-4 right-4 z-30">
           <IoMdClose
@@ -114,7 +114,7 @@ export const LoginModal: FC<LoginModalProps> = ({
             onClick={onClose}
           />
         </div>
-        <div className="w-full flex flex-col gap-1 ">
+        <div className="w-full flex flex-col gap-1">
           <h1 className="text-2xl font-semibold">Welcome Back!</h1>
           <p className="text-sm text-muted-foreground">
             Please enter your details.

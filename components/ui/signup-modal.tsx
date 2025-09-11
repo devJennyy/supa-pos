@@ -126,7 +126,7 @@ export const SignupModal: FC<LoginModalProps> = ({
     <main className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
       <form
         onSubmit={handleSignUp}
-        className="relative w-full max-w-[500px] rounded-3xl sm:py-10 p-8 gap-10 flex flex-col justify-start bg-secondaryBackground border dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
+        className="relative w-full max-w-[500px] rounded-3xl sm:py-10 p-8 gap-8 flex flex-col justify-start bg-secondaryBackground border dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
       >
         <div className="absolute top-4 right-4 z-30">
           <IoMdClose
@@ -317,9 +317,9 @@ export const SignupModal: FC<LoginModalProps> = ({
           )}
         </div>
 
-        <div className="w-full h-[1px] rounded-full !mt-[-5px] dark:bg-foreground/0 bg-gradient-to-l from-foreground/0 via-foreground to-foreground/0"></div>
+        <div className="!my-1 w-full dark:h-[1.8px] h-[1.6px] rounded-full bg-gradient-to-l from-transparent via-neutral-300 to-transparent dark:from-border/0 dark:via-border dark:to-border/0"></div>
 
-        <div className="w-full flex flex-col gap-3 !mt-[-10px]">
+        <div className="w-full flex flex-col gap-3">
           <button
             type="button"
             onClick={() => handleGoogleLogin()}
