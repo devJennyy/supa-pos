@@ -102,10 +102,10 @@ export const LoginModal: FC<LoginModalProps> = ({
   }, [session, router]);
 
   return (
-    <main className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    <main className="fixed inset-0 z-50 flex items-center justify-center dark:bg-black/50 bg-black/60 backdrop-blur-sm">
       <form
         onSubmit={handleLogIn}
-        className="relative w-full max-w-[500px] rounded-3xl sm:py-10 p-8 gap-10 flex flex-col justify-start bg-secondaryBackground border dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
+        className="relative w-full max-w-[500px] rounded-3xl sm:py-10 p-8 gap-10 flex flex-col justify-start dark:bg-secondaryBackground bg-background border dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
       >
         <div className="absolute top-4 right-4 z-30">
           <IoMdClose
@@ -116,7 +116,9 @@ export const LoginModal: FC<LoginModalProps> = ({
         </div>
         <div className="w-full flex flex-col gap-1 ">
           <h1 className="text-2xl font-semibold">Welcome Back!</h1>
-          <p className="text-base text-secondary">Please enter your details.</p>
+          <p className="text-sm text-muted-foreground">
+            Please enter your details.
+          </p>
         </div>
 
         <div className="w-full flex flex-col gap-5 text-sm">
@@ -139,14 +141,9 @@ export const LoginModal: FC<LoginModalProps> = ({
                   setEmailError(false);
                 }
               }}
-              onBlur={() => {
-                if (email.trim() === "") {
-                  setEmailError(true);
-                }
-              }}
-              className={`w-full h-11 px-4 border rounded-lg outline-none
+              className={`w-full h-11 px-4 border dark:border-border border-border-input rounded-lg outline-none
       ${emailError ? "border-red-500" : "border"}
-      darkfocus:shadow-sm focus-visible:ring-1 dark:ring-stone-100 ring-stone-700`}
+      darkfocus:shadow-sm focus-visible:ring-1 dark:ring-stone-100 ring-stone-100`}
             />
           </div>
 
@@ -169,9 +166,9 @@ export const LoginModal: FC<LoginModalProps> = ({
                     setPasswordError(false);
                   }
                 }}
-                className={`w-full h-11 px-4 pr-11 border rounded-lg outline-none
+                className={`w-full h-11 px-4 pr-11 border dark:border-border border-border-input rounded-lg outline-none
         ${passwordError ? "border-red-500" : "border"}
-        darkfocus:shadow-sm focus-visible:ring-1 dark:ring-stone-100 ring-stone-700 
+        darkfocus:shadow-sm focus-visible:ring-1 dark:ring-stone-100 ring-stone-100 
         [appearance:textfield] [&::-ms-reveal]:hidden [&::-ms-clear]:hidden [&::-webkit-credentials-auto-fill-button]:hidden`}
               />
 
@@ -187,7 +184,7 @@ export const LoginModal: FC<LoginModalProps> = ({
             {/* Forgot Password */}
             <Dialog>
               <DialogTrigger asChild>
-                <p className="text-secondary hover:text-foreground transition-default text-end underline underline-offset-2 cursor-pointer !mt-1">
+                <p className="text-sm dark:text-secondary hover:text-foreground transition-default text-end underline underline-offset-4 cursor-pointer !mt-1">
                   Forgot Password?
                 </p>
               </DialogTrigger>
@@ -253,13 +250,13 @@ export const LoginModal: FC<LoginModalProps> = ({
           )}
         </div>
 
-        <div className="w-full h-[1px] rounded-full !mt-[-5px] dark:bg-foreground/0 bg-gradient-to-l from-foreground/0 via-foreground to-foreground/0"></div>
+        <div className="w-full dark:h-[1.5px] h-[1.6px] rounded-full bg-gradient-to-l from-transparent via-neutral-300 to-transparent dark:from-border/0 dark:via-border dark:to-border/0"></div>
 
-        <div className="w-full flex flex-col gap-3 !mt-[-10px]">
+        <div className="w-full flex flex-col gap-3">
           <button
             type="button"
             onClick={() => handleGoogleLogin()}
-            className="w-full h-12 dark:bg-input/50 hover:dark:bg-input active:dark:bg-input dark:border bg-input/20 hover:bg-input/30 active:bg-input/30 border transition-default rounded-full flex justify-center items-center gap-2 cursor-pointer"
+            className="w-full h-12 dark:bg-input/50 hover:dark:bg-input active:dark:bg-input bg-input/20 hover:bg-input/30 active:bg-input/30 border border-border-input dark:border-border transition-default rounded-full flex justify-center items-center gap-2 cursor-pointer"
           >
             <FcGoogle size={20} />
             <p className="text-sm">Continue with Google</p>
@@ -267,7 +264,7 @@ export const LoginModal: FC<LoginModalProps> = ({
           <button
             type="button"
             onClick={() => handleGitHubLogin()}
-            className="w-full h-12 dark:bg-input/50 hover:dark:bg-input active:dark:bg-input dark:border bg-input/20 hover:bg-input/30 active:bg-input/30 border transition-default rounded-full flex justify-center items-center gap-2 cursor-pointer"
+            className="w-full h-12 dark:bg-input/50 hover:dark:bg-input active:dark:bg-input bg-input/20 hover:bg-input/30 active:bg-input/30 border border-border-input dark:border-border transition-default rounded-full flex justify-center items-center gap-2 cursor-pointer"
           >
             <FaGithub size={18} />
             <p className="text-sm">Sign in with Github</p>

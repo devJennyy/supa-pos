@@ -40,6 +40,7 @@ html {
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
+  --color-border-input: var(--border-input);
   --color-borderBrand: var(--borderBrand);
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
@@ -63,9 +64,16 @@ html {
   --breakpoint-4xl: 2560px;
 }
 ::selection {
+  background: #EEFBFA;
+  color: #27AB9E;  
+}
+
+/* Dark mode */
+.dark ::selection {
   background: #1F3038;
   color: #4FD1C5;
 }
+
 
 :root {
   --radius: 0.625rem;
@@ -89,6 +97,7 @@ html {
   --destructive: oklch(0.577 0.245 27.325);
 
   --border: #F1F1F3;
+  --border-input: #E5E5E5;
   --borderBrand: #7FDED5;
   --input: #EEFBFA;
   --ring: oklch(0.708 0 0);
@@ -212,3 +221,21 @@ html {
 .sidebar-close-btn:hover .sidebar-icon {
   @apply text-white;
 }
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #FCFBFC inset; /* white background */
+  -webkit-text-fill-color: #1A1A1A; /* dark text */
+  background-clip: padding-box;
+}
+
+.dark input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #1F2733 inset; /* dark background */
+  -webkit-text-fill-color: #FFFFFF; /* white text */
+  background-clip: padding-box;
+}
+
+
+
+
+
+
