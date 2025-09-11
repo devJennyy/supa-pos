@@ -11,15 +11,23 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import AccountSettingsSkeleton from "@/components/settings/skeletons/AccountSettings";
 import { FiPlus } from "react-icons/fi";
+import { UserAuth } from "@/app/context/AuthContext";
 
 export default function AccountSettingsPage() {
   const [isLoading, setIsLoading] = useState(true);
+  const auth = UserAuth();
+  const profile = auth?.profile;
+  const dataLoading = auth?.loading;
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
+  if(dataLoading) {
+    return <AccountSettingsSkeleton />
+  }
+  
   return (
     <main className=" w-full flex gap-5 lg:p-5 p-4 !mt-2">
       {isLoading ? (
@@ -64,13 +72,13 @@ export default function AccountSettingsPage() {
                     {/* Main Circle with Image */}
                     <div className="relative z-10">
                       <div className="border-4 bg-border/70 rounded-full z-20">
-                        <Image
-                          src=""
+                        {profile?.avatar_url && <Image
+                          src={profile?.avatar_url || ''}
                           alt="Profile"
                           width={500}
                           height={500}
                           className="w-54 h-54 rounded-full object-cover"
-                        />
+                        />}
                       </div>
                       <button className="cursor-pointer w-fit absolute bottom-[-1rem] left-1/2 -translate-x-1/2 bg-primary text-white p-2 rounded-full hover:opacity-90 border-4">
                         <FiPlus size={20} />
@@ -134,13 +142,13 @@ export default function AccountSettingsPage() {
                 {/* Profile Image Upload */}
                 <div className="lg:hidden flex flex-col items-center space-y-3">
                   <div className="relative">
-                    <Image
-                      src=""
+                    {profile?.avatar_url && <Image
+                      src={profile?.avatar_url || ''}
                       alt="Profile"
                       width={112}
                       height={112}
                       className="w-28 h-28 rounded-full object-cover border"
-                    />
+                    />}
                     <button className="absolute bottom-1 right-1 bg-primary text-white p-2 rounded-full shadow-md hover:opacity-90">
                       <Camera size={16} />
                     </button>

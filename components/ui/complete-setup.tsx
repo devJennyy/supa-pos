@@ -7,64 +7,72 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import LoadingScreen from "@/components/ui/loading";
 import { UserAuth } from "@/app/context/AuthContext";
+import { useUploadAvatar } from "@/hooks/useUploadAvatar";
 
 export default function SetupModal() {
   const [pageLoading, setPageLoading] = useState(true);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [fullName, setFullName] = useState("");
   const [store_name, setStoreName] = useState("");
   const [isFirstTime, setIsFirstTime] = useState<boolean | null>(null);
+  const [uploading, setUploading] = useState(false);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const auth = UserAuth()!;
   const { refreshProfile } = auth;
+  const { imageUrl, uploadAvatar } = useUploadAvatar();
 
+  // Fetch profile
   useEffect(() => {
     const fetchProfile = async () => {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
       if (userError || !user) {
         console.error("No user or error getting user:", userError);
         setIsFirstTime(false);
         return;
       }
 
-      setTimeout(async () => {
-        const { data, error } = await supabase
-          .from("profiles")
-          .select("first_name, last_name, store_name, first_time")
-          .eq("id", user.id)
-          .maybeSingle();
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("first_name, last_name, store_name, avatar_url, first_time")
+        .eq("id", user.id)
+        .maybeSingle();
 
-        if (error || !data) {
-          setIsFirstTime(false);
-          return;
-        }
+      if (error || !data) {
+        setIsFirstTime(false);
+        return;
+      }
 
-        setIsFirstTime(data.first_time);
-        setFullName(`${data.first_name} ${data.last_name}`);
-        setStoreName(data.store_name || "");
+      setIsFirstTime(data.first_time);
+      setFullName(`${data.first_name} ${data.last_name}`);
+      setStoreName(data.store_name || "");
+      setImagePreview(data.avatar_url || null);
 
-        if (data.first_time === false) {
-          setPageLoading(true);
-          setTimeout(() => setPageLoading(false), 800);
-        } else {
-          setPageLoading(false);
-        }
-      }, 1000);
+      setPageLoading(false);
     };
 
     fetchProfile();
   }, []);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Handle file selection
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setImagePreview(reader.result as string);
-      reader.readAsDataURL(file);
+    if (!file) return;
+
+    // Preview locally
+    const reader = new FileReader();
+    reader.onloadend = () => setImagePreview(reader.result as string);
+    reader.readAsDataURL(file);
+
+    // Upload to Supabase
+    try {
+      setUploading(true);
+      const url = await uploadAvatar(file);
+      console.log("Uploaded URL:", url);
+    } catch (err) {
+      console.error("Upload failed:", err);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -72,12 +80,9 @@ export default function SetupModal() {
     fileInputRef.current?.click();
   };
 
+  // Save profile
   const updateProfile = async () => {
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
-
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
     if (!user || userError) {
       console.error("No user or error getting user:", userError);
       return;
@@ -88,7 +93,13 @@ export default function SetupModal() {
 
     const { error: updateError } = await supabase
       .from("profiles")
-      .update({ first_name, last_name, store_name, first_time: false })
+      .update({
+        first_name,
+        last_name,
+        store_name,
+        avatar_url: imageUrl || imagePreview,
+        first_time: false,
+      })
       .eq("id", user.id);
 
     if (updateError) {
@@ -96,17 +107,15 @@ export default function SetupModal() {
       return;
     }
 
-    if (refreshProfile) {
-      await refreshProfile();
-    }
+    if (refreshProfile) await refreshProfile();
 
     setIsFirstTime(false);
     setPageLoading(true);
     setTimeout(() => setPageLoading(false), 800);
   };
 
-  // Still fetching
-  if (isFirstTime === null) {
+  // Loading screen
+  if (isFirstTime === null || pageLoading) {
     return (
       <div className="fixed inset-0 z-[9999999] flex items-center justify-center bg-black/30 backdrop-blur-md">
         <LoadingScreen />
@@ -115,18 +124,9 @@ export default function SetupModal() {
   }
 
   // Not first time
-  if (isFirstTime === false) {
-    if (pageLoading) {
-      return (
-        <div className="fixed inset-0 z-[9999999] flex items-center justify-center bg-black/30 backdrop-blur-md">
-          <LoadingScreen />
-        </div>
-      );
-    }
-    return null;
-  }
+  if (isFirstTime === false) return null;
 
-  // First time - show modal
+  // First time - modal
   return (
     <div className="fixed inset-0 z-[9999999] flex items-center justify-center bg-black/30 backdrop-blur-md">
       <div className="w-full max-w-[1280px] sm:px-5 px-4 3xl:py-20 py-10 flex justify-center">
@@ -156,7 +156,11 @@ export default function SetupModal() {
               onClick={handleCameraClick}
               className="absolute bottom-2 right-2 w-8 h-8 bg-background border rounded-full flex items-center justify-center cursor-pointer"
             >
-              <BsFillCameraFill className="text-primary text-base" />
+              {uploading ? (
+                <div className="animate-spin border-2 border-primary border-t-transparent rounded-full w-5 h-5" />
+              ) : (
+                <BsFillCameraFill className="text-primary text-base" />
+              )}
             </div>
 
             <input

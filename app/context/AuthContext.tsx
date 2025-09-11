@@ -13,6 +13,7 @@ type ProfileType = {
   store_name: string;
   email: string;
   setup_complete: boolean;
+  avatar_url: string;
   [key: string]: any;
 };
 
@@ -40,6 +41,7 @@ type AuthContextType = {
     data?: any;
     error?: any;
   }>;
+  loading: boolean;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<{ success: boolean; data?: any; error?: any }>; 
 };
@@ -49,6 +51,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<any>(undefined);
   const [profile, setProfile] = useState<ProfileType | null>(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   const fetchUserProfile = async (userId: string) => {
@@ -125,17 +128,20 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
 useEffect(() => {
-  supabase.auth.getSession().then(({ data: { session } }) => {
+  const initAuth = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
     setSession(session);
 
     if (session?.user?.id) {
-      fetchUserProfile(session.user.id);
+      await fetchUserProfile(session.user.id);
     }
-  });
 
-  const {
-    data: { subscription },
-  } = supabase.auth.onAuthStateChange((_event, session) => {
+    setLoading(false);
+  };
+
+  initAuth();
+
+  const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
     setSession(session);
 
     if (session?.user?.id) {
@@ -316,6 +322,7 @@ useEffect(() => {
       value={{
         session,
         profile,
+        loading,
         signUpNewUser,
         signInUser,
         signOut,

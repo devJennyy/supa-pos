@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import {
@@ -22,6 +23,8 @@ import { HiOutlineSearch } from "react-icons/hi";
 import SetupModal from "@/components/ui/complete-setup";
 import { UserAuth } from "../context/AuthContext";
 import { AppSidebar } from "@/components/layout/Sidebar";
+import Image from "next/image";
+import { useUploadAvatar } from "@/hooks/useUploadAvatar";
 
 type SidebarContextType = {
   isRightOpen: boolean;
@@ -47,6 +50,7 @@ export default function Layout({ children }: LayoutProps) {
   const auth = UserAuth();
   const profile = auth?.profile;
   const refreshProfile = auth?.refreshProfile;
+  const { imageUrl } = useUploadAvatar();
 
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
   const [hasOpenedOnce, setHasOpenedOnce] = useState(false);
@@ -82,7 +86,7 @@ export default function Layout({ children }: LayoutProps) {
       );
     }
   };
-
+// console.log(imageUrl)
   useEffect(() => {
     const init = async () => {
       if (refreshProfile) {
@@ -92,8 +96,8 @@ export default function Layout({ children }: LayoutProps) {
     };
 
     init();
-  }, [refreshProfile]);
-
+  }, []);
+  
   return (
     <RightSidebarContext.Provider
       value={{
@@ -133,9 +137,17 @@ export default function Layout({ children }: LayoutProps) {
                 <div className="flex items-center gap-4">
                   <div
                     className="w-12 h-12 rounded-full border bg-input flex items-center justify-center 
-             text-lg font-semibold transition cursor-pointer"
+             text-lg font-semibold transition cursor-pointer overflow-hidden"
                   >
-                    {profile?.store_name?.charAt(0).toUpperCase() || "?"}
+                    {profile?.avatar_url ? (
+                      <img
+                        src={profile?.avatar_url}
+                        alt="Profile"
+                        className="object-cover w-full h-full rounded-full"
+                      />
+                    ) : (
+                      profile?.store_name?.charAt(0).toUpperCase() || "?"
+                    )}
                   </div>
 
                   <div className="flex flex-col">
