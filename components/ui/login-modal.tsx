@@ -250,7 +250,7 @@ export const LoginModal: FC<LoginModalProps> = ({
           )}
         </div>
 
-        <div className="w-full dark:h-[1.5px] h-[1.6px] rounded-full bg-gradient-to-l from-transparent via-neutral-300 to-transparent dark:from-border/0 dark:via-border dark:to-border/0"></div>
+        <div className="!my-1 w-full dark:h-[1.8px] h-[1.6px] rounded-full bg-gradient-to-l from-transparent via-neutral-300 to-transparent dark:from-border/0 dark:via-border dark:to-border/0"></div>
 
         <div className="w-full flex flex-col gap-3">
           <button

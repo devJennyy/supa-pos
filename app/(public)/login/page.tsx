@@ -95,7 +95,7 @@ const Page = () => {
           className="w-full max-w-[500px] rounded-2xl sm:p-8 p-6 gap-6 flex flex-col justify-start bg-secondaryBackground border dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
         >
           <div className="w-full flex flex-col gap-2">
-            <h1 className="text-2xl font-semibold">Welcome Back!</h1>
+            <h1 className="sm:text-2xl text-[21px] font-semibold">Welcome Back!</h1>
             <p className="lg:text-base text-sm text-secondary">
               Please enter your details.
             </p>
@@ -237,7 +237,7 @@ const Page = () => {
             )}
           </div>
 
-          <div className="sm:my-1 w-full h-[1px] rounded-full  dark:bg-secondary/0 bg-gradient-to-l from-secondary/0 via-secondary to-secondary/0"></div>
+          <div className="sm:my-1 w-full h-[1px] rounded-full bg-gradient-to-l from-transparent via-neutral-300 to-transparent dark:bg-secondary/0 dark:from-secondary/0 dark:via-secondary dark:to-secondary/0"></div>
 
           <div className="w-full flex flex-col gap-3">
             <button

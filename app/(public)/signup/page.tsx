@@ -118,13 +118,13 @@ const Page = () => {
       id="/register-account"
       className="w-full 4xl:flex-none flex-1 flex justify-center items-center overflow-hidden"
     >
-      <div className="w-full max-w-[1280px] !mx-auto sm:px-5 px-4 3xl:py-20 py-10 flex lg:flex-row flex-col-reverse justify-center lg:items-start items-center">
+      <div className="w-full max-w-[1280px] !mx-auto sm:px-5 px-4 3xl:py-20 sm:py-10 py-8 flex lg:flex-row flex-col-reverse justify-center lg:items-start items-center">
         <form
           onSubmit={handleSignUp}
           className="w-full max-w-[500px] rounded-2xl sm:p-8 p-6 gap-6 flex flex-col justify-start bg-secondaryBackground border dark:shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
         >
           <div className="w-full flex flex-col gap-2">
-            <h1 className="text-2xl font-semibold">Create an account</h1>
+            <h1 className="sm:text-2xl text-[21px] font-semibold">Create an account</h1>
             <p className="lg:text-base text-sm text-secondary">
               Please enter your details.
             </p>
@@ -314,7 +314,7 @@ const Page = () => {
             )}
           </div>
 
-          <div className="sm:my-1 w-full h-[1px] rounded-full dark:bg-secondary/0 bg-gradient-to-l from-secondary/0 via-secondary to-secondary/0"></div>
+          <div className="my-1 w-full dark:h-[1.8px] h-[1.6px] rounded-full dark:bg-secondary/0 bg-gradient-to-l from-secondary/0 via-secondary to-secondary/0"></div>
 
           <div className="w-full flex flex-col gap-3">
             <button
