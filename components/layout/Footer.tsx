@@ -38,7 +38,7 @@ const Footer = () => {
     },
   ];
   return (
-    <footer className="w-full border-y">
+    <footer className="w-full border-t bg-secondaryBackground">
       <div className="w-full max-w-[1280px] !mx-auto flex justify-center items-center 4xl:py-7 py-4 sm:px-5 px-4 ">
         {/* This code svcks, but I kinda like the output so... NO JUDGING PLS! */}
         <div className="flex md:flex-row flex-col justify-between items-center w-full text-secondary text-xs lg:text-sm 4xl:text-lg font-light md:gap-0 gap-5">
