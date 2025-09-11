@@ -49,7 +49,7 @@ const Footer = () => {
           </p>
           <div className="flex justify-between items-center w-full font-medium">
             <button className="hover:text-foreground flex justify-start items-center 2xl:w-[164px] lg:w-[152px] md:w-[136px] gap-[3px] hover:gap-[6px] transition-default">
-              <a href="https://supapos.vercel.app/" target="_blank">
+              <a href="https://github.com/devJennyy/supa-pos" target="_blank">
                 Visit repository
               </a>
               <GoArrowUpRight className="4xl:!mt-[5px] !mt-[3px] 4xl:text-2xl xl:text-lg text-base" />
