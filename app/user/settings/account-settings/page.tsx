@@ -1,6 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,22 +13,115 @@ import { motion } from "framer-motion";
 import AccountSettingsSkeleton from "@/components/settings/skeletons/AccountSettings";
 import { FiPlus } from "react-icons/fi";
 import { UserAuth } from "@/app/context/AuthContext";
+import { useUploadAvatar } from "@/hooks/useUploadAvatar";
+import { supabase } from "@/app/supabaseClient";
 
 export default function AccountSettingsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const auth = UserAuth();
   const profile = auth?.profile;
   const dataLoading = auth?.loading;
+  const { uploadAvatar } = useUploadAvatar();
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
-  if(dataLoading) {
-    return <AccountSettingsSkeleton />
+  if (dataLoading) {
+    return <AccountSettingsSkeleton />;
   }
-  
+
+  const handleCameraClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Preview locally
+    const reader = new FileReader();
+    reader.onloadend = () => setImagePreview(reader.result as string);
+    reader.readAsDataURL(file);
+
+    // Upload to Supabase
+    try {
+      setUploading(true);
+      const url = await uploadAvatar(file);
+      if (url) {
+        setImagePreview(url);
+      }
+    } catch (err) {
+      console.error("Upload failed:", err);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // Save profile
+  const updateProfile = async () => {
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (!user || userError) {
+      console.error("No user or error getting user:", userError);
+      return;
+    }
+
+    const { error: updateError } = await supabase
+      .from("profiles")
+      .update({
+        avatar_url: imagePreview,
+      })
+      .eq("id", user.id);
+
+    if (updateError) {
+      console.error("Error updating profile:", updateError);
+    } else {
+      if (auth?.refreshProfile) {
+        await auth.refreshProfile();
+      }
+
+      // 🔄 reload the page
+      window.location.reload();
+    }
+  };
+
+  // Use default avatar
+  const useDefaultAvatar = async () => {
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (!user || userError) {
+      console.error("No user or error getting user:", userError);
+      return;
+    }
+
+    const { error: updateError } = await supabase
+      .from("profiles")
+      .update({
+        avatar_url: "/images/default-avatar.svg",
+      })
+      .eq("id", user.id);
+
+    if (updateError) {
+      console.error("Error updating profile:", updateError);
+    } else {
+      if (auth?.refreshProfile) {
+        await auth.refreshProfile();
+      }
+      window.location.reload();
+    }
+  };
+
   return (
     <main className=" w-full flex gap-5 lg:p-5 p-4 !mt-2">
       {isLoading ? (
@@ -46,7 +140,6 @@ export default function AccountSettingsPage() {
                 {/* Profile Image Upload */}
                 <div className="flex flex-col items-center space-y-8">
                   <div className="relative flex items-center justify-center">
-                    {/* Ripple Background */}
                     <div className="absolute inset-0 flex items-center justify-center z-0">
                       {[...Array(3)].map((_, i) => (
                         <motion.div
@@ -71,27 +164,71 @@ export default function AccountSettingsPage() {
 
                     {/* Main Circle with Image */}
                     <div className="relative z-10">
-                      <div className="border-4 bg-border/70 rounded-full z-20">
-                        {profile?.avatar_url && <Image
-                          src={profile?.avatar_url || ''}
-                          alt="Profile"
-                          width={500}
-                          height={500}
-                          className="w-54 h-54 rounded-full object-cover"
-                        />}
+                      <div className="border-4 bg-border/70 rounded-full z-20 overflow-hidden w-54 h-54">
+                        {uploading ? (
+                          <div className="flex items-center justify-center w-full h-full">
+                            <div className="animate-spin border-4 border-primary border-t-transparent rounded-full w-10 h-10" />
+                          </div>
+                        ) : profile?.avatar_url || imagePreview ? (
+                          <motion.div
+                            key={imagePreview ?? profile?.avatar_url}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.4 }}
+                            className="w-full h-full"
+                          >
+                            <Image
+                              src={imagePreview ?? profile?.avatar_url ?? ""}
+                              alt="Profile"
+                              width={216}
+                              height={216}
+                              className="w-full h-full object-cover rounded-full"
+                            />
+                          </motion.div>
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-input">
+                            <img
+                              src="/images/default-avatar.svg"
+                              alt="Default Avatar"
+                              className="w-1/2 h-1/2 object-contain"
+                            />
+                          </div>
+                        )}
                       </div>
-                      <button className="cursor-pointer w-fit absolute bottom-[-1rem] left-1/2 -translate-x-1/2 bg-primary text-white p-2 rounded-full hover:opacity-90 border-4">
-                        <FiPlus size={20} />
+
+                      {/* Upload button */}
+                      <button
+                        onClick={handleCameraClick}
+                        className="cursor-pointer w-fit absolute bottom-[-1rem] left-1/2 -translate-x-1/2 bg-primary text-white p-2 rounded-full hover:opacity-90 border-4"
+                      >
+                        {uploading ? (
+                          <div className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5" />
+                        ) : (
+                          <FiPlus size={20} />
+                        )}
                       </button>
+
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="hidden"
+                      />
                     </div>
                   </div>
                   <p className="text-2xl font-semibold !mt-1">
                     Jenny&apos;s Convenient Store
                   </p>
                   <div className="w-full flex flex-col gap-3">
-                    <Button className="w-full">Upload Image</Button>
-                    <Button className="w-full bg-input/30 border hover:bg-input/60 transiton-default">
-                      Take a selfie
+                    <Button onClick={updateProfile} className="w-full">
+                      Save Profile
+                    </Button>
+                    <Button
+                      onClick={useDefaultAvatar}
+                      className="w-full bg-input/30 border hover:bg-input/60 transition-default"
+                    >
+                      Use Default Avatar
                     </Button>
                   </div>
                 </div>
@@ -105,26 +242,38 @@ export default function AccountSettingsPage() {
                   </CardHeader>
                   <CardContent className="space-y-6 w-full">
                     <div className="grid gap-2 w-full">
-                      <Label htmlFor="shopName" className="text-secondary">Owner&apos;s Name</Label>
+                      <Label htmlFor="shopName" className="text-secondary">
+                        Owner&apos;s Name
+                      </Label>
                       <p className="tracking-wider">Jenny Lock-Smith</p>
                     </div>
                     <div className="grid gap-2 w-full">
-                      <Label htmlFor="shopName" className="text-secondary">Email Address</Label>
+                      <Label htmlFor="shopName" className="text-secondary">
+                        Email Address
+                      </Label>
                       <p className="tracking-wider">jenny@gmail.com</p>
                     </div>
                     <div className="grid gap-2 w-full">
-                      <Label htmlFor="shopName" className="text-secondary">Shop Name</Label>
-                      <p className="tracking-wider">Jenny&apos;s Convenient Store</p>
+                      <Label htmlFor="shopName" className="text-secondary">
+                        Shop Name
+                      </Label>
+                      <p className="tracking-wider">
+                        Jenny&apos;s Convenient Store
+                      </p>
                     </div>
                     <div className="flex">
                       <div className="grid gap-2 w-full">
-                      <Label htmlFor="shopName" className="text-secondary">Contact Number</Label>
-                      <p className="italic text-secondary">Not Set</p>
-                    </div>
-                    <div className="grid gap-2 w-full">
-                      <Label htmlFor="shopName" className="text-secondary">Business Phone Number</Label>
-                      <p className="italic text-secondary">Not Set</p>
-                    </div>
+                        <Label htmlFor="shopName" className="text-secondary">
+                          Contact Number
+                        </Label>
+                        <p className="italic text-secondary">Not Set</p>
+                      </div>
+                      <div className="grid gap-2 w-full">
+                        <Label htmlFor="shopName" className="text-secondary">
+                          Business Phone Number
+                        </Label>
+                        <p className="italic text-secondary">Not Set</p>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -142,13 +291,15 @@ export default function AccountSettingsPage() {
                 {/* Profile Image Upload */}
                 <div className="lg:hidden flex flex-col items-center space-y-3">
                   <div className="relative">
-                    {profile?.avatar_url && <Image
-                      src={profile?.avatar_url || ''}
-                      alt="Profile"
-                      width={112}
-                      height={112}
-                      className="w-28 h-28 rounded-full object-cover border"
-                    />}
+                    {profile?.avatar_url && (
+                      <Image
+                        src={profile?.avatar_url || ""}
+                        alt="Profile"
+                        width={112}
+                        height={112}
+                        className="w-28 h-28 rounded-full object-cover border"
+                      />
+                    )}
                     <button className="absolute bottom-1 right-1 bg-primary text-white p-2 rounded-full shadow-md hover:opacity-90">
                       <Camera size={16} />
                     </button>

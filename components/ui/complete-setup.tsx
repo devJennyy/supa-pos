@@ -39,7 +39,8 @@ export default function SetupModal() {
         .maybeSingle();
 
       if (error || !data) {
-        setIsFirstTime(false);
+        setIsFirstTime(true);
+        setPageLoading(false)
         return;
       }
 
@@ -114,7 +115,6 @@ export default function SetupModal() {
     setTimeout(() => setPageLoading(false), 800);
   };
 
-  // Loading screen
   if (isFirstTime === null || pageLoading) {
     return (
       <div className="fixed inset-0 z-[9999999] flex items-center justify-center bg-black/30 backdrop-blur-md">
@@ -123,10 +123,8 @@ export default function SetupModal() {
     );
   }
 
-  // Not first time
   if (isFirstTime === false) return null;
 
-  // First time - modal
   return (
     <div className="fixed inset-0 z-[9999999] flex items-center justify-center bg-black/30 backdrop-blur-md">
       <div className="w-full max-w-[1280px] sm:px-5 px-4 3xl:py-20 py-10 flex justify-center">
