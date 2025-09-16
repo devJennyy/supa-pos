@@ -196,7 +196,6 @@ export default function AccountSettingsPage() {
                         )}
                       </div>
 
-                      {/* Upload button */}
                       <button
                         onClick={handleCameraClick}
                         className="cursor-pointer w-fit absolute bottom-[-1rem] left-1/2 -translate-x-1/2 bg-primary text-white p-2 rounded-full hover:opacity-90 border-4"
@@ -217,13 +216,28 @@ export default function AccountSettingsPage() {
                       />
                     </div>
                   </div>
+
                   <p className="text-2xl font-semibold !mt-1">
                     Jenny&apos;s Convenient Store
                   </p>
+
                   <div className="w-full flex flex-col gap-3">
-                    <Button onClick={updateProfile} className="w-full">
-                      Save Profile
-                    </Button>
+                    {!imagePreview ? (
+                      <Button
+                        onClick={handleCameraClick}
+                        className="w-full bg-input/30 border hover:bg-input/60 transition-default"
+                      >
+                        Upload Image
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={updateProfile}
+                        className="w-full bg-primary hover:bg-primary/90 transition-default"
+                      >
+                        Save Profile
+                      </Button>
+                    )}
+
                     <Button
                       onClick={useDefaultAvatar}
                       className="w-full bg-input/30 border hover:bg-input/60 transition-default"
@@ -289,24 +303,57 @@ export default function AccountSettingsPage() {
               </CardHeader>
               <CardContent className="space-y-6 w-full">
                 {/* Profile Image Upload */}
-                <div className="lg:hidden flex flex-col items-center space-y-3">
-                  <div className="relative">
-                    {profile?.avatar_url && (
-                      <Image
-                        src={profile?.avatar_url || ""}
-                        alt="Profile"
-                        width={112}
-                        height={112}
-                        className="w-28 h-28 rounded-full object-cover border"
-                      />
+                <div className="lg:hidden relative z-10 flex justify-center items-center">
+                  <div className="border-4 bg-border/70 rounded-full z-0 overflow-hidden w-36 h-36">
+                    {uploading ? (
+                      <div className="flex items-center justify-center w-full h-full">
+                        <div className="animate-spin border-4 border-primary border-t-transparent rounded-full w-10 h-10" />
+                      </div>
+                    ) : profile?.avatar_url || imagePreview ? (
+                      <motion.div
+                        key={imagePreview ?? profile?.avatar_url}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.4 }}
+                        className="w-full h-full"
+                      >
+                        <Image
+                          src={imagePreview ?? profile?.avatar_url ?? ""}
+                          alt="Profile"
+                          width={216}
+                          height={216}
+                          className="w-full h-full object-cover rounded-full"
+                        />
+                      </motion.div>
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-input">
+                        <img
+                          src="/images/default-avatar.svg"
+                          alt="Default Avatar"
+                          className="w-1/2 h-1/2 object-contain"
+                        />
+                      </div>
                     )}
-                    <button className="absolute bottom-1 right-1 bg-primary text-white p-2 rounded-full shadow-md hover:opacity-90">
-                      <Camera size={16} />
-                    </button>
                   </div>
-                  <p className="text-sm text-muted-foreground">
-                    Click the camera to change your photo
-                  </p>
+
+                  <button
+                    onClick={handleCameraClick}
+                    className="z-20 cursor-pointer w-fit absolute bottom-[-1rem] left-1/2 -translate-x-1/2 bg-primary text-white p-1.5 rounded-full hover:opacity-90 border-4"
+                  >
+                    {uploading ? (
+                      <div className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5" />
+                    ) : (
+                      <FiPlus size={16} />
+                    )}
+                  </button>
+
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                  />
                 </div>
 
                 <div className="flex sm:flex-row flex-col gap-4 w-full">
@@ -345,7 +392,7 @@ export default function AccountSettingsPage() {
                     className="w-full"
                   />
                 </div>
-                <Button className="mt-4 w-full">Save Profile</Button>
+                <Button onClick={updateProfile} className="mt-4 w-full">Save Profile</Button>
               </CardContent>
             </Card>
 

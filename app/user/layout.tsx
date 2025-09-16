@@ -23,8 +23,6 @@ import { HiOutlineSearch } from "react-icons/hi";
 import SetupModal from "@/components/ui/complete-setup";
 import { UserAuth } from "../context/AuthContext";
 import { AppSidebar } from "@/components/layout/Sidebar";
-import Image from "next/image";
-import { useUploadAvatar } from "@/hooks/useUploadAvatar";
 
 type SidebarContextType = {
   isRightOpen: boolean;
@@ -50,7 +48,6 @@ export default function Layout({ children }: LayoutProps) {
   const auth = UserAuth();
   const profile = auth?.profile;
   const refreshProfile = auth?.refreshProfile;
-  const { imageUrl } = useUploadAvatar();
 
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
   const [hasOpenedOnce, setHasOpenedOnce] = useState(false);

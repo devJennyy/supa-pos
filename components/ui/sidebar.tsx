@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import * as React from "react";
@@ -333,10 +334,18 @@ function SidebarTrigger({
         <Popover>
           <PopoverTrigger asChild>
             <div
-              className="w-10 h-10 rounded-full border bg-input flex items-center justify-center 
-          text-lg font-semibold transition cursor-pointer"
+              className="w-12 h-12 rounded-full border bg-input flex items-center justify-center 
+             text-lg font-semibold transition cursor-pointer overflow-hidden"
             >
-              {profile?.store_name?.charAt(0).toUpperCase() || "?"}
+              {profile?.avatar_url ? (
+                <img
+                  src={profile?.avatar_url}
+                  alt="Profile"
+                  className="object-cover w-full h-full rounded-full"
+                />
+              ) : (
+                profile?.store_name?.charAt(0).toUpperCase() || "?"
+              )}
             </div>
           </PopoverTrigger>
 
