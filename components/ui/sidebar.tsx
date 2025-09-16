@@ -27,6 +27,9 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import Image from "next/image";
 import { UserAuth } from "@/app/context/AuthContext";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { Label } from "./label";
+import { CardContent, CardHeader, CardTitle } from "./card";
+import { useState } from "react";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -270,6 +273,7 @@ function SidebarTrigger({
 }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar } = useSidebar();
   const { profile } = UserAuth()!;
+  const [openPopover, setOpenPopover] = useState(false);
 
   return (
     <>
@@ -291,68 +295,153 @@ function SidebarTrigger({
         <span className="sr-only">Toggle Sidebar</span>
       </Button>
 
-      <div className="lg:hidden h-16 w-full flex justify-between items-center bg-secondaryBackground">
-        <Button
-          data-sidebar="trigger"
-          data-slot="sidebar-trigger"
-          variant="ghost"
-          size="icon"
-          className={cn(
-            "[&_svg:not([class*='size-'])]:size-6.5 w-10 h-10",
-            className
-          )}
-          onClick={(event) => {
-            onClick?.(event);
-            toggleSidebar();
-          }}
-          {...props}
-        >
-          <RxHamburgerMenu />
-          <span className="sr-only">Toggle Sidebar</span>
-        </Button>
+      <div className="relative w-full">
+        <div className="lg:hidden h-16 w-full flex justify-between items-center bg-secondaryBackground z-50 relative">
+          <Button
+            data-sidebar="trigger"
+            data-slot="sidebar-trigger"
+            variant="ghost"
+            size="icon"
+            className={cn(
+              "[&_svg:not([class*='size-'])]:size-6.5 w-10 h-10",
+              className
+            )}
+            onClick={(event) => {
+              onClick?.(event);
+              toggleSidebar();
+            }}
+            {...props}
+          >
+            <RxHamburgerMenu />
+            <span className="sr-only">Toggle Sidebar</span>
+          </Button>
 
-        {/* Logo */}
-        <a href="/homepage" className="md:w-full md:max-w-43">
-          <Image
-            src="/logo/logo-light-text.svg"
-            alt="Logo Light"
-            className="block dark:hidden"
-            width={110}
-            height={40}
-            priority
-          />
-          <Image
-            src="/logo/logo-dark-text.svg"
-            alt="Logo Dark"
-            className="hidden dark:block"
-            width={110}
-            height={40}
-            priority
-          />
-        </a>
+          {/* Logo */}
+          <a href="/homepage" className="md:w-full md:max-w-43">
+            <Image
+              src="/logo/logo-light-text.svg"
+              alt="Logo Light"
+              className="block dark:hidden"
+              width={110}
+              height={40}
+              priority
+            />
+            <Image
+              src="/logo/logo-dark-text.svg"
+              alt="Logo Dark"
+              className="hidden dark:block"
+              width={110}
+              height={40}
+              priority
+            />
+          </a>
 
-        <Popover>
-          <PopoverTrigger asChild>
-            <div
-              className="w-12 h-12 rounded-full border bg-input flex items-center justify-center 
-             text-lg font-semibold transition cursor-pointer overflow-hidden"
-            >
-              {profile?.avatar_url ? (
-                <img
-                  src={profile?.avatar_url}
-                  alt="Profile"
-                  className="object-cover w-full h-full rounded-full"
-                />
-              ) : (
-                profile?.store_name?.charAt(0).toUpperCase() || "?"
-              )}
-            </div>
-          </PopoverTrigger>
+          {/* Profile Popover */}
+          <div className="relative z-50">
+            {openPopover && (
+              <div
+                className="fixed inset-0 top-17 bg-black/10 backdrop-blur-sm z-40"
+                onClick={() => setOpenPopover(false)}
+              />
+            )}
 
-          <PopoverContent className="w-fit bg-secondaryBackground border p-3 !mr-4 !mt-1">
-            <p className="text-sm">{profile?.store_name || "SupaPOS"}</p>
-          </PopoverContent>
-        </Popover>
+            <Popover open={openPopover} onOpenChange={setOpenPopover}>
+              <PopoverTrigger asChild>
+                <div
+                  className="w-12 h-12 rounded-full border bg-input flex items-center justify-center 
+                       text-lg font-semibold transition cursor-pointer overflow-hidden z-50 relative"
+                >
+                  {profile?.avatar_url ? (
+                    <img
+                      src={profile?.avatar_url}
+                      alt="Profile"
+                      className="object-cover w-full h-full rounded-full"
+                    />
+                  ) : (
+                    profile?.store_name?.charAt(0).toUpperCase() || "?"
+                  )}
+                </div>
+              </PopoverTrigger>
+
+              <PopoverContent className="w-fit bg-secondaryBackground border !mr-4 !mt-1 text-sm">
+                <div className="p-1">
+                  <CardHeader className="!mb-3 px-0 w-full">
+                    <CardTitle>User Information</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4 px-0 ">
+                    <div className="grid gap-1 w-full">
+                      <Label
+                        htmlFor="ownersName"
+                        className="text-secondary text-xs"
+                      >
+                        Owner&apos;s Name
+                      </Label>
+                      <p className="tracking-wider text-[13px]">
+                        {profile?.first_name || (
+                          <span className="italic text-secondary">Not Set</span>
+                        )}
+                        <span className="!ml-1">{profile?.last_name}</span>
+                      </p>
+                    </div>
+                    <div className="grid gap-1 w-full">
+                      <Label
+                        htmlFor="emailAddress"
+                        className="text-secondary text-xs"
+                      >
+                        Email Address
+                      </Label>
+                      <p className="tracking-wider truncate text-[13px]">
+                        {profile?.email || (
+                          <span className="italic text-secondary">Not Set</span>
+                        )}
+                      </p>
+                    </div>
+                    <div className="grid gap-1 w-full">
+                      <Label
+                        htmlFor="shopName"
+                        className="text-secondary text-xs"
+                      >
+                        Shop Name
+                      </Label>
+                      <p className="tracking-wider text-[13px]">{profile?.store_name}</p>
+                    </div>
+
+                    <div className="grid gap-1 w-full">
+                      <Label
+                        htmlFor="contactNumber"
+                        className="text-secondary text-xs"
+                      >
+                        Contact Number
+                      </Label>
+                      <p className="italic text-secondary text-[13px]">
+                        {profile?.contact_number || (
+                          <span className="italic text-secondary">Not Set</span>
+                        )}
+                      </p>
+                    </div>
+                    <div className="grid gap-1 w-full">
+                      <Label
+                        htmlFor="businessNumber"
+                        className="text-secondary text-xs"
+                      >
+                        Business Number
+                      </Label>
+                      <p className="italic text-secondary text-[13px]">
+                        {profile?.business_number || (
+                          <span className="italic text-secondary">Not Set</span>
+                        )}
+                      </p>
+                    </div>
+                  </CardContent>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
+        </div>
+
+        <div
+          className={`transition-all ${openPopover ? "filter blur-sm" : ""}`}
+        ></div>
       </div>
     </>
   );

@@ -19,11 +19,20 @@ import { usePathname } from "next/navigation";
 import { MdLogout } from "react-icons/md";
 import { UserAuth } from "@/app/context/AuthContext";
 import Logo from "../ui/logo";
+import ConfirmPasswordModal from "../ui/password-lock";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
   const pathname = usePathname();
   const { signOut } = UserAuth()!;
+  const [modalOpen, setModalOpen] = useState(false);
+  const router = useRouter();
+
+  const handleAccountSettingsClick = () => {
+    setModalOpen(true);
+  };
 
   const navMainItems = [
     { title: "Dashboard", url: "/user/dashboard", icon: FaHome, iconSize: 19 },
@@ -69,6 +78,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       url: "/user/settings/account-settings",
       icon: RiSettings3Fill,
       iconSize: 19,
+      // onClick: handleAccountSettingsClick,
     },
     {
       title: "Theme Color",
@@ -112,34 +122,42 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }));
 
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <Logo />
-      </SidebarHeader>
+    <>
+      <Sidebar collapsible="icon" {...props}>
+        <SidebarHeader>
+          <Logo />
+        </SidebarHeader>
 
-      <SidebarContent className="flex flex-col justify-between h-full">
-        <div>
-          <NavMain items={navMain} />
+        <SidebarContent className="flex flex-col justify-between h-full">
+          <div>
+            <NavMain items={navMain} />
 
-          {state === "collapsed" ? (
-            <div className="!mx-2 flex justify-center items-center">
-              <SidebarSeparator />
-            </div>
-          ) : (
-            <div className="font-medium text-sm text-muted-foreground !mx-4 mt-4 mb-2">
-              Account Pages
-            </div>
-          )}
+            {state === "collapsed" ? (
+              <div className="!mx-2 flex justify-center items-center">
+                <SidebarSeparator />
+              </div>
+            ) : (
+              <div className="font-medium text-sm text-muted-foreground !mx-4 mt-4 mb-2">
+                Account Pages
+              </div>
+            )}
 
-          <NavMain items={settings} />
-        </div>
+            <NavMain items={settings} />
+          </div>
 
-        <div className="mt-auto !mx-2 mb-4">
-          <NavMain items={[logoutItem]} />
-        </div>
-      </SidebarContent>
+          <div className="mt-auto !mx-2 mb-4">
+            <NavMain items={[logoutItem]} />
+          </div>
+        </SidebarContent>
 
-      <SidebarRail />
-    </Sidebar>
+        <SidebarRail />
+      </Sidebar>
+
+      {/* <ConfirmPasswordModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSuccess={() => router.push("/user/settings/account-settings")}
+      /> */}
+    </>
   );
 }

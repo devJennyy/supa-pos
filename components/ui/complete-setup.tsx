@@ -22,7 +22,6 @@ export default function SetupModal() {
   const { refreshProfile } = auth;
   const { imageUrl, uploadAvatar } = useUploadAvatar();
 
-  // Fetch profile
   useEffect(() => {
     const fetchProfile = async () => {
       const { data: { user }, error: userError } = await supabase.auth.getUser();
@@ -55,17 +54,14 @@ export default function SetupModal() {
     fetchProfile();
   }, []);
 
-  // Handle file selection
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Preview locally
     const reader = new FileReader();
     reader.onloadend = () => setImagePreview(reader.result as string);
     reader.readAsDataURL(file);
 
-    // Upload to Supabase
     try {
       setUploading(true);
       const url = await uploadAvatar(file);
@@ -81,7 +77,6 @@ export default function SetupModal() {
     fileInputRef.current?.click();
   };
 
-  // Save profile
   const updateProfile = async () => {
     const { data: { user }, error: userError } = await supabase.auth.getUser();
     if (!user || userError) {

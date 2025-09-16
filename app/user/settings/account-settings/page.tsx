@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -7,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Camera } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import AccountSettingsSkeleton from "@/components/settings/skeletons/AccountSettings";
@@ -15,6 +15,13 @@ import { FiPlus } from "react-icons/fi";
 import { UserAuth } from "@/app/context/AuthContext";
 import { useUploadAvatar } from "@/hooks/useUploadAvatar";
 import { supabase } from "@/app/supabaseClient";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 export default function AccountSettingsPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,11 +32,38 @@ export default function AccountSettingsPage() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [firstName, setFirstName] = useState(profile?.first_name || "");
+  const [lastName, setLastName] = useState(profile?.last_name || "");
+  const [email, setEmail] = useState(profile?.email || "");
+  const [contactNumber, setContactNumber] = useState(
+    profile?.contact_number || ""
+  );
+  const [storeName, setStoreName] = useState(profile?.store_name || "");
+  const [businessNumber, setBusinessNumber] = useState(
+    profile?.business_number || ""
+  );
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalType, setModalType] = useState<"success" | "error">("success");
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (profile) {
+      setFirstName(profile.first_name || "");
+      setLastName(profile.last_name || "");
+      setEmail(profile.email || "");
+      setContactNumber(profile.contact_number || "");
+      setStoreName(profile.store_name || "");
+      setBusinessNumber(profile.business_number || "");
+    }
+  }, [profile]);
 
   if (dataLoading) {
     return <AccountSettingsSkeleton />;
@@ -43,12 +77,10 @@ export default function AccountSettingsPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Preview locally
     const reader = new FileReader();
     reader.onloadend = () => setImagePreview(reader.result as string);
     reader.readAsDataURL(file);
 
-    // Upload to Supabase
     try {
       setUploading(true);
       const url = await uploadAvatar(file);
@@ -62,8 +94,7 @@ export default function AccountSettingsPage() {
     }
   };
 
-  // Save profile
-  const updateProfile = async () => {
+  const updateProfile = async (fields: Record<string, any>) => {
     const {
       data: { user },
       error: userError,
@@ -76,9 +107,7 @@ export default function AccountSettingsPage() {
 
     const { error: updateError } = await supabase
       .from("profiles")
-      .update({
-        avatar_url: imagePreview,
-      })
+      .update(fields)
       .eq("id", user.id);
 
     if (updateError) {
@@ -87,13 +116,9 @@ export default function AccountSettingsPage() {
       if (auth?.refreshProfile) {
         await auth.refreshProfile();
       }
-
-      // 🔄 reload the page
-      window.location.reload();
     }
   };
 
-  // Use default avatar
   const useDefaultAvatar = async () => {
     const {
       data: { user },
@@ -120,6 +145,38 @@ export default function AccountSettingsPage() {
       }
       window.location.reload();
     }
+  };
+
+  const updatePassword = async () => {
+    if (newPassword !== confirmPassword) {
+      setModalType("error");
+      setModalMessage("Passwords do not match!");
+      setModalOpen(true);
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      setModalType("error");
+      setModalMessage("Password must be at least 6 characters.");
+      setModalOpen(true);
+      return;
+    }
+
+    setLoading(true);
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    setLoading(false);
+
+    if (error) {
+      setModalType("error");
+      setModalMessage("Error updating password: " + error.message);
+    } else {
+      setModalType("success");
+      setModalMessage("Password updated successfully!");
+      setNewPassword("");
+      setConfirmPassword("");
+    }
+
+    setModalOpen(true);
   };
 
   return (
@@ -190,7 +247,7 @@ export default function AccountSettingsPage() {
                             <img
                               src="/images/default-avatar.svg"
                               alt="Default Avatar"
-                              className="w-1/2 h-1/2 object-contain"
+                              className="object-contain"
                             />
                           </div>
                         )}
@@ -218,7 +275,7 @@ export default function AccountSettingsPage() {
                   </div>
 
                   <p className="text-2xl font-semibold !mt-1">
-                    Jenny&apos;s Convenient Store
+                    {profile?.store_name}
                   </p>
 
                   <div className="w-full flex flex-col gap-3">
@@ -231,7 +288,9 @@ export default function AccountSettingsPage() {
                       </Button>
                     ) : (
                       <Button
-                        onClick={updateProfile}
+                        onClick={() =>
+                          updateProfile({ avatar_url: imagePreview })
+                        }
                         className="w-full bg-primary hover:bg-primary/90 transition-default"
                       >
                         Save Profile
@@ -256,37 +315,62 @@ export default function AccountSettingsPage() {
                   </CardHeader>
                   <CardContent className="space-y-6 w-full">
                     <div className="grid gap-2 w-full">
-                      <Label htmlFor="shopName" className="text-secondary">
+                      <Label htmlFor="ownersName" className="text-secondary">
                         Owner&apos;s Name
                       </Label>
-                      <p className="tracking-wider">Jenny Lock-Smith</p>
+                      <p className="tracking-wider">
+                        {profile?.first_name || (
+                          <span className="italic text-secondary">Not Set</span>
+                        )}
+                        <span className="!ml-1">{profile?.last_name}</span>
+                      </p>
                     </div>
                     <div className="grid gap-2 w-full">
-                      <Label htmlFor="shopName" className="text-secondary">
+                      <Label htmlFor="emailAddress" className="text-secondary">
                         Email Address
                       </Label>
-                      <p className="tracking-wider">jenny@gmail.com</p>
+                      <p className="tracking-wider">
+                        {profile?.email || (
+                          <span className="italic text-secondary">Not Set</span>
+                        )}
+                      </p>
                     </div>
                     <div className="grid gap-2 w-full">
                       <Label htmlFor="shopName" className="text-secondary">
                         Shop Name
                       </Label>
-                      <p className="tracking-wider">
-                        Jenny&apos;s Convenient Store
-                      </p>
+                      <p className="tracking-wider">{profile?.store_name}</p>
                     </div>
                     <div className="flex">
                       <div className="grid gap-2 w-full">
-                        <Label htmlFor="shopName" className="text-secondary">
+                        <Label
+                          htmlFor="contactNumber"
+                          className="text-secondary"
+                        >
                           Contact Number
                         </Label>
-                        <p className="italic text-secondary">Not Set</p>
+                        <p className="italic text-secondary">
+                          {profile?.contact_number || (
+                            <span className="italic text-secondary">
+                              Not Set
+                            </span>
+                          )}
+                        </p>
                       </div>
                       <div className="grid gap-2 w-full">
-                        <Label htmlFor="shopName" className="text-secondary">
+                        <Label
+                          htmlFor="businessNumber"
+                          className="text-secondary"
+                        >
                           Business Phone Number
                         </Label>
-                        <p className="italic text-secondary">Not Set</p>
+                        <p className="italic text-secondary">
+                          {profile?.business_number || (
+                            <span className="italic text-secondary">
+                              Not Set
+                            </span>
+                          )}
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -330,7 +414,7 @@ export default function AccountSettingsPage() {
                         <img
                           src="/images/default-avatar.svg"
                           alt="Default Avatar"
-                          className="w-1/2 h-1/2 object-contain"
+                          className="object-contain"
                         />
                       </div>
                     )}
@@ -363,6 +447,8 @@ export default function AccountSettingsPage() {
                       id="firstName"
                       placeholder="Enter your first name"
                       className="w-full"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
                     />
                   </div>
                   <div className="grid gap-2 sm:w-1/2 w-full">
@@ -371,6 +457,8 @@ export default function AccountSettingsPage() {
                       id="lastName"
                       placeholder="Enter your last name"
                       className="w-full"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
                     />
                   </div>
                 </div>
@@ -381,18 +469,40 @@ export default function AccountSettingsPage() {
                     type="email"
                     placeholder="you@example.com"
                     className="w-full"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div className="grid gap-2 w-full">
-                  <Label htmlFor="email">Contact Number</Label>
+                  <Label htmlFor="contact">Contact Number</Label>
                   <Input
                     id="contact"
-                    type="number"
+                    type="text"
                     placeholder="*Optional*"
                     className="w-full"
+                    value={contactNumber}
+                    onChange={(e) => {
+                      const onlyDigits = e.target.value.replace(/\D/g, "");
+                      if (onlyDigits.length <= 20) {
+                        setContactNumber(onlyDigits);
+                      }
+                    }}
                   />
                 </div>
-                <Button onClick={updateProfile} className="mt-4 w-full">Save Profile</Button>
+
+                <Button
+                  onClick={() =>
+                    updateProfile({
+                      first_name: firstName,
+                      last_name: lastName,
+                      email: email,
+                      contact_number: contactNumber,
+                    })
+                  }
+                  className="mt-4 w-full"
+                >
+                  Save Profile
+                </Button>
               </CardContent>
             </Card>
 
@@ -406,20 +516,38 @@ export default function AccountSettingsPage() {
                   <Label htmlFor="shopName">Shop Name</Label>
                   <Input
                     id="shopName"
-                    placeholder="Enter your shop name"
                     className="w-full"
+                    value={storeName}
+                    onChange={(e) => setStoreName(e.target.value)}
                   />
                 </div>
                 <div className="grid gap-2 w-full">
                   <Label htmlFor="email">Business Phone Number</Label>
                   <Input
                     id="contact"
-                    type="number"
+                    type="text"
                     placeholder="*Optional*"
                     className="w-full"
+                    value={businessNumber}
+                    onChange={(e) => {
+                      const onlyDigits = e.target.value.replace(/\D/g, "");
+                      if (onlyDigits.length <= 20) {
+                        setBusinessNumber(onlyDigits);
+                      }
+                    }}
                   />
                 </div>
-                <Button className="mt-4 w-full">Save Shop Details</Button>
+                <Button
+                  onClick={() =>
+                    updateProfile({
+                      store_name: storeName,
+                      business_number: businessNumber,
+                    })
+                  }
+                  className="mt-4 w-full"
+                >
+                  Save Shop Details
+                </Button>
               </CardContent>
             </Card>
 
@@ -437,6 +565,8 @@ export default function AccountSettingsPage() {
                       type="password"
                       placeholder="••••••••"
                       className="w-full"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
                     />
                   </div>
                   <div className="grid gap-2 lg:w-1/2 w-full">
@@ -446,10 +576,33 @@ export default function AccountSettingsPage() {
                       type="password"
                       placeholder="••••••••"
                       className="w-full"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                   </div>
                 </div>
-                <Button className="mt-4 w-full">Update Password</Button>
+                <Button
+                  onClick={updatePassword}
+                  disabled={loading}
+                  className="!mt-4 w-full"
+                >
+                  {loading ? "Updating..." : "Update Password"}
+                </Button>
+                <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+                  <DialogContent className="sm:max-w-[400px]">
+                    <DialogHeader>
+                      <DialogTitle>
+                        {modalType === "success" ? "Success" : "Error"}
+                      </DialogTitle>
+                    </DialogHeader>
+
+                    <div className="py-4">{modalMessage}</div>
+
+                    <DialogFooter>
+                      <Button onClick={() => setModalOpen(false)}>Close</Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
               </CardContent>
             </Card>
 

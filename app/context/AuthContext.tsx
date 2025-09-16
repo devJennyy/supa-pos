@@ -14,6 +14,8 @@ type ProfileType = {
   email: string;
   setup_complete: boolean;
   avatar_url: string;
+  contact_number: string,
+  business_number: string
   [key: string]: any;
 };
 
@@ -25,7 +27,7 @@ type AuthContextType = {
     password: string,
     firstName: string,
     lastName: string,
-    storeName: string
+    storeName: string,
   ) => Promise<{ success: boolean; data?: any; error?: any }>;
   signInUser: (
     email: string,
@@ -266,7 +268,6 @@ useEffect(() => {
       return { success: false, error: { message: "Unexpected error occurred" } };
     }
   };
-
 
 
   // Sign in with GitHub
