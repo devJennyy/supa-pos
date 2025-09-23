@@ -115,13 +115,13 @@ html {
   --chart-yellow: oklch(78% 0.15 90);
   --chart-orange: oklch(70% 0.18 60);
   --chart-red:    oklch(62% 0.20 30);
-  --chart-bg:    rgba(0,0,0,0.08)
+  --chart-bg:    rgba(0,0,0,0.08);
 
   --sidebar: #FFFFFF;
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent: #EEFBFA;
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);

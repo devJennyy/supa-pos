@@ -138,7 +138,15 @@ export default function SetupModal() {
               <Image
                 src={imagePreview || "/images/default-avatar.svg"}
                 alt="Avatar"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover hidden dark:block"
+                width={100}
+                height={100}
+                priority
+              />
+              <Image
+                src={imagePreview || "/images/default-avatar-light.svg"}
+                alt="Avatar"
+                className="w-full h-full object-cover dark:hidden"
                 width={100}
                 height={100}
                 priority

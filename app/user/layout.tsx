@@ -113,9 +113,11 @@ export default function Layout({ children }: LayoutProps) {
           {/* Main content */}
           <SidebarInset className="flex-1 relative overflow-hidden">
             {/* Header */}
-            <header className="flex h-17 w-full max-w-full shrink-0 items-center gap-2 border-b bg-secondaryBackground px-3 overflow-hidden">
-              <SidebarTrigger />
-              <div className="lg:flex hidden justify-between items-center w-full px-10 py-4 shadow-lg rounded-xl">
+            <header className="flex lg:h-17 h-16 w-full max-w-full shrink-0 items-center gap-2 border-b bg-secondaryBackground px-3 overflow-hidden">
+              <div className="lg:hidden flex justify-start items-center w-full px-2 py-4 rounded-xl">
+                <SidebarTrigger />
+              </div>
+              <div className="lg:flex hidden justify-between items-center w-full px-2 py-4 rounded-xl">
                 {/* Search Input */}
                 <div className="relative w-2/5">
                   <input

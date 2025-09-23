@@ -348,7 +348,7 @@ function SidebarTrigger({
             <Popover open={openPopover} onOpenChange={setOpenPopover}>
               <PopoverTrigger asChild>
                 <div
-                  className="w-12 h-12 rounded-full border bg-input flex items-center justify-center 
+                  className="w-10 h-10 rounded-full border bg-input flex items-center justify-center 
                        text-lg font-semibold transition cursor-pointer overflow-hidden z-50 relative"
                 >
                   {profile?.avatar_url ? (
