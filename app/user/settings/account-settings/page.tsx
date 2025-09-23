@@ -201,7 +201,7 @@ export default function AccountSettingsPage() {
                       {[...Array(3)].map((_, i) => (
                         <motion.div
                           key={i}
-                          className="absolute rounded-full bg-input/50"
+                          className="absolute rounded-full dark:bg-input/50 bg-primary/20"
                           style={{ width: 216, height: 216 }}
                           animate={{
                             scale: [1, 1.3],
@@ -282,7 +282,7 @@ export default function AccountSettingsPage() {
                     {!imagePreview ? (
                       <Button
                         onClick={handleCameraClick}
-                        className="w-full bg-input/30 border hover:bg-input/60 transition-default"
+                        className="py-5 w-full dark:bg-input/30 border dark:hover:bg-input/60 transition-default"
                       >
                         Upload Image
                       </Button>
@@ -291,7 +291,7 @@ export default function AccountSettingsPage() {
                         onClick={() =>
                           updateProfile({ avatar_url: imagePreview })
                         }
-                        className="w-full bg-primary hover:bg-primary/90 transition-default"
+                        className="py-5 w-full bg-primary dark:hover:bg-primary/90 transition-default"
                       >
                         Save Profile
                       </Button>
@@ -299,7 +299,7 @@ export default function AccountSettingsPage() {
 
                     <Button
                       onClick={useDefaultAvatar}
-                      className="w-full bg-input/30 border hover:bg-input/60 transition-default"
+                      className="text-foreground py-5 w-full dark:bg-input/30 bg-background border dark:hover:bg-input/60 hover:bg-input hover:border-primary/40 transition-default"
                     >
                       Use Default Avatar
                     </Button>
@@ -309,7 +309,7 @@ export default function AccountSettingsPage() {
                 <div className="!my-10.5 w-full dark:h-[1.8px] h-[1.6px] rounded-full dark:bg-secondary/0 bg-gradient-to-l from-secondary/0 via-secondary to-secondary/0"></div>
 
                 {/* User's Info */}
-                <Card className="shadow-md rounded-2xl w-full !mt-8 bg-input/30">
+                <Card className="dark:shadow-md rounded-2xl w-full !mt-8 dark:bg-input/30">
                   <CardHeader>
                     <CardTitle>User Information</CardTitle>
                   </CardHeader>

@@ -23,6 +23,7 @@ import { HiOutlineSearch } from "react-icons/hi";
 import SetupModal from "@/components/ui/complete-setup";
 import { UserAuth } from "../context/AuthContext";
 import { AppSidebar } from "@/components/layout/Sidebar";
+import ThemeToggle from "@/components/ui/theme-toggle";
 
 type SidebarContextType = {
   isRightOpen: boolean;
@@ -133,35 +134,38 @@ export default function Layout({ children }: LayoutProps) {
                 </div>
 
                 {/* User Info */}
-                <div className="flex items-center gap-4">
-                  <div
-                    className="w-12 h-12 rounded-full border bg-input flex items-center justify-center 
+                <div className="flex items-center gap-5">
+                  <ThemeToggle />
+                  <div className="flex items-center gap-4">
+                    <div
+                      className="w-12 h-12 rounded-full border bg-input flex items-center justify-center 
              text-lg font-semibold transition cursor-pointer overflow-hidden"
-                  >
-                    {profile?.avatar_url ? (
-                      <img
-                        src={profile?.avatar_url}
-                        alt="Profile"
-                        className="object-cover w-full h-full rounded-full"
-                      />
-                    ) : (
-                      profile?.store_name?.charAt(0).toUpperCase() || "?"
-                    )}
-                  </div>
+                    >
+                      {profile?.avatar_url ? (
+                        <img
+                          src={profile?.avatar_url}
+                          alt="Profile"
+                          className="object-cover w-full h-full rounded-full"
+                        />
+                      ) : (
+                        profile?.store_name?.charAt(0).toUpperCase() || "?"
+                      )}
+                    </div>
 
-                  <div className="flex flex-col">
-                    <p className="font-semibold text-sm">
-                      {profile?.store_name}
-                    </p>
-                    <p className="text-secondary text-xs font-medium">
-                      {`${new Date().toLocaleDateString("en-GB", {
-                        weekday: "long",
-                      })}, ${new Date().toLocaleDateString("en-GB", {
-                        day: "2-digit",
-                        month: "long",
-                        year: "numeric",
-                      })}`}
-                    </p>
+                    <div className="flex flex-col">
+                      <p className="font-semibold text-sm">
+                        {profile?.store_name}
+                      </p>
+                      <p className="text-secondary text-xs font-medium">
+                        {`${new Date().toLocaleDateString("en-GB", {
+                          weekday: "long",
+                        })}, ${new Date().toLocaleDateString("en-GB", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                        })}`}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
