@@ -222,20 +222,20 @@ export default function ReportPage() {
             <Card className="border border-border/50 px-5 bg-secondaryBackground/30 hidden md:block">
               <TabsContent value={tab}>
                 <Table className="rounded-lg border overflow-hidden">
-                  <TableHeader className="sticky top-0 bg-input z-10 h-14">
+                  <TableHeader className="sticky top-0 bg-table-header dark:bg-input z-10 h-14">
                     <TableRow>
-                      <TableHead className="w-[20%] px-5">Item</TableHead>
-                      <TableHead className="w-[15%]">Action</TableHead>
-                      <TableHead className="w-[15%]">Quantity</TableHead>
-                      <TableHead className="w-[15%]">Price</TableHead>
-                      <TableHead className="w-[15%]">Total</TableHead>
-                      <TableHead className="w-[20%]">Date/Period</TableHead>
+                      <TableHead className="w-[20%] px-5 text-foreground">Item</TableHead>
+                      <TableHead className="w-[15%] text-foreground">Action</TableHead>
+                      <TableHead className="w-[15%] text-foreground">Quantity</TableHead>
+                      <TableHead className="w-[15%] text-foreground">Price</TableHead>
+                      <TableHead className="w-[15%] text-foreground">Total</TableHead>
+                      <TableHead className="w-[20%] text-foreground">Date/Period</TableHead>
                     </TableRow>
                   </TableHeader>
 
-                  <TableBody className="bg-secondaryBackground">
+                  <TableBody className="dark:bg-secondaryBackground">
                     {data.map((item) => (
-                      <TableRow key={item.id}>
+                      <TableRow key={item.id} className="border dark:border-border/40">
                         <TableCell className="font-medium px-5 text-secondary h-14">
                           {item.name}
                         </TableCell>

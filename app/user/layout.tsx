@@ -134,7 +134,7 @@ export default function Layout({ children }: LayoutProps) {
                 </div>
 
                 {/* User Info */}
-                <div className="flex items-center gap-5">
+                <div className="flex items-center gap-2">
                   <ThemeToggle />
                   <div className="flex items-center gap-4">
                     <div

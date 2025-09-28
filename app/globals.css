@@ -37,6 +37,8 @@ html {
   --color-chart-3: var(--chart-3);
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
+  --color-table-header: var(--table-header);
+  --color-table-row-hover: var(--table-row-hover);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -116,6 +118,9 @@ html {
   --chart-orange: oklch(70% 0.18 60);
   --chart-red:    oklch(62% 0.20 30);
   --chart-bg:    rgba(0,0,0,0.08);
+  
+  --table-header: #F8F8F8;
+  --table-row-hover: #F1F1F3;
 
   --sidebar: #FFFFFF;
   --sidebar-foreground: oklch(0.145 0 0);

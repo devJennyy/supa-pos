@@ -48,6 +48,7 @@ export default function AccountSettingsPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [modalType, setModalType] = useState<"success" | "error">("success");
+  const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1000);
@@ -282,24 +283,30 @@ export default function AccountSettingsPage() {
                     {!imagePreview ? (
                       <Button
                         onClick={handleCameraClick}
-                        className="py-5 w-full dark:bg-input/30 border dark:hover:bg-input/60 transition-default"
+                        className="text-foreground py-5 w-full dark:bg-input/30 bg-background border dark:hover:bg-input/60 hover:bg-input hover:border-primary/40 dark:hover:border-border transition-default"
                       >
-                        Upload Image
+                        Upload New Image
                       </Button>
                     ) : (
                       <Button
-                        onClick={() =>
-                          updateProfile({ avatar_url: imagePreview })
-                        }
-                        className="py-5 w-full bg-primary dark:hover:bg-primary/90 transition-default"
+                        onClick={async () => {
+                          await updateProfile({ avatar_url: imagePreview });
+                          setIsSaved(true);
+
+                          setTimeout(() => {
+                            setIsSaved(false);
+                            setImagePreview(null);
+                          }, 2000);
+                        }}
+                        className="border py-5 w-full bg-primary dark:hover:bg-primary/90 transition-default"
                       >
-                        Save Profile
+                        {isSaved ? "Saved!" : "Save Profile"}
                       </Button>
                     )}
 
                     <Button
                       onClick={useDefaultAvatar}
-                      className="text-foreground py-5 w-full dark:bg-input/30 bg-background border dark:hover:bg-input/60 hover:bg-input hover:border-primary/40 transition-default"
+                      className="text-foreground py-5 w-full dark:bg-input/30 bg-background border dark:hover:bg-input/60 hover:bg-input hover:border-primary/40 dark:hover:border-border transition-default"
                     >
                       Use Default Avatar
                     </Button>
