@@ -66,7 +66,7 @@ export function NavMain({
                       >
                         <div
                           className={`w-7.5 h-7.5 flex justify-center items-center sidebar-icon ${
-                            item.isActive ? "text-white" : "text-secondary"
+                            item.isActive ? "text-white" : "text-muted-foreground"
                           }`}
                         >
                           {item.icon && (
@@ -83,7 +83,7 @@ export function NavMain({
                       >
                         <div
                           className={`w-7.5 h-7.5 flex justify-center items-center sidebar-icon ${
-                            item.isActive ? "text-white" : "text-secondary"
+                            item.isActive ? "text-white" : "text-muted-foreground"
                           }`}
                         >
                           {item.icon && (
@@ -101,15 +101,15 @@ export function NavMain({
                       }`}
                     >
                       <div
-                        className={`w-7.5 h-7.5 flex justify-center items-center rounded-md transition-colors sidebar-btn-icon text-secondary ${
-                          item.isActive ? "text-white bg-primary" : ""
+                        className={`w-7.5 h-7.5 flex justify-center items-center rounded-md transition-colors sidebar-btn-icon ${
+                          item.isActive ? "text-white bg-primary" : "text-muted-foreground"
                         }`}
                       >
                         {item.icon && <item.icon size={item.iconSize ?? 20} />}
                       </div>
                       <span
-                        className={`text-secondary sidebar-label ${
-                          item.isActive ? "text-foreground" : ""
+                        className={`sidebar-label ${
+                          item.isActive ? "text-primary font-semibold" : "text-secondary"
                         }`}
                       >
                         {item.title}
@@ -129,7 +129,7 @@ export function NavMain({
                           className={`w-7.5 h-7.5 flex justify-center items-center rounded-md transition-colors sidebar-btn-icon ${
                             item.isActive
                               ? "text-white bg-primary"
-                              : "text-secondary"
+                              : "text-muted-foreground"
                           }`}
                         >
                           {item.icon && (
@@ -155,7 +155,7 @@ export function NavMain({
                           className={`w-7.5 h-7.5 flex justify-center items-center rounded-md transition-colors sidebar-btn-icon ${
                             item.isActive
                               ? "text-white bg-primary"
-                              : "text-secondary"
+                              : "text-muted-foreground"
                           }`}
                         >
                           {item.icon && (
@@ -164,7 +164,7 @@ export function NavMain({
                         </div>
                         <span
                           className={`sidebar-label ${
-                            item.isActive ? "dark:text-white text-primary" : "text-secondary"
+                            item.isActive ? "text-primary font-semibold" : "text-secondary"
                           }`}
                         >
                           {item.title}
@@ -179,16 +179,16 @@ export function NavMain({
                     {!isCollapsed && (
                       <CollapsibleContent>
                         <div className="flex pl-3">
-                          <div className="w-7.5 flex justify-center">
+                          <div className="w-7.5 flex justify-center ">
                             <div className="border-l border-border" />
                           </div>
                           <div className="flex flex-col gap-1 py-1 w-full">
                             {item.children?.map((child) => (
                               <Link key={child.title} href={child.url}>
                                 <SidebarMenuButton
-                                  className={`px-3 py-4.5 text-sm rounded-md ${
+                                  className={`hover:text-primary dark:hover:text-foreground px-3 py-4.5 text-sm rounded-md ${
                                     child.isActive
-                                      ? "text-primary font-medium"
+                                      ? "text-primary font-semibold"
                                       : "text-muted-foreground"
                                   }`}
                                 >

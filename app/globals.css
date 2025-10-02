@@ -215,7 +215,7 @@ html {
 }
 
 .sidebar-btn:hover .sidebar-label {
-  @apply text-foreground;
+  @apply text-primary;
 }
 
 .sidebar-close-btn:hover {
@@ -227,14 +227,14 @@ html {
 }
 
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px #FCFBFC inset; /* white background */
-  -webkit-text-fill-color: #1A1A1A; /* dark text */
+  -webkit-box-shadow: 0 0 0px 1000px #FCFBFC inset;
+  -webkit-text-fill-color: #1A1A1A;
   background-clip: padding-box;
 }
 
 .dark input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px #1F2733 inset; /* dark background */
-  -webkit-text-fill-color: #FFFFFF; /* white text */
+  -webkit-box-shadow: 0 0 0px 1000px #1F2733 inset;
+  -webkit-text-fill-color: #FFFFFF;
   background-clip: padding-box;
 }
 
