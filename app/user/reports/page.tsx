@@ -233,9 +233,9 @@ export default function ReportPage() {
                     </TableRow>
                   </TableHeader>
 
-                  <TableBody className="bg-background dark:bg-secondaryBackground">
+                  <TableBody className="bg-white dark:bg-secondaryBackground">
                     {data.map((item) => (
-                      <TableRow key={item.id} className="border-b border-borderBrand/50 dark:border-border/40">
+                      <TableRow key={item.id} className="">
                         <TableCell className="font-medium px-5 text-secondary h-14">
                           {item.name}
                         </TableCell>

@@ -34,13 +34,36 @@ interface Transaction {
 }
 
 const transactions: Transaction[] = [
-  { id: "1234585752222", date: "Aug 16, 2025", time: "12:21 AM", items: 103, total: "2,500.00", paymentMethod: "Cash" },
-  { id: "1234585752223", date: "Aug 15, 2025", time: "03:45 PM", items: 5, total: "150.00", paymentMethod: "Maya" },
-  { id: "1234585752224", date: "Aug 14, 2025", time: "10:12 AM", items: 12, total: "720.00", paymentMethod: "Bank" },
+  {
+    id: "1234585752222",
+    date: "Aug 16, 2025",
+    time: "12:21 AM",
+    items: 103,
+    total: "2,500.00",
+    paymentMethod: "Cash",
+  },
+  {
+    id: "1234585752223",
+    date: "Aug 15, 2025",
+    time: "03:45 PM",
+    items: 5,
+    total: "150.00",
+    paymentMethod: "Maya",
+  },
+  {
+    id: "1234585752224",
+    date: "Aug 14, 2025",
+    time: "10:12 AM",
+    items: 12,
+    total: "720.00",
+    paymentMethod: "Bank",
+  },
 ];
 
 export default function TransactionPage() {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(subDays(new Date(), 1));
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    subDays(new Date(), 1)
+  );
   const [isLoading, setIsLoading] = useState(true);
   const { openRight } = useRightSidebar();
 
@@ -60,12 +83,13 @@ export default function TransactionPage() {
         direction="col"
       />
 
-      <Card className="border border-border/50 px-5 bg-secondaryBackground/30 !mt-2">
+      {/* Todasy History */}
+      <Card className="bg-input/20 border border-borderBrand/40 dark:border-border/50 px-5 dark:bg-secondaryBackground/30 !mt-2">
         {/* Desktop Table */}
         <div className="hidden md:block">
           <Table className="rounded-lg border overflow-hidden">
-            <TableHeader className="sticky top-0 bg-input z-10 h-14">
-              <TableRow>
+            <TableHeader className="sticky top-0 bg-primary dark:bg-input z-10 h-14">
+              <TableRow className="border border-primary dark:border-input">
                 <TableHead className="px-5">Reference #</TableHead>
                 <TableHead>Date</TableHead>
                 <TableHead>Time</TableHead>
@@ -78,7 +102,9 @@ export default function TransactionPage() {
             <TableBody className="bg-secondaryBackground">
               {transactions.map((txn) => (
                 <TableRow key={txn.id} className="text-[13px]">
-                  <TableCell className="font-medium text-secondary px-5">{txn.id}</TableCell>
+                  <TableCell className="font-medium text-secondary px-5">
+                    {txn.id}
+                  </TableCell>
                   <TableCell>{txn.date}</TableCell>
                   <TableCell>{txn.time}</TableCell>
                   <TableCell>{txn.items}</TableCell>
@@ -98,7 +124,10 @@ export default function TransactionPage() {
               ))}
               {transactions.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center py-10 text-muted-foreground">
+                  <TableCell
+                    colSpan={7}
+                    className="text-center py-10 text-muted-foreground"
+                  >
                     No transactions found.
                   </TableCell>
                 </TableRow>
@@ -108,16 +137,26 @@ export default function TransactionPage() {
         </div>
 
         {/* Mobile Accordion */}
-        <Accordion type="single" collapsible className="space-y-3 block md:hidden">
+        <Accordion
+          type="single"
+          collapsible
+          className="space-y-3 block md:hidden"
+        >
           {transactions.map((txn) => (
-            <AccordionItem key={txn.id} value={txn.id} className="border rounded-lg overflow-hidden">
-              <AccordionTrigger className="flex justify-between items-center w-full p-3 bg-secondaryBackground rounded-t rounded-b-none">
+            <AccordionItem
+              key={txn.id}
+              value={txn.id}
+              className="border border-borderBrand/70 dark:border-border rounded-lg overflow-hidden"
+            >
+              <AccordionTrigger className="flex justify-between items-center w-full p-3 bg-input/60 dark:bg-secondaryBackground rounded-t rounded-b-none">
                 <div className="flex flex-col">
                   <span className="font-medium">{txn.id}</span>
-                  <span className="text-xs text-muted-foreground">{txn.date}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {txn.date}
+                  </span>
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="px-3 pb-3 border-t space-y-3 text-sm">
+              <AccordionContent className="px-3 pb-3 border-t border-borderBrand/50 dark:border-border space-y-3 text-sm bg-secondaryBackground dark:bg-background">
                 <div className="flex justify-between !mt-3">
                   <span className="text-muted-foreground">Time:</span>
                   <span>{txn.time}</span>
@@ -161,12 +200,12 @@ export default function TransactionPage() {
           <DatePicker date={selectedDate} setDate={setSelectedDate} />
         </div>
 
-        <Card className="border border-border/50 px-5 bg-secondaryBackground/30 !mt-2">
+        <Card className="bg-input/20 border border-borderBrand/40 dark:border-border/50 px-5 dark:bg-secondaryBackground/30 !mt-2">
           {/* Desktop Table */}
           <div className="hidden md:block">
             <Table className="rounded-lg border overflow-hidden">
-              <TableHeader className="sticky top-0 bg-input z-10 h-14">
-                <TableRow>
+              <TableHeader className="sticky top-0 bg-primary dark:bg-input z-10 h-14">
+                <TableRow className="border border-primary dark:border-input">
                   <TableHead className="px-5">Reference #</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Time</TableHead>
@@ -179,7 +218,9 @@ export default function TransactionPage() {
               <TableBody className="bg-secondaryBackground">
                 {transactions.map((txn) => (
                   <TableRow key={txn.id} className="text-[13px]">
-                    <TableCell className="font-medium text-secondary px-5">{txn.id}</TableCell>
+                    <TableCell className="font-medium text-secondary px-5">
+                      {txn.id}
+                    </TableCell>
                     <TableCell>{txn.date}</TableCell>
                     <TableCell>{txn.time}</TableCell>
                     <TableCell>{txn.items}</TableCell>
@@ -199,7 +240,10 @@ export default function TransactionPage() {
                 ))}
                 {transactions.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-10 text-muted-foreground">
+                    <TableCell
+                      colSpan={7}
+                      className="text-center py-10 text-muted-foreground"
+                    >
                       No transactions found.
                     </TableCell>
                   </TableRow>
@@ -209,16 +253,26 @@ export default function TransactionPage() {
           </div>
 
           {/* Mobile Accordion */}
-          <Accordion type="single" collapsible className="space-y-3 block md:hidden">
+          <Accordion
+            type="single"
+            collapsible
+            className="space-y-3 block md:hidden"
+          >
             {transactions.map((txn) => (
-              <AccordionItem key={txn.id} value={txn.id} className="border rounded-lg overflow-hidden">
-                <AccordionTrigger className="flex justify-between items-center w-full p-3 bg-secondaryBackground rounded-t rounded-b-none">
+              <AccordionItem
+                key={txn.id}
+                value={txn.id}
+                className="border border-borderBrand/70 dark:border-border rounded-lg overflow-hidden"
+              >
+                <AccordionTrigger className="lex justify-between items-center w-full p-3 bg-input/60 dark:bg-secondaryBackground rounded-t rounded-b-none">
                   <div className="flex flex-col">
                     <span className="font-medium">{txn.id}</span>
-                    <span className="text-xs text-muted-foreground">{txn.date}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {txn.date}
+                    </span>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="px-3 pb-3 border-t space-y-3 text-sm">
+                <AccordionContent className="px-3 pb-3 border-t border-borderBrand/50 dark:border-border space-y-3 text-sm bg-secondaryBackground dark:bg-background">
                   <div className="flex justify-between !mt-3">
                     <span className="text-muted-foreground">Time:</span>
                     <span>{txn.time}</span>

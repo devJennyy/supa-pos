@@ -21,18 +21,18 @@ export function DatePicker({ date, setDate }: DatePickerProps) {
 
   return (
     <div className="relative flex gap-2">
-      <Button variant="outline" className="lg:text-sm text-xs sm:px-4 px-3">
+      <Button variant="outline" className="lg:text-sm text-xs sm:px-4 px-3 bg-input/40 dark:bg-input/30 border border-borderBrand/80 dark:border-input hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white dark:hover:border-primary">
         Yesterday
       </Button>
-      <Button variant="outline" className="lg:text-sm text-xs sm:px-4 px-3">
+      <Button variant="outline" className="lg:text-sm text-xs sm:px-4 px-3 bg-input/40 dark:bg-input/30 border border-borderBrand/80 dark:border-input hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white dark:hover:border-primary">
         Last 7 Days
       </Button>
-      <Button variant="outline" className="sm:block hidden">
+      <Button variant="outline" className="sm:block hidden bg-input/40 dark:bg-input/30 border border-borderBrand/80 dark:border-input hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white dark:hover:border-primary">
         Last 30 Days
       </Button>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button className="bg-background border lg:text-sm text-xs px-3">
+          <Button variant="outline" className="bg-background dark:bg-background lg:text-sm text-xs px-3 border border-borderBrand/80 dark:border-input hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white dark:hover:border-primary">
             <p>mm / dd / year</p>
             <MdCalendarMonth className="!mb-[2px]" />
           </Button>
