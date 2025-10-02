@@ -80,10 +80,10 @@ const ItemSelection = () => {
         {itemDetails?.map((item, index) => (
           <div
             key={index}
-            className="border lg:p-5 p-2.5 rounded-xl cursor-pointer text-start hover:bg-secondaryBackground group transition-default"
+            className="bg-white dark:bg-transparent border lg:p-5 p-2.5 rounded-xl text-start hover:bg-input/40 dark:hover:bg-input/30 hover:border-borderBrand/70 dark:hover:border-border group transition-default"
           >
             <div className="w-full h-full flex flex-col lg:gap-4 gap-1.5">
-              <div className="w-full lg:h-16 flex lg:flex-row flex-col justify-between lg:gap-4 gap-3">
+              <div className="w-full lg:h-16 flex lg:flex-row flex-col lg:gap-4 gap-3">
                 <div className="w-full lg:max-w-16 lg:h-full h-24 border rounded-lg group-hover:bg-input"></div>
 
                 <div className="flex flex-col justify-between lg:gap-1 gap-1.5">
@@ -102,19 +102,19 @@ const ItemSelection = () => {
               </h1>
 
               <div className="flex flex-col lg:gap-3 gap-1.5">
-                <div className="h-9 bg-secondaryBackground rounded-md flex justify-between items-center px-3 group-hover:bg-primary/5">
+                <div className="h-9 bg-secondaryBackground rounded-md flex justify-between items-center px-3 group-hover:bg-primary/5 group-hover:border border-borderBrand/30 dark:border-border">
                   <button
                     onClick={openRight}
-                    className="p-1 bg-input rounded-full flex justify-center items-center group-hover:bg-primary/15"
+                    className="p-1 bg-input rounded-full flex justify-center items-center group-hover:bg-primary/40 dark:group-hover:bg-primary/30 cursor-pointer"
                   >
-                    <FiMinus className="lg:text-[15px] text-sm" />
+                    <FiMinus className="lg:text-[15px] text-sm group-hover:text-white" />
                   </button>
                   <p className="font-bold lg:text-base text-sm">2</p>
                   <button
                     onClick={openRight}
-                    className="p-1 bg-input rounded-full flex justify-center items-center group-hover:bg-primary"
+                    className="p-1 bg-input rounded-full flex justify-center items-center group-hover:bg-primary cursor-pointer"
                   >
-                    <FiPlus className="lg:text-[15px] text-sm" />
+                    <FiPlus className="lg:text-[15px] text-sm group-hover:text-white" />
                   </button>
                 </div>
 

@@ -182,20 +182,26 @@ const Categories = ({ showAddButton }: Props) => {
           <button
             key={index}
             onClick={() => setActiveIndex(index)}
-            className={`flex-shrink-0 lg:h-25 lg:px-8 px-5 h-20 rounded-xl border flex flex-col justify-center items-center lg:gap-2 gap-1 hover:bg-input hover:text-primary text-secondary transition-default
-              ${activeIndex === index ? "bg-input text-foreground" : ""}
+            className={`flex-shrink-0 lg:h-25 lg:px-8 px-5 h-20 rounded-xl border flex flex-col justify-center items-center lg:gap-2 gap-1 hover:bg-input dark:hover:bg-input hover:text-primary text-secondary transition-default
+              ${
+                activeIndex === index
+                  ? "bg-input/70 text-foreground dark:border-border border-borderBrand/70"
+                  : "bg-white dark:bg-transparent hover:dark:border-border hover:border-borderBrand/70"
+              }
             `}
           >
             <p
               className={`${
                 index === activeIndex ? "text-primary" : "text-secondary"
-              } lg:text-[24px] text-[18px]`}
+              } lg:text-2xl text-lg`}
             >
               {item.emoji}
             </p>
             <p
-              className={`lg:text-sm text-xs font-medium ${
-                activeIndex === index ? "text-foreground" : "text-secondary"
+              className={`lg:text-sm text-xs ${
+                activeIndex === index
+                  ? "text-foreground font-semibold"
+                  : "text-secondary"
               }`}
             >
               {item.title}
