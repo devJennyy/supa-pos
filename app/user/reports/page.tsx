@@ -219,23 +219,23 @@ export default function ReportPage() {
             </div>
 
             {/* Desktop Table */}
-            <Card className="border border-border/50 px-5 bg-secondaryBackground/30 hidden md:block">
+            <Card className="bg-input/20 border border-borderBrand/40 dark:border-border/50 px-5 dark:bg-secondaryBackground/30 hidden md:block">
               <TabsContent value={tab}>
-                <Table className="rounded-lg border overflow-hidden">
-                  <TableHeader className="sticky top-0 bg-table-header dark:bg-input z-10 h-14">
-                    <TableRow>
-                      <TableHead className="w-[20%] px-5 text-foreground">Item</TableHead>
-                      <TableHead className="w-[15%] text-foreground">Action</TableHead>
-                      <TableHead className="w-[15%] text-foreground">Quantity</TableHead>
-                      <TableHead className="w-[15%] text-foreground">Price</TableHead>
-                      <TableHead className="w-[15%] text-foreground">Total</TableHead>
-                      <TableHead className="w-[20%] text-foreground">Date/Period</TableHead>
+                <Table>
+                  <TableHeader className="sticky top-0 bg-primary dark:bg-input z-10 h-14">
+                    <TableRow className="border border-primary dark:border-input">
+                      <TableHead className="w-[20%] px-5 text-white dark:text-foreground">Item</TableHead>
+                      <TableHead className="w-[15%] text-white dark:text-foreground">Action</TableHead>
+                      <TableHead className="w-[15%] text-white dark:text-foreground">Quantity</TableHead>
+                      <TableHead className="w-[15%] text-white dark:text-foreground">Price</TableHead>
+                      <TableHead className="w-[15%] text-white dark:text-foreground">Total</TableHead>
+                      <TableHead className="w-[20%] text-white dark:text-foreground">Date/Period</TableHead>
                     </TableRow>
                   </TableHeader>
 
-                  <TableBody className="dark:bg-secondaryBackground">
+                  <TableBody className="bg-background dark:bg-secondaryBackground">
                     {data.map((item) => (
-                      <TableRow key={item.id} className="border dark:border-border/40">
+                      <TableRow key={item.id} className="border-b border-borderBrand/50 dark:border-border/40">
                         <TableCell className="font-medium px-5 text-secondary h-14">
                           {item.name}
                         </TableCell>
