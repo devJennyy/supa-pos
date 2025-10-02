@@ -246,11 +246,11 @@ const Item = ({ showAddButton }: ItemProps) => {
         {itemDetails?.map((item, index) => (
           <div
             key={index}
-            className="border lg:p-5 p-2.5 rounded-xl cursor-pointer text-start hover:bg-secondaryBackground group transition-default"
+            className="bg-white dark:bg-transparent border lg:p-5 p-2.5 rounded-xl cursor-pointer text-start hover:bg-input/40 dark:hover:bg-input/30 hover:border-borderBrand/70 dark:hover:border-border group transition-default"
           >
             <div className="w-full flex flex-col justify-between h-full lg:gap-4 gap-1.5">
               <div className="w-full flex flex-col justify-between gap-3">
-                <div className="w-full lg:h-32 h-24 border rounded-lg group-hover:bg-input"></div>
+                <div className="w-full lg:h-32 h-24 border rounded-lg group-hover:bg-input group-hover:border-borderBrand/70 dark:group-hover:border-border"></div>
                 <p className="font-semibold lg:text-base text-sm line-clamp-2 text-ellipsis">
                   {item.productName}
                 </p>
