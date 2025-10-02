@@ -97,7 +97,7 @@ export function NavMain({
                       tooltip={item.title}
                       data-has-children="true"
                       className={`flex gap-3 items-center relative px-3 h-14 sidebar-btn transition-default cursor-pointer ${
-                        item.isActive ? "bg-input" : ""
+                        item.isActive ? "bg-input border border-primary/20 dark:border-0" : ""
                       }`}
                     >
                       <div
@@ -121,8 +121,8 @@ export function NavMain({
                         tooltip={item.title}
                         onClick={item.onClick}
                         data-has-children="false"
-                        className={`flex gap-3 items-center relative px-3 h-14 sidebar-btn transition-default cursor-pointer ${
-                          item.isActive ? "bg-input" : ""
+                        className={`flex gap-3 items-center relative px-3 h-14 sidebar-btn transition-default cursor-pointer hover:!text-red-500 ${
+                          item.isActive ? "bg-input border border-primary/20 dark:border-0" : ""
                         }`}
                       >
                         <div
@@ -148,7 +148,7 @@ export function NavMain({
                         tooltip={item.title}
                         data-has-children="false"
                         className={`flex gap-3 items-center relative px-3 h-14 sidebar-btn transition-default cursor-pointer ${
-                          item.isActive ? "bg-input" : ""
+                          item.isActive ? "bg-input border border-primary/20 dark:border-0" : ""
                         }`}
                       >
                         <div
@@ -164,7 +164,7 @@ export function NavMain({
                         </div>
                         <span
                           className={`sidebar-label ${
-                            item.isActive ? "dark:text-white text-foreground" : "text-secondary"
+                            item.isActive ? "dark:text-white text-primary" : "text-secondary"
                           }`}
                         >
                           {item.title}
