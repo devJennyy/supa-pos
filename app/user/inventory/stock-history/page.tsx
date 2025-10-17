@@ -99,13 +99,13 @@ export default function StockHistoryPage() {
               </TabsList>
             </div>
 
-            <Card className="border border-border/50 px-5 bg-secondaryBackground/30">
+            <Card className="bg-input/20 border border-borderBrand/40 dark:border-border/50 px-5 dark:bg-secondaryBackground/30">
               <TabsContent value={tab}>
                 {/* Desktop Table */}
                 <div className="hidden md:block">
-                  <Table className="rounded-lg border overflow-hidden">
-                    <TableHeader className="sticky top-0 bg-input z-10 h-14">
-                      <TableRow>
+                  <Table>
+                    <TableHeader className="sticky top-0 bg-primary dark:bg-input z-10 h-14">
+                      <TableRow className="border border-primary dark:border-input">
                         <TableHead className="w-[25%] px-5">Item</TableHead>
                         <TableHead className="w-[20%]">Category</TableHead>
                         <TableHead className="w-[20%]">Unit</TableHead>
@@ -126,8 +126,8 @@ export default function StockHistoryPage() {
                             <Badge
                               className={`${
                                 item.action === "Deducted"
-                                  ? "bg-destructive text-destructive-foreground"
-                                  : "bg-primary text-foreground"
+                                  ? "bg-destructive/80 dark:text-white"
+                                  : "bg-primary text-white"
                               } opacity-90 rounded-sm`}
                             >
                               {item.action}
@@ -179,8 +179,8 @@ export default function StockHistoryPage() {
                           <Badge
                             className={`${
                               item.action === "Deducted"
-                                ? "bg-destructive text-destructive-foreground"
-                                : "bg-primary text-foreground"
+                                ? "bg-destructive/80 dark:text-white"
+                                : "bg-primary text-white"
                             } opacity-90 rounded-sm`}
                           >
                             {item.action}
@@ -218,12 +218,12 @@ export default function StockHistoryPage() {
               </TabsList>
             </div>
 
-            <Card className="border border-border/50 px-5 bg-secondaryBackground/30">
+            <Card className="bg-input/20 border border-borderBrand/40 dark:border-border/50 px-5 dark:bg-secondaryBackground/30">
               <TabsContent value={tab}>
                 <div className="hidden md:block">
-                  <Table className="rounded-lg border overflow-hidden">
-                    <TableHeader className="sticky top-0 bg-input z-10 h-14">
-                      <TableRow>
+                  <Table>
+                    <TableHeader className="sticky top-0 bg-primary dark:bg-input z-10 h-14">
+                      <TableRow className="border border-primary dark:border-input">
                         <TableHead className="w-[25%] px-5">Item</TableHead>
                         <TableHead className="w-[20%]">Category</TableHead>
                         <TableHead className="w-[20%]">Unit</TableHead>
@@ -244,8 +244,8 @@ export default function StockHistoryPage() {
                             <Badge
                               className={`${
                                 item.action === "Deducted"
-                                  ? "bg-destructive text-destructive-foreground"
-                                  : "bg-primary text-foreground"
+                                 ? "bg-destructive/80 dark:text-white"
+                                  : "bg-primary text-white"
                               } opacity-90 rounded-sm`}
                             >
                               {item.action}
@@ -297,8 +297,8 @@ export default function StockHistoryPage() {
                           <Badge
                             className={`${
                               item.action === "Deducted"
-                                ? "bg-destructive text-destructive-foreground"
-                                : "bg-primary text-foreground"
+                                ? "bg-destructive/80 dark:text-white"
+                                  : "bg-primary text-white"
                             } opacity-90 rounded-sm`}
                           >
                             {item.action}

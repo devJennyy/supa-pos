@@ -61,7 +61,7 @@ function statusOf(item: StockItem) {
 }
 
 function toneBadge(tone: "destructive" | "warning" | "default") {
-  if (tone === "destructive") return "bg-destructive text-destructive-foreground";
+  if (tone === "destructive") return "bg-destructive/80 dark:text-white";
   if (tone === "warning") return "bg-yellow-500 text-white";
   return "bg-primary text-foreground";
 }
@@ -119,6 +119,7 @@ export default function LowStockPage() {
                   placeholder="Search name..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
+                  className="border border-gray-150 w-full focus:outline-none focus:ring-1 focus:ring-input hover:shadow-sm transition placeholder:text-secondary"
                 />
                 <Button variant="default" size="icon" onClick={() => setQuery("")}>
                   <RefreshCcw className="h-4 w-4" />
@@ -129,7 +130,7 @@ export default function LowStockPage() {
             <div className="grid gap-3 md:w-1/5">
               <Label>Category</Label>
               <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="md:w-32 w-full cursor-pointer">
+                <SelectTrigger className="md:w-32 w-full hover:bg-input/40 dark:bg-input/30 border border-gray-150 hover:border-borderBrand/80 dark:border-input/60 dark:hover:border-primary cursor-pointer">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
@@ -154,10 +155,10 @@ export default function LowStockPage() {
           </div>
 
           {/* Desktop Table */}
-          <Card className="border border-border/50 px-5 bg-secondaryBackground/30 !mt-2 hidden md:block">
-            <Table className="rounded-lg border overflow-hidden">
-              <TableHeader className="sticky top-0 bg-input z-10 h-14">
-                <TableRow>
+          <Card className="bg-input/20 border border-borderBrand/40 dark:border-border/50 px-5 dark:bg-secondaryBackground/30 hidden md:block">
+            <Table>
+              <TableHeader className="sticky top-0 bg-primary dark:bg-input z-10 h-14">
+                <TableRow className="border border-primary dark:border-input">
                   <TableHead className="w-[30%] px-5">Item</TableHead>
                   <TableHead className="w-[20%]">Category</TableHead>
                   <TableHead className="w-[15%]">Stocks</TableHead>

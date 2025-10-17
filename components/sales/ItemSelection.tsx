@@ -82,7 +82,7 @@ const ItemSelection = () => {
             key={index}
             className="bg-white dark:bg-transparent border lg:p-5 p-2.5 rounded-xl text-start hover:bg-input/40 dark:hover:bg-input/30 hover:border-borderBrand/70 dark:hover:border-border group transition-default"
           >
-            <div className="w-full h-full flex flex-col lg:gap-4 gap-1.5">
+            <div className="w-full h-full flex flex-col lg:gap-3 gap-1.5">
               <div className="w-full lg:h-16 flex lg:flex-row flex-col lg:gap-4 gap-3">
                 <div className="w-full lg:max-w-16 lg:h-full h-24 border rounded-lg group-hover:bg-input"></div>
 
@@ -97,12 +97,12 @@ const ItemSelection = () => {
                 </div>
               </div>
 
-              <h1 className="font-semibold lg:text-lg lg:!my-1">
+              <h1 className="font-semibold lg:text-lg text-sm">
                 ₱ {item.productPrice}
               </h1>
 
               <div className="flex flex-col lg:gap-3 gap-1.5">
-                <div className="h-9 bg-secondaryBackground rounded-md flex justify-between items-center px-3 group-hover:bg-primary/5 group-hover:border border-borderBrand/30 dark:border-border">
+                <div className="h-9 border bg-secondaryBackground rounded-md flex justify-between items-center px-3 group-hover:bg-primary/5 group-hover:border border-borderBrand/30 dark:border-border">
                   <button
                     onClick={openRight}
                     className="p-1 bg-input rounded-full flex justify-center items-center group-hover:bg-primary/40 dark:group-hover:bg-primary/30 cursor-pointer"

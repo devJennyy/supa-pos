@@ -161,6 +161,7 @@ export default function DeductStockPage() {
                   placeholder="Search name..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
+                  className="border border-gray-150 w-full focus:outline-none focus:ring-1 focus:ring-input hover:shadow-sm transition placeholder:text-secondary"
                 />
                 <Button
                   variant="default"
@@ -175,7 +176,7 @@ export default function DeductStockPage() {
             <div className="grid gap-3 md:w-1/5">
               <Label>Category</Label>
               <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="w-full cursor-pointer">
+                <SelectTrigger className="w-full hover:bg-input/40 dark:bg-input/30 border border-gray-150 hover:border-borderBrand/80 dark:border-input/60 dark:hover:border-primary cursor-pointer">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
@@ -191,10 +192,10 @@ export default function DeductStockPage() {
 
           {/* Desktop Table */}
           <div className="hidden md:block">
-            <Card className="border border-border/50 px-5 bg-secondaryBackground/30 !mt-2">
-              <Table className="rounded-lg border overflow-hidden">
-                <TableHeader className="sticky top-0 bg-input z-10 h-14">
-                  <TableRow>
+            <Card className="bg-input/20 border border-borderBrand/40 dark:border-border/50 px-5 dark:bg-secondaryBackground/30 hidden md:block">
+              <Table>
+                <TableHeader className="sticky top-0 bg-primary dark:bg-input z-10 h-14">
+                  <TableRow className="border border-primary dark:border-input">
                     <TableHead className="w-[35%] px-5">Item</TableHead>
                     <TableHead className="w-[25%]">Category</TableHead>
                     <TableHead className="w-[20%]">Unit</TableHead>
@@ -219,7 +220,7 @@ export default function DeductStockPage() {
                           onChange={(e) =>
                             handleDeductChange(item.id, e.target.value)
                           }
-                          className="w-20 h-8"
+                          className="w-20 h-8 border border-gray-150 focus:outline-none focus:ring-1 focus:ring-input hover:shadow-sm transition placeholder:text-secondary"
                         />
                       </TableCell>
                       <TableCell className="pr-5">
