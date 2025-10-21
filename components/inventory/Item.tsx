@@ -23,6 +23,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "@/components/ui/native-select";
+import { IoIosAdd } from "react-icons/io";
 
 const itemDetails = [
   {
@@ -107,8 +112,25 @@ const Item = ({ showAddButton }: ItemProps) => {
   const [price, setPrice] = useState("");
   const [unit, setUnit] = useState("");
   const [customUnit, setCustomUnit] = useState("");
+  const [category, setCategory] = useState("");
 
-  const unitOptions = [
+  const categoryUnitOptions: Record<string, string[]> = {
+    Snacks: [
+      "g (grams)",
+      "kg (kilograms)",
+      "pcs",
+      "pack",
+      "box",
+      "tray",
+      "bowl",
+      "Other",
+    ],
+    Drinks: ["bottle", "can", "glass", "liter", "sachet", "box"],
+    Canned: ["g (grams)", "kg (kilograms)", "can", "pack", "box", "Other"],
+    Goods: ["pcs", "box", "pack", "kg (kilograms)", "L (liters)", "Other"],
+  };
+
+  const defaultUnitOptions = [
     "g (grams)",
     "kg (kilograms)",
     "ml (milliliters)",
@@ -122,6 +144,7 @@ const Item = ({ showAddButton }: ItemProps) => {
     "bowl",
     "Other",
   ];
+  const unitOptions = categoryUnitOptions[category] || defaultUnitOptions;
 
   const handleStockChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/,/g, "");
@@ -151,6 +174,7 @@ const Item = ({ showAddButton }: ItemProps) => {
   };
 
   const finalUnitType = unit === "Other" ? customUnit : unit;
+  const [subUnit, setSubUnit] = useState("");
 
   return (
     <div className="flex flex-col gap-4">
@@ -176,8 +200,165 @@ const Item = ({ showAddButton }: ItemProps) => {
 
                 <div className="grid gap-4 !mt-2">
                   <div className="grid gap-3">
-                    <Label htmlFor="name-1">Item Name</Label>
-                    <Input id="name-1" name="name" placeholder="Chocolate" />
+                    <Label htmlFor="item-name">Item Name</Label>
+                    <Input id="item-name" name="name" placeholder="Chocolate" />
+                  </div>
+
+                  {/* Category selection */}
+                  <div className="grid gap-3 w-full">
+                    <Label>Category</Label>
+                    <div className="flex gap-2">
+                      <Select
+                        onValueChange={(val) => {
+                          setCategory(val);
+                          setUnit("");
+                        }}
+                        value={category}
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select category" />
+                        </SelectTrigger>
+
+                        <SelectContent>
+                          {["Snacks", "Drinks", "Canned", "Goods"].map(
+                            (opt, idx) => (
+                              <SelectItem key={idx} value={opt}>
+                                {opt}
+                              </SelectItem>
+                            )
+                          )}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-3">
+                    <Label htmlFor="item-description">Description</Label>
+                    <Input
+                      id="item-description"
+                      name="name"
+                      placeholder="Original Taste"
+                    />
+                  </div>
+
+                  {/* Item Type */}
+                  <div className="grid gap-3 w-full">
+                    <Label>Item Type</Label>
+                    <div className="flex gap-2">
+                      <Select
+                        onValueChange={(val) => {
+                          if (val === "add-new") {
+                            setUnit(val);
+                          } else {
+                            setUnit(val);
+                          }
+                        }}
+                        value={unit}
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+
+                        <SelectContent>
+                          {unitOptions.map((opt, idx) => (
+                            <SelectItem key={idx} value={opt}>
+                              {opt}
+                            </SelectItem>
+                          ))}
+
+                          {unit === "add-new" ? (
+                            <div className="flex items-center px-2 py-2">
+                              <Input
+                                autoFocus
+                                className="w-full text-sm"
+                                placeholder="Enter new type..."
+                                value={customUnit}
+                                onChange={(e) => setCustomUnit(e.target.value)}
+                                onKeyDown={(e) => {
+                                  if (
+                                    e.key === "Enter" &&
+                                    customUnit.trim() !== ""
+                                  ) {
+                                    const newList = [
+                                      ...unitOptions,
+                                      customUnit.trim(),
+                                    ];
+                                    setCustomUnit("");
+                                    setUnit(customUnit.trim());
+                                    categoryUnitOptions[category] = newList;
+                                  }
+                                }}
+                                onBlur={() => {
+                                  if (customUnit.trim() !== "") {
+                                    const newList = [
+                                      ...unitOptions,
+                                      customUnit.trim(),
+                                    ];
+                                    setCustomUnit("");
+                                    setUnit(customUnit.trim());
+                                    categoryUnitOptions[category] = newList;
+                                  }
+                                }}
+                              />
+                            </div>
+                          ) : (
+                            <div
+                              onClick={() => setUnit("add-new")}
+                              className="flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-muted rounded-md"
+                            >
+                              <IoIosAdd size={18} />
+                              <span className="text-sm">Add another type</span>
+                            </div>
+                          )}
+                        </SelectContent>
+                      </Select>
+
+                      {[
+                        "bottle",
+                        "can",
+                        "glass",
+                        "liter",
+                        "sachet",
+                        "box",
+                        "pack",
+                      ].includes(unit) && (
+                        <Input
+                          className="w-1/2"
+                          type="text"
+                          placeholder={
+                            unit === "bottle"
+                              ? "ml per bottle"
+                              : unit === "can"
+                              ? "ml per can"
+                              : unit === "glass"
+                              ? "ml per glass"
+                              : unit === "liter"
+                              ? "L per container"
+                              : unit === "sachet"
+                              ? "g per sachet"
+                              : unit === "box"
+                              ? "ml per box"
+                              : unit === "pack"
+                              ? "pieces per pack"
+                              : ""
+                          }
+                          value={subUnit}
+                          onChange={(e) => {
+                            let val = e.target.value.replace(/[^\d]/g, ""); // numbers only
+                            if (val) {
+                              if (
+                                ["bottle", "can", "glass", "box"].includes(unit)
+                              )
+                                val = `${val} mL`;
+                              else if (unit === "liter") val = `${val} L`;
+                              else if (unit === "sachet") val = `${val} g`;
+                              else if (unit === "pack") val = `${val} pcs`;
+                            }
+                            setSubUnit(val);
+                          }}
+                        />
+                      )}
+                    </div>
                   </div>
 
                   <div className="grid gap-3">
@@ -203,31 +384,6 @@ const Item = ({ showAddButton }: ItemProps) => {
                       placeholder="212.99"
                     />
                   </div>
-
-                  <div className="grid gap-3">
-                    <Label>Unit Type</Label>
-                    <Select onValueChange={(val) => setUnit(val)} value={unit}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select unit type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {unitOptions.map((opt, idx) => (
-                          <SelectItem key={idx} value={opt}>
-                            {opt}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-
-                    {unit === "Other" && (
-                      <Input
-                        className="mt-2 w-full"
-                        placeholder="Enter custom unit type"
-                        value={customUnit}
-                        onChange={(e) => setCustomUnit(e.target.value)}
-                      />
-                    )}
-                  </div>
                 </div>
 
                 <DialogFooter className="lg:!mt-4 !mt-2">
@@ -242,6 +398,7 @@ const Item = ({ showAddButton }: ItemProps) => {
         )}
       </div>
 
+      {/* Product list display */}
       <div className="grid lg:gap-5 gap-3 lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] grid-cols-[repeat(auto-fill,minmax(140px,1fr))]">
         {itemDetails?.map((item, index) => (
           <div
