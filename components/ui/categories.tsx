@@ -36,6 +36,8 @@ import { Label } from "@/components/ui/label";
 import EmojiPicker, { Theme } from "emoji-picker-react";
 import { supabase } from "@/app/supabaseClient";
 import { motion, Reorder } from "framer-motion";
+import { CheckCircle2Icon, AlertCircleIcon } from "lucide-react";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 interface Props {
   showAddButton?: boolean;
@@ -43,24 +45,27 @@ interface Props {
 
 const Categories = ({ showAddButton }: Props) => {
   const carouselRef = useRef<HTMLDivElement>(null);
-
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const [icon, setIcon] = useState("📦");
   const [showPicker, setShowPicker] = useState(false);
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
-
-  const [showReorderDialog, setShowReorderDialog] = useState(false);
   const [categories, setCategories] = useState<
     { id: string; name: string; icon: string }[]
   >([]);
-  const [tempCategories, setTempCategories] = useState(categories);
+  const [newCategory, setNewCategory] = useState({ name: "", icon: "" });
+  const [alert, setAlert] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const emojiRegex = /^(?:\p{Emoji_Presentation}|\p{Emoji}\uFE0F)$/u;
 
+  const [tempCategories, setTempCategories] = useState(categories);
+  const [isEditing, setIsEditing] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [showReorderDialog, setShowReorderDialog] = useState(false);
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
     setStartX(e.pageX - (carouselRef.current?.offsetLeft || 0));
@@ -87,6 +92,50 @@ const Categories = ({ showAddButton }: Props) => {
     fetchCategories();
   }, []);
 
+  const saveCategory = async () => {
+    if (!newCategory.name.trim()) {
+      setAlert({ type: "error", message: "Please enter a category name." });
+      return;
+    }
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    const { error } = await supabase.from("categories").insert([
+      {
+        name: newCategory.name,
+        icon: newCategory.icon,
+        user_id: user?.id || null,
+      },
+    ]);
+
+    if (error) {
+      setAlert({ type: "error", message: "Failed to add category." });
+      return;
+    }
+
+    setCategories((prev) => [
+      ...prev,
+      {
+        id: Date.now().toString(),
+        name: newCategory.name,
+        icon: newCategory.icon,
+      },
+    ]);
+    setNewCategory({ name: "", icon: "" });
+
+    setIsAddModalOpen(false);
+    setAlert({ type: "success", message: "Category added successfully!" });
+  };
+
+  useEffect(() => {
+    if (alert) {
+      const timer = setTimeout(() => setAlert(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [alert]);
+
   const handleDelete = async (id: string) => {
     const { error } = await supabase.from("categories").delete().eq("id", id);
     if (!error) setCategories((prev) => prev.filter((c) => c.id !== id));
@@ -110,7 +159,7 @@ const Categories = ({ showAddButton }: Props) => {
         <div className="flex gap-2 items-center">
           {/* Add Button */}
           {showAddButton && (
-            <Dialog>
+            <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
               <DialogTrigger asChild>
                 <Button variant="outline">
                   <LuPackagePlus />
@@ -121,6 +170,7 @@ const Categories = ({ showAddButton }: Props) => {
                 <DialogHeader>
                   <DialogTitle>Add New Category</DialogTitle>
                 </DialogHeader>
+
                 <div className="grid gap-4 !mt-2">
                   <div className="grid gap-3">
                     <Label htmlFor="name-1">Name</Label>
@@ -128,25 +178,44 @@ const Categories = ({ showAddButton }: Props) => {
                       id="name-1"
                       name="name"
                       placeholder="e.g. Beverages"
+                      value={newCategory.name}
+                      onChange={(e) =>
+                        setNewCategory((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }))
+                      }
                     />
                   </div>
+
                   <div className="grid gap-3">
                     <label htmlFor="icon-1">Emoji / Icon</label>
                     <div className="flex items-center gap-2">
                       <Input
                         id="icon-1"
                         name="icon"
-                        value={icon}
-                        onChange={(e) => setIcon(e.target.value)}
+                        value={newCategory.icon}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (!value || emojiRegex.test(value)) {
+                            setNewCategory((prev) => ({
+                              ...prev,
+                              icon: value,
+                            }));
+                          }
+                        }}
                         placeholder="Select / add emoji"
                       />
+
                       <Button
                         type="button"
                         variant="outline"
                         onClick={() => setShowPicker((prev) => !prev)}
                         className="p-2"
                       >
-                        <p className="text-lg !mb-1">🍔</p>
+                        <p className="text-lg !mb-1">
+                          {newCategory.icon || "🍔"}
+                        </p>
                       </Button>
                     </div>
                     {showPicker && (
@@ -164,38 +233,27 @@ const Categories = ({ showAddButton }: Props) => {
                           width="100%"
                           height={350}
                           theme={Theme.LIGHT}
-                          onEmojiClick={(emojiData) => setIcon(emojiData.emoji)}
+                          onEmojiClick={(emojiData) =>
+                            setNewCategory((prev) => ({
+                              ...prev,
+                              icon: emojiData.emoji,
+                            }))
+                          }
                         />
                       </div>
                     )}
                   </div>
                 </div>
+
                 <DialogFooter className="lg:!mt-4 !mt-2">
                   <DialogClose asChild>
                     <Button variant="outline">Cancel</Button>
                   </DialogClose>
+
                   <Button
                     type="button"
                     onClick={async () => {
-                      const nameInput = (
-                        document.getElementById("name-1") as HTMLInputElement
-                      )?.value;
-                      if (!nameInput)
-                        return alert("Please enter a category name.");
-
-                      const {
-                        data: { user },
-                      } = await supabase.auth.getUser();
-                      const { data, error } = await supabase
-                        .from("categories")
-                        .insert([
-                          { name: nameInput, icon, user_id: user?.id || null },
-                        ]);
-
-                      if (!error) {
-                        setCategories((prev) => [...prev, ...(data ?? [])]);
-                        alert("Category added!");
-                      }
+                      await saveCategory();
                     }}
                   >
                     Save changes
@@ -203,6 +261,23 @@ const Categories = ({ showAddButton }: Props) => {
                 </DialogFooter>
               </DialogContent>
             </Dialog>
+          )}
+
+          {/* Alert Popup */}
+          {alert && (
+            <div className="fixed bottom-5 right-5 z-50 w-full lg:max-w-sm max-w-xs bg-secondaryBackground rounded-lg">
+              <Alert className="bg-primary/10 border border-primary rounded-lg shadow-lg p-4">
+                {alert.type === "success" ? (
+                  <CheckCircle2Icon className="h-5 w-5" />
+                ) : (
+                  <AlertCircleIcon className="h-5 w-5" />
+                )}
+                <AlertTitle>
+                  {alert.type === "success" ? "Success!" : "Error!"}
+                </AlertTitle>
+                <AlertDescription>{alert.message}</AlertDescription>
+              </Alert>
+            </div>
           )}
 
           {/* Edit Button */}
