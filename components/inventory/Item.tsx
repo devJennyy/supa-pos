@@ -23,10 +23,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  NativeSelect,
-  NativeSelectOption,
-} from "@/components/ui/native-select";
 import { IoIosAdd } from "react-icons/io";
 
 const itemDetails = [
@@ -173,7 +169,6 @@ const Item = ({ showAddButton }: ItemProps) => {
     setPrice(decimalPart !== undefined ? `${intPart}.${decimalPart}` : intPart);
   };
 
-  const finalUnitType = unit === "Other" ? customUnit : unit;
   const [subUnit, setSubUnit] = useState("");
 
   return (

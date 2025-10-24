@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import React, { useRef, useState } from "react";
 import SectionTitle from "../ui/section-title";
 import { Button } from "./button";
@@ -15,32 +16,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import EmojiPicker, { Theme } from "emoji-picker-react";
+import { supabase } from "@/app/supabaseClient";
 
 interface Props {
   showAddButton?: boolean;
 }
-
-const categories = [
-  { title: "Snacks", emoji: "🥨" },
-  { title: "Drinks", emoji: "🧃" },
-  { title: "Canned", emoji: "🥫" },
-  { title: "Goods", emoji: "🍚" },
-  { title: "Sweet", emoji: "🍬" },
-  { title: "Condiments", emoji: "🌶️" },
-  { title: "Bakery", emoji: "🥖" },
-  { title: "Fruits", emoji: "🍎" },
-  { title: "Vegetables", emoji: "🥦" },
-  { title: "Dairy", emoji: "🧀" },
-  { title: "Frozen", emoji: "❄️" },
-  { title: "Seafood", emoji: "🦞" },
-  { title: "Meat", emoji: "🥩" },
-  { title: "Beverages", emoji: "☕" },
-  { title: "Snacks & Chips", emoji: "🍿" },
-  { title: "Noodles & Pasta", emoji: "🍝" },
-  { title: "Grains & Rice", emoji: "🌾" },
-  { title: "Health & Supplements", emoji: "💊" },
-  { title: "Baby Care", emoji: "👶" },
-];
 
 const Categories = ({ showAddButton }: Props) => {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -68,6 +48,27 @@ const Categories = ({ showAddButton }: Props) => {
     const walk = (x - startX) * 1;
     carouselRef.current.scrollLeft = scrollLeft - walk;
   };
+
+  const [categories, setCategories] = useState<
+    { id: string; name: string; icon: string }[]
+  >([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const { data, error } = await supabase
+        .from("categories")
+        .select("id, name, icon")
+        .order("created_at", { ascending: true });
+
+      if (error) {
+        console.error("Error fetching categories:", error);
+      } else {
+        setCategories(data || []);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   return (
     <div className="flex flex-col gap-4">
@@ -162,7 +163,40 @@ const Categories = ({ showAddButton }: Props) => {
                   <DialogClose asChild>
                     <Button variant="outline">Cancel</Button>
                   </DialogClose>
-                  <Button type="submit">Save changes</Button>
+                  <Button
+                    type="button"
+                    onClick={async () => {
+                      const nameInput = (
+                        document.getElementById("name-1") as HTMLInputElement
+                      )?.value;
+                      if (!nameInput)
+                        return alert("Please enter a category name.");
+
+                      const {
+                        data: { user },
+                      } = await supabase.auth.getUser();
+
+                      const { data, error } = await supabase
+                        .from("categories")
+                        .insert([
+                          {
+                            name: nameInput,
+                            icon,
+                            user_id: user?.id || null,
+                          },
+                        ]);
+
+                      if (error) {
+                        console.error("Error adding category:", error);
+                        alert("Error adding category");
+                      } else {
+                        setCategories((prev) => [...prev, ...(data ?? [])]);
+                        alert("Category added!");
+                      }
+                    }}
+                  >
+                    Save changes
+                  </Button>
                 </DialogFooter>
               </DialogContent>
             </form>
@@ -180,22 +214,22 @@ const Categories = ({ showAddButton }: Props) => {
       >
         {categories.map((item, index) => (
           <button
-            key={index}
+            key={item.id}
             onClick={() => setActiveIndex(index)}
             className={`flex-shrink-0 lg:h-25 lg:px-8 px-5 h-20 rounded-xl border flex flex-col justify-center items-center lg:gap-2 gap-1 hover:bg-input dark:hover:bg-input hover:text-primary text-secondary transition-default
-              ${
-                activeIndex === index
-                  ? "bg-input/70 text-foreground dark:border-border border-borderBrand/70"
-                  : "bg-white dark:bg-transparent hover:dark:border-border hover:border-borderBrand/70"
-              }
-            `}
+      ${
+        activeIndex === index
+          ? "bg-input/70 text-foreground dark:border-border border-borderBrand/70"
+          : "bg-white dark:bg-transparent hover:dark:border-border hover:border-borderBrand/70"
+      }
+    `}
           >
             <p
               className={`${
                 index === activeIndex ? "text-primary" : "text-secondary"
               } lg:text-2xl text-lg`}
             >
-              {item.emoji}
+              {item.icon}
             </p>
             <p
               className={`lg:text-sm text-xs ${
@@ -204,7 +238,7 @@ const Categories = ({ showAddButton }: Props) => {
                   : "text-secondary"
               }`}
             >
-              {item.title}
+              {item.name}
             </p>
           </button>
         ))}
