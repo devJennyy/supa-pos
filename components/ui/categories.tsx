@@ -38,6 +38,8 @@ import { supabase } from "@/app/supabaseClient";
 import { motion, Reorder } from "framer-motion";
 import { CheckCircle2Icon, AlertCircleIcon } from "lucide-react";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { FaCheck } from "react-icons/fa6";
 
 interface Props {
   showAddButton?: boolean;
@@ -66,6 +68,8 @@ const Categories = ({ showAddButton }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [showReorderDialog, setShowReorderDialog] = useState(false);
+  const [showAll, setShowAll] = useState(false);
+
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
     setStartX(e.pageX - (carouselRef.current?.offsetLeft || 0));
@@ -152,7 +156,7 @@ const Categories = ({ showAddButton }: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col"> 
       <div className="flex items-center justify-between">
         <SectionTitle title="Categories" />
 
@@ -163,12 +167,14 @@ const Categories = ({ showAddButton }: Props) => {
               <DialogTrigger asChild>
                 <Button variant="outline">
                   <LuPackagePlus />
-                  <p>Add Categories</p>
+                  <p className="flex gap-1">Add <span className="hidden lg:block">Categories</span></p>
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                  <DialogTitle>Add New Category</DialogTitle>
+                  <DialogTitle className="text-left">
+                    Add New Category
+                  </DialogTitle>
                 </DialogHeader>
 
                 <div className="grid gap-4 !mt-2">
@@ -177,7 +183,7 @@ const Categories = ({ showAddButton }: Props) => {
                     <Input
                       id="name-1"
                       name="name"
-                      placeholder="e.g. Beverages"
+                      placeholder="Add category name"
                       value={newCategory.name}
                       onChange={(e) =>
                         setNewCategory((prev) => ({
@@ -307,21 +313,29 @@ const Categories = ({ showAddButton }: Props) => {
           </div>
 
           {isEditing && (
+            <>
             <Button
-              variant="secondary"
               onClick={() => setIsEditing(false)}
-              className="ml-2"
+               className="hidden lg:block"
             >
               Done Editing
             </Button>
+
+            <Button
+              onClick={() => setIsEditing(false)}
+              className="lg:hidden"
+            >
+              <FaCheck size={12}/>
+            </Button>
+            </>
           )}
         </div>
       </div>
 
       {/* Reorder Modal */}
       {showReorderDialog && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg w-full max-w-md p-5">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-background border rounded-lg shadow-lg w-full max-w-md p-5 max-h-[80vh] flex flex-col">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold">Reorder Categories</h2>
               <button
@@ -332,25 +346,45 @@ const Categories = ({ showAddButton }: Props) => {
               </button>
             </div>
 
-            <Reorder.Group
-              axis="y"
-              values={tempCategories}
-              onReorder={setTempCategories}
-              className="flex flex-col gap-2"
+            <div
+              className={`scrollbar-hidden transition-default`}
+              style={{
+                maxHeight: showAll ? "50vh" : "260px",
+              }}
             >
-              {tempCategories.map((item) => (
-                <Reorder.Item
-                  key={item.id}
-                  value={item}
-                  className="px-4 py-2 border rounded-lg bg-white dark:bg-gray-800 cursor-grab"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-xl">{item.icon}</span>
-                    <span>{item.name}</span>
-                  </div>
-                </Reorder.Item>
-              ))}
-            </Reorder.Group>
+              <Reorder.Group
+                axis="y"
+                values={tempCategories}
+                onReorder={setTempCategories}
+                className="flex flex-col gap-2"
+              >
+                {tempCategories.map((item) => (
+                  <Reorder.Item
+                    key={item.id}
+                    value={item}
+                    className="px-4 py-2 border rounded-lg bg-input/60 cursor-grab"
+                  >
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg">{item.icon}</span>
+                        <span className="text-sm">{item.name}</span>
+                      </div>
+                      <RxHamburgerMenu size={18} className="text-bg-gray-800" />
+                    </div>
+                  </Reorder.Item>
+                ))}
+              </Reorder.Group>
+            </div>
+
+            {tempCategories.length > 5 && !showAll && (
+              <Button
+                variant="outline"
+                onClick={() => setShowAll(true)}
+                className="mt-5"
+              >
+                Show More
+              </Button>
+            )}
 
             <div className="mt-4 flex justify-end gap-2">
               <Button
@@ -368,7 +402,7 @@ const Categories = ({ showAddButton }: Props) => {
       {/* Delete Item */}
       <div
         ref={carouselRef}
-        className="flex lg:gap-5 gap-3 lg:overflow-x-hidden overflow-x-auto pb-4 custom-scrollbar cursor-grab select-none"
+        className="flex lg:gap-5 gap-3 lg:overflow-x-hidden overflow-x-auto py-4 custom-scrollbar cursor-grab select-none"
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}

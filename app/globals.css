@@ -243,6 +243,25 @@ input:-webkit-autofill {
   background-clip: padding-box;
 }
 
+.scrollbar-hidden {
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
+}
+
+.scrollbar-hidden {
+  overflow-y: auto;
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+
 
 
 
