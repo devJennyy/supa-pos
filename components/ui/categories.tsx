@@ -54,8 +54,9 @@ const Categories = ({ showAddButton }: Props) => {
 
   const [showPicker, setShowPicker] = useState(false);
   const [categories, setCategories] = useState<
-    { id: string; name: string; icon: string }[]
+    { id: string; name: string; icon: string; is_default?: boolean }[]
   >([]);
+
   const [newCategory, setNewCategory] = useState({ name: "", icon: "" });
   const [alert, setAlert] = useState<{
     type: "success" | "error";
@@ -67,6 +68,12 @@ const Categories = ({ showAddButton }: Props) => {
   const [tempCategories, setTempCategories] = useState(categories);
   const [isEditing, setIsEditing] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editCategory, setEditCategory] = useState<{
+    id: string;
+    name: string;
+    icon: string;
+  } | null>(null);
   const [showReorderDialog, setShowReorderDialog] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
@@ -89,9 +96,36 @@ const Categories = ({ showAddButton }: Props) => {
     const fetchCategories = async () => {
       const { data, error } = await supabase
         .from("categories")
-        .select("id, name, icon")
-        .order("created_at", { ascending: true });
-      if (!error) setCategories(data || []);
+        .select(
+          `
+          id,
+          name,
+          icon,
+          is_default,
+          user_categories:user_categories(category_id, user_id, name_override, icon_override)
+        `
+        )
+        .order("id", { ascending: true });
+
+      if (!error) {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+
+        const merged = data.map((cat) => {
+          const override = cat.user_categories?.find(
+            (uc) => uc.user_id === user?.id
+          );
+          return {
+            id: cat.id,
+            name: override?.name_override || cat.name,
+            icon: override?.icon_override || cat.icon,
+            is_default: cat.is_default,
+          };
+        });
+
+        setCategories(merged);
+      }
     };
     fetchCategories();
   }, []);
@@ -106,31 +140,130 @@ const Categories = ({ showAddButton }: Props) => {
       data: { user },
     } = await supabase.auth.getUser();
 
-    const { error } = await supabase.from("categories").insert([
-      {
-        name: newCategory.name,
-        icon: newCategory.icon,
-        user_id: user?.id || null,
-      },
-    ]);
+    if (!user) {
+      setAlert({ type: "error", message: "User not authenticated." });
+      return;
+    }
 
-    if (error) {
+    const { data: categoryData, error: categoryError } = await supabase
+      .from("categories")
+      .insert([
+        {
+          name: newCategory.name,
+          icon: newCategory.icon,
+          user_id: user.id,
+          is_default: false,
+        },
+      ])
+      .select("id")
+      .single();
+
+    if (categoryError || !categoryData) {
+      console.error(categoryError);
       setAlert({ type: "error", message: "Failed to add category." });
+      return;
+    }
+
+    const { error: userCatError } = await supabase
+      .from("user_categories")
+      .insert([
+        {
+          user_id: user.id,
+          category_id: categoryData.id,
+          name_override: newCategory.name,
+          icon_override: newCategory.icon,
+        },
+      ]);
+
+    if (userCatError) {
+      console.error(userCatError);
+      setAlert({ type: "error", message: "Failed to link user category." });
       return;
     }
 
     setCategories((prev) => [
       ...prev,
       {
-        id: Date.now().toString(),
+        id: categoryData.id,
         name: newCategory.name,
         icon: newCategory.icon,
       },
     ]);
-    setNewCategory({ name: "", icon: "" });
 
+    setNewCategory({ name: "", icon: "" });
     setIsAddModalOpen(false);
     setAlert({ type: "success", message: "Category added successfully!" });
+  };
+
+  const updateCategory = async () => {
+    if (!editCategory?.name.trim()) {
+      setAlert({ type: "error", message: "Please enter a category name." });
+      return;
+    }
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setAlert({ type: "error", message: "User not authenticated." });
+      return;
+    }
+
+    const { data: categoryData, error: categoryError } = await supabase
+      .from("categories")
+      .select("is_default")
+      .eq("id", editCategory.id)
+      .single();
+
+    if (categoryError || !categoryData) {
+      setAlert({ type: "error", message: "Category not found." });
+      return;
+    }
+
+    let error = null;
+
+    if (categoryData.is_default) {
+      const { error: upsertError } = await supabase
+        .from("user_categories")
+        .upsert(
+          {
+            user_id: user.id,
+            category_id: editCategory.id,
+            name_override: editCategory.name,
+            icon_override: editCategory.icon,
+          },
+          { onConflict: "user_id,category_id" }
+        );
+
+      error = upsertError;
+    } else {
+      const { error: updateError } = await supabase
+        .from("categories")
+        .update({
+          name: editCategory.name,
+          icon: editCategory.icon,
+        })
+        .eq("id", editCategory.id)
+        .eq("user_id", user.id);
+
+      error = updateError;
+    }
+
+    if (error) {
+      console.error(error);
+      setAlert({ type: "error", message: "Failed to update category." });
+      return;
+    }
+
+    setCategories((prev) =>
+      prev.map((cat) =>
+        cat.id === editCategory.id ? { ...cat, ...editCategory } : cat
+      )
+    );
+
+    setIsEditModalOpen(false);
+    setAlert({ type: "success", message: "Category updated successfully!" });
   };
 
   useEffect(() => {
@@ -141,8 +274,46 @@ const Categories = ({ showAddButton }: Props) => {
   }, [alert]);
 
   const handleDelete = async (id: string) => {
-    const { error } = await supabase.from("categories").delete().eq("id", id);
-    if (!error) setCategories((prev) => prev.filter((c) => c.id !== id));
+    const category = categories.find((c) => c.id === id);
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setAlert({ type: "error", message: "User not authenticated." });
+      return;
+    }
+
+    try {
+      const { error: userCatError } = await supabase
+        .from("user_categories")
+        .delete()
+        .eq("category_id", id)
+        .eq("user_id", user.id);
+
+      if (userCatError) throw userCatError;
+
+      if (!category?.is_default) {
+        const { error: catError } = await supabase
+          .from("categories")
+          .delete()
+          .eq("id", id);
+
+        if (catError) throw catError;
+      }
+
+      setCategories((prev) => prev.filter((c) => c.id !== id));
+
+      setAlert({ type: "success", message: "Category deleted successfully!" });
+    } catch (error) {
+      console.error("Delete error:", error);
+      setAlert({ type: "error", message: "Failed to delete category." });
+    }
+  };
+
+  const handleEdit = (category: { id: string; name: string; icon: string }) => {
+    setEditCategory(category);
+    setIsEditModalOpen(true);
   };
 
   const openReorderDialog = () => {
@@ -156,7 +327,7 @@ const Categories = ({ showAddButton }: Props) => {
   };
 
   return (
-    <div className="flex flex-col"> 
+    <div className="flex flex-col">
       <div className="flex items-center justify-between">
         <SectionTitle title="Categories" />
 
@@ -167,7 +338,9 @@ const Categories = ({ showAddButton }: Props) => {
               <DialogTrigger asChild>
                 <Button variant="outline">
                   <LuPackagePlus />
-                  <p className="flex gap-1">Add <span className="hidden lg:block">Categories</span></p>
+                  <p className="flex gap-1">
+                    Add <span className="hidden lg:block">Categories</span>
+                  </p>
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
@@ -271,22 +444,40 @@ const Categories = ({ showAddButton }: Props) => {
 
           {/* Alert Popup */}
           {alert && (
-            <div className="fixed bottom-5 right-5 z-50 w-full lg:max-w-sm max-w-xs bg-secondaryBackground rounded-lg">
-              <Alert className="bg-primary/10 border border-primary rounded-lg shadow-lg p-4">
+            <div
+              className={`fixed bottom-5 right-5 z-50 w-full lg:max-w-sm max-w-xs rounded-lg ${
+                alert.type === "success" ? "bg-secondaryBackground" : "bg-white"
+              }`}
+            >
+              <Alert
+                className={`rounded-lg shadow-lg p-4 border ${
+                  alert.type === "success"
+                    ? "bg-primary/10 border-primary "
+                    : "bg-[#CA2A30]/90 border-[#E5484D]"
+                }`}
+              >
                 {alert.type === "success" ? (
-                  <CheckCircle2Icon className="h-5 w-5" />
+                  <CheckCircle2Icon className="h-5 w-5 text-primary" />
                 ) : (
-                  <AlertCircleIcon className="h-5 w-5" />
+                  <AlertCircleIcon className="h-5 w-5 text-white" />
                 )}
-                <AlertTitle>
+                <AlertTitle
+                  className={`${alert.type === "success" ? "" : "text-white"}`}
+                >
                   {alert.type === "success" ? "Success!" : "Error!"}
                 </AlertTitle>
-                <AlertDescription>{alert.message}</AlertDescription>
+                <AlertDescription
+                  className={`${
+                    alert.type === "success" ? "" : "text-white/80"
+                  }`}
+                >
+                  {alert.message}
+                </AlertDescription>
               </Alert>
             </div>
           )}
 
-          {/* Edit Button */}
+          {/* Settings */}
           <div className="relative">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -295,6 +486,14 @@ const Categories = ({ showAddButton }: Props) => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-32">
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={() => handleEdit(categories[activeIndex])}
+                >
+                  Edit
+                </DropdownMenuItem>
+
+                <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={openReorderDialog}
                   className="cursor-pointer"
@@ -314,19 +513,16 @@ const Categories = ({ showAddButton }: Props) => {
 
           {isEditing && (
             <>
-            <Button
-              onClick={() => setIsEditing(false)}
-               className="hidden lg:block"
-            >
-              Done Editing
-            </Button>
+              <Button
+                onClick={() => setIsEditing(false)}
+                className="hidden lg:block"
+              >
+                Done Editing
+              </Button>
 
-            <Button
-              onClick={() => setIsEditing(false)}
-              className="lg:hidden"
-            >
-              <FaCheck size={12}/>
-            </Button>
+              <Button onClick={() => setIsEditing(false)} className="lg:hidden">
+                <FaCheck size={12} />
+              </Button>
             </>
           )}
         </div>
@@ -475,6 +671,51 @@ const Categories = ({ showAddButton }: Props) => {
           </motion.div>
         ))}
       </div>
+
+      {/* Edit Modal */}
+      <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle className="text-left">Edit Category</DialogTitle>
+          </DialogHeader>
+
+          <div className="grid gap-4 !mt-2">
+            <div className="grid gap-3">
+              <Label>Name</Label>
+              <Input
+                value={editCategory?.name || ""}
+                onChange={(e) =>
+                  setEditCategory((prev) =>
+                    prev ? { ...prev, name: e.target.value } : prev
+                  )
+                }
+              />
+            </div>
+
+            <div className="grid gap-3">
+              <Label>Emoji / Icon</Label>
+              <Input
+                value={editCategory?.icon || ""}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (!value || emojiRegex.test(value)) {
+                    setEditCategory((prev) =>
+                      prev ? { ...prev, icon: value } : prev
+                    );
+                  }
+                }}
+              />
+            </div>
+          </div>
+
+          <DialogFooter className="lg:!mt-4 !mt-2">
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button onClick={updateCategory}>Save Changes</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
