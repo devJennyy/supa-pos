@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useEffect, useRef, useState } from "react";
 import SectionTitle from "../ui/section-title";
@@ -53,6 +54,7 @@ const Categories = ({ showAddButton }: Props) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const [showPicker, setShowPicker] = useState(false);
+  const [showEditPicker, setShowEditPicker] = useState(false);
   const [categories, setCategories] = useState<
     { id: string; name: string; icon: string; is_default?: boolean }[]
   >([]);
@@ -98,31 +100,34 @@ const Categories = ({ showAddButton }: Props) => {
         .from("categories")
         .select(
           `
-          id,
-          name,
-          icon,
-          is_default,
-          user_categories:user_categories(category_id, user_id, name_override, icon_override)
-        `
+        id,
+        name,
+        icon,
+        is_default,
+        user_categories:user_categories(category_id, user_id, name_override, icon_override, hidden)
+      `
         )
-        .order("id", { ascending: true });
+        .order("created_at", { ascending: true });
 
       if (!error) {
         const {
           data: { user },
         } = await supabase.auth.getUser();
 
-        const merged = data.map((cat) => {
-          const override = cat.user_categories?.find(
-            (uc) => uc.user_id === user?.id
-          );
-          return {
-            id: cat.id,
-            name: override?.name_override || cat.name,
-            icon: override?.icon_override || cat.icon,
-            is_default: cat.is_default,
-          };
-        });
+        const merged = data
+          .map((cat) => {
+            const override = cat.user_categories?.find(
+              (uc) => uc.user_id === user?.id
+            );
+            return {
+              id: cat.id,
+              name: override?.name_override || cat.name,
+              icon: override?.icon_override || cat.icon,
+              is_default: cat.is_default,
+              hidden: override?.hidden || false,
+            };
+          })
+          .filter((cat) => !cat.hidden);
 
         setCategories(merged);
       }
@@ -217,6 +222,7 @@ const Categories = ({ showAddButton }: Props) => {
       .single();
 
     if (categoryError || !categoryData) {
+      console.error(categoryError);
       setAlert({ type: "error", message: "Category not found." });
       return;
     }
@@ -235,19 +241,28 @@ const Categories = ({ showAddButton }: Props) => {
           },
           { onConflict: "user_id,category_id" }
         );
-
       error = upsertError;
     } else {
-      const { error: updateError } = await supabase
+      const { error: catUpdateError } = await supabase
         .from("categories")
         .update({
           name: editCategory.name,
           icon: editCategory.icon,
         })
-        .eq("id", editCategory.id)
-        .eq("user_id", user.id);
+        .eq("id", editCategory.id);
+      error = catUpdateError;
 
-      error = updateError;
+      if (!error) {
+        const { error: userCatUpdateError } = await supabase
+          .from("user_categories")
+          .update({
+            name_override: editCategory.name,
+            icon_override: editCategory.icon,
+          })
+          .eq("user_id", user.id)
+          .eq("category_id", editCategory.id);
+        error = userCatUpdateError;
+      }
     }
 
     if (error) {
@@ -285,15 +300,30 @@ const Categories = ({ showAddButton }: Props) => {
     }
 
     try {
-      const { error: userCatError } = await supabase
-        .from("user_categories")
-        .delete()
-        .eq("category_id", id)
-        .eq("user_id", user.id);
+      if (category?.is_default) {
+        const { error: hideError } = await supabase
+          .from("user_categories")
+          .upsert(
+            {
+              user_id: user.id,
+              category_id: id,
+              hidden: true,
+              name_override: category.name || "",
+              icon_override: category.icon || "",
+            },
+            { onConflict: "user_id,category_id" }
+          );
 
-      if (userCatError) throw userCatError;
+        if (hideError) throw hideError;
+      } else {
+        const { error: userCatError } = await supabase
+          .from("user_categories")
+          .delete()
+          .eq("category_id", id)
+          .eq("user_id", user.id);
 
-      if (!category?.is_default) {
+        if (userCatError) throw userCatError;
+
         const { error: catError } = await supabase
           .from("categories")
           .delete()
@@ -303,7 +333,6 @@ const Categories = ({ showAddButton }: Props) => {
       }
 
       setCategories((prev) => prev.filter((c) => c.id !== id));
-
       setAlert({ type: "success", message: "Category deleted successfully!" });
     } catch (error) {
       console.error("Delete error:", error);
@@ -692,19 +721,56 @@ const Categories = ({ showAddButton }: Props) => {
               />
             </div>
 
-            <div className="grid gap-3">
+            <div className="grid gap-3 relative">
               <Label>Emoji / Icon</Label>
-              <Input
-                value={editCategory?.icon || ""}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (!value || emojiRegex.test(value)) {
-                    setEditCategory((prev) =>
-                      prev ? { ...prev, icon: value } : prev
-                    );
-                  }
-                }}
-              />
+              <div className="flex items-center gap-2">
+                <Input
+                  value={editCategory?.icon || ""}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (!value || emojiRegex.test(value)) {
+                      setEditCategory((prev) =>
+                        prev ? { ...prev, icon: value } : prev
+                      );
+                    }
+                  }}
+                  placeholder="Select / edit emoji"
+                />
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowEditPicker((prev) => !prev)}
+                  className="p-2"
+                >
+                  <p className="text-lg !mb-1">{editCategory?.icon || "🍔"}</p>
+                </Button>
+              </div>
+
+              {showEditPicker && (
+                <div className="absolute right-0 top-[5.5rem] z-50 max-w-[90vw] bg-background rounded-lg shadow-lg border p-3">
+                  <div className="flex justify-between items-center mb-2">
+                    <p className="text-sm">Choose emoji</p>
+                    <button
+                      className="text-sm px-2 py-1 rounded hover:bg-muted"
+                      onClick={() => setShowEditPicker(false)}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <EmojiPicker
+                    width="100%"
+                    height={350}
+                    theme={Theme.LIGHT}
+                    onEmojiClick={(emojiData) => {
+                      setEditCategory((prev) =>
+                        prev ? { ...prev, icon: emojiData.emoji } : prev
+                      );
+                      setShowEditPicker(false);
+                    }}
+                  />
+                </div>
+              )}
             </div>
           </div>
 
